@@ -1,0 +1,32 @@
+<view wx:for="{{appoints}}" wx:key class="appoint-container shadow bg-white">
+    <view class="content margin-top-xs">
+        <view class="user-info-group">
+            <image src="{{item.avatar}}"></image>
+            <view class="userinfo">
+                <view class="username">{{item.nickname}}</view>
+                <view>
+                    <text wx:if="{{item.gender}}" class="{{item.gender =='2'?'cuIcon-female':'cuIcon-male'}} text-orange"></text>
+                </view>
+            </view>
+        </view>
+        <view class="appoint_info text-grey">
+            <view class="padding-top-xs">看房时间：{{item.desc}}</view>
+            <view class="padding-top-xs text-green">
+                <text class="cuIcon-weixin text-green  margin-right-xs"></text>{{item.wechat}}
+            </view>
+            <view class="padding-top-xs text-green">
+                <text class="cuIcon-phone text-orange  margin-right-xs"></text>{{item.phone}}
+            </view>
+        </view>
+        <button class="cu-btn bg-green margin-tb-sm sm" bindtap="make_call" data-phone="{{item.phone}}">
+            <text class="text-white">拨打电话</text>
+        </button>
+        <button class="cu-btn bg-red-bright margin sm" bindtap="Delete_appoint" data-appoint-id="{{item.id}}">
+            <text class="text-white">删除</text>
+        </button>
+    </view>
+</view>
+<view class="empty" wx:if="{{appoints.length == 0}}">
+    <image src="/image/empty-imgs/appointment.png"></image>
+    <text class="margin-top text-grey">空空如也～</text>
+</view>

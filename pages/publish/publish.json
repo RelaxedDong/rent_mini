@@ -1,0 +1,8 @@
+{
+  "usingComponents": {
+    "l-input": "../../dist/input/index",
+    "l-textarea": "../../dist/textarea/index",
+    "l-image-picker": "../../dist/image-picker/index"
+  },
+  "navigationBarTitleText": "房源发布"
+}

@@ -1,0 +1,16 @@
+.tower-swiper .tower-item {
+  transform: scale(calc(0.5 + var(--index) / 10));
+  margin-left: calc(var(--left) * 100rpx - 150rpx);
+  z-index: var(--index);
+}
+.card-swiper {
+  height:250rpx !important;
+}
+
+.screen-swiper{
+  position: relative;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+

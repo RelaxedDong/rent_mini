@@ -1,0 +1,86 @@
+/* pages/discuss-detail/discuss-detail.wxss */
+.discuss-container{
+    padding: 20rpx;
+    overflow-x:hidden;
+}
+.nav{
+    position: relative;
+    left: 0;
+    top: 0;
+    z-index: 10;
+}
+.nav-title{
+    position: absolute;
+    left: 20rpx;
+    /*top: 32rpx;*/
+    z-index: 10;
+    text-align: left;
+    font-size:30rpx;
+    letter-spacing:2px;
+}
+.user-info-group{
+  border-radius: 10rpx;
+    margin-top: 20rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.shadow{
+    box-shadow: 0 4rpx 20rpx 0 rgba(212,217,223,.5);
+}
+.comment-content{
+    padding-top: 30rpx;
+}
+.group-delete{
+    width: 100%;
+}
+.user-info-group image{
+    width: 70rpx;
+    height: 70rpx;
+    border-radius: 50%;
+}
+.userinfo{
+    margin-left: 15rpx;
+    display: flex;
+    height: 70rpx;
+    flex-direction: column;
+}
+.username{
+    font-size: 30rpx;
+    color: #2C354B;
+    margin-left: 5rpx;
+}
+.content-box{
+    padding:0 20rpx;
+    box-sizing: border-box;
+}
+/*.infobox{*/
+/*  border-radius: 10rpx;*/
+/*    margin: 20rpx 0;*/
+/*    display: flex;*/
+/*    flex-direction: row;*/
+/*    align-items:center;*/
+/*    margin-left: auto;*/
+/*    flex: 1;*/
+/*    justify-content:space-between;*/
+/*    align-content: center;*/
+/*}*/
+.itembox{
+    display: flex;
+    flex-direction: column;
+    padding:  20rpx;
+}
+.top-item{
+    color: #2DCB73;
+    font-weight: bold;
+    font-size: 30rpx;
+    text-align: center
+}
+.bottom-item{
+    color: #b2bec3;
+    font-weight: lighter;
+    font-size: 25rpx;
+    text-align: center;
+    margin-top: 10rpx;
+}

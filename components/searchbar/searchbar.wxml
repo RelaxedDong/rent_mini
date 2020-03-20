@@ -1,0 +1,6 @@
+  <view class="cu-bar search bg-white">
+    <view class="search-form round">
+      <text class="cuIcon-search"></text>
+      <input type="text" disabled="{{disabled}}" value="{{inputVal}}"  bindinput='getsuggest' bindconfirm="toSearch" placeholder="{{placeholder}}" confirm-type="search"></input>
+    </view>
+  </view>

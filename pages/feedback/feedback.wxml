@@ -1,0 +1,10 @@
+<view class="title">问题和建议</view>
+<textarea class="textarea" placeholder="请简要描述您的问题和建议" placeholder-class="placeholder" bindinput="textareaVal"
+minlength="20"/>
+
+
+<view class="title">微信</view>
+<input type="text" class="input" placeholder="必填，方便我们与您联系" placeholder-class="placeholder" bindinput="inputVal"
+       maxlength="20"/>
+
+<view class="confirm" catchtap="confirm">提交</view>

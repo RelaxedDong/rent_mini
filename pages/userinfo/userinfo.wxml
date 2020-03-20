@@ -1,0 +1,43 @@
+    <view class="container-box">
+        <form bindsubmit='EditFinish' report-submit>
+            <view class="cu-form-group">
+                <view class="title">手机号</view>
+                <input placeholder="必填"
+                       name="phone"
+                       maxlength="11"
+                       minlength="11"
+                       value="{{form.phone}}"></input>
+                <button class="cu-btn bg-blue shadow"
+                        open-type="getPhoneNumber"
+                        bindgetphonenumber="getPhoneNumber"
+                >授权绑定</button>
+            </view>
+            <view class="cu-form-group">
+                <view class="title">微信号</view>
+                <input placeholder="必填"
+                       name="wechat"
+                       value="{{form.wechat}}"></input>
+            </view>
+            <view class="cu-form-group border-bottom">
+                <view class="title">年龄</view>
+                <input placeholder="请选择" type="number"
+                       name="age"
+                       value="{{form.age}}"></input>
+            </view>
+            <view class="cu-form-group">
+                <switch class="switch-sex" checked="{{gender == '1' ?'1':''}}" bindchange="GenderChange"></switch>
+                <view class="title">{{gender=='1'?'男':'女'}}</view>
+            </view>
+            <view class="cu-form-group margin-top">
+        <textarea maxlength="-1"
+                  value="{{form.signature}}"
+                  name="signature"
+                  placeholder="可填写个人签名哦~"></textarea>
+            </view>
+            <view class="padding flex flex-direction">
+                <button formType="submit" class="cu-btn blue-btn margin-tb-sm lg">
+                    <text class="text-white">立即更改</text>
+                </button>
+            </view>
+        </form>
+    </view>

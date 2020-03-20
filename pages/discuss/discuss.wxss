@@ -1,0 +1,12 @@
+.discuss-type {
+    padding: 5rpx 10rpx;
+    font-size: 18rpx;
+    border-radius: 5rpx;
+    overflow: hidden;
+    align-items: center;
+    margin-left: 10rpx;
+}
+.username {
+    display: flex;
+    flex-direction: row;
+}

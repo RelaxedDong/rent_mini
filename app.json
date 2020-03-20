@@ -1,0 +1,61 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/discuss-detail/discuss-detail",
+    "pages/discuss/discuss",
+    "pages/publish/publish",
+    "pages/before-publish/before-publish",
+    "pages/detail/detail",
+    "pages/edit-house/edit-house",
+    "pages/appoint/appoint",
+    "pages/contact/contact",
+    "pages/my/my",
+    "pages/list/list",
+    "pages/mycollects/mycollects",
+    "pages/mypublish/mypublish",
+    "pages/city/city",
+    "pages/web/web",
+    "pages/my-discuss/my",
+    "pages/userinfo/userinfo"
+  ],
+  "usingComponents": {
+    "search-bar": "components/searchbar/searchbar",
+    "swiper-banner": "components/swiper/swiper",
+    "tags-list": "components/tags/tags"
+  },
+  "window": {
+    "navigationBarTitleText": "授权验证",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#cdcdcd",
+    "selectedColor": "#82ea9c",
+    "list": [
+      {
+        "selectedIconPath": "image/footer/home-active.png",
+        "iconPath": "image/footer/home.png",
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "selectedIconPath": "image/footer/upload-active.png",
+        "iconPath": "image/footer/upload.png",
+        "pagePath": "pages/before-publish/before-publish",
+        "text": "发布"
+      },
+      {
+        "selectedIconPath": "image/footer/me-active.png",
+        "iconPath": "image/footer/me.png",
+        "pagePath": "pages/my/my",
+        "text": "我的"
+      }
+    ]
+  },
+  "permission": {
+    "scope.userLocation": {
+      "desc": "为了更好的服务，请授权位置信息"
+    }
+  },
+  "sitemapLocation": "sitemap.json"
+}

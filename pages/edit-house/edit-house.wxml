@@ -1,0 +1,23 @@
+<view bindtap="ToDetail" class="editbox">
+    <view class="img-group-face">
+        <image wx:for="{{house.imgs}}" wx:if="{{index<4}}" mode='aspectFill' src="{{item}}" lazy-load wx:key></image>
+    </view>
+</view>
+<view class="edit-container">
+    <form bindsubmit='submitBtn'>
+        <l-input label="标题" required="{{true}}" name="title" label-width="170"
+                 value="{{form.title}}"></l-input>
+        <l-input label="租金" required="{{true}}" name="price" label-width="170" type="number"
+                 value="{{form.price}}"></l-input>
+        <l-input label="房屋面积" name="area" type="number" label-width="170" value="{{form.area}}">
+        </l-input>
+        <l-textarea name="desc" value="{{form.desc}}" required="{{true}}" border="{{false}}" maxlength="400"
+        />
+        <view class="padding flex flex-direction">
+            <button class="cu-btn grand margin-tb-sm lg" formType="submit">
+                <text class="text-white">立即修改</text>
+            </button>
+        </view>
+    </form>
+</view>
+

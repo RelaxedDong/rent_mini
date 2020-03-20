@@ -1,0 +1,69 @@
+<view class="aui-tour-content"></view>
+<view  class="radius my-head simple-radis aui-tour-box text-df text-center icon-text bg-white"
+    style="  box-shadow: 0 4rpx 20rpx 0 rgba(212,217,223,.5)">
+    <view wx:if="{{is_auth}}" class="userbox padding-sm">
+            <view class="avatar">
+                <open-data type="userAvatarUrl"></open-data>
+            </view>
+            <view class="nickname-gender">
+                <open-data type="userNickName" lang="zh_CN"></open-data>
+                <text class="{{gender=='1'?'cuIcon-male text-blue':'cuIcon-female text-pink'}}  margin-top-xs"></text>
+            </view>
+    </view>
+    <view wx:else class="margin">
+        <form bindsubmit='login' report-submit>
+            <button class="cu-btn bg-blue"
+                    wx:if="{{!is_auth}}"
+                    open-type="getUserInfo"
+                    bindgetuserinfo="login"
+                    formType="submit"
+                    hover-class="hover"
+            >立即授权</button>
+        </form>
+    </view>
+    <view class="flex-item margin-xs padding-bottom text-grey">
+        <view class="flex flex-sub  flex-direction icon-text">
+            <view class="text-df">{{favors}}</view>
+            <view class="margin-top-xs text-xs">点赞</view>
+        </view>
+        <view class="flex flex-sub flex-direction icon-text">
+            <view class="text-df">{{collect_count}}</view>
+            <view class="margin-top-xs text-xs">收藏</view>
+        </view>
+        <view class="flex flex-sub flex-direction icon-text">
+            <view class="text-df">{{houses_count}}</view>
+            <view class="margin-top-xs text-xs">房源数</view>
+        </view>
+    </view>
+</view>
+<view class="margin bg-white">
+    <view class="cu-list grid shadow col-3 no-border radius">
+        <view class="cu-item" wx:for="{{grid_list}}" wx:key bindtap="Navigator_to" data-url="{{item.url}}">
+            <view class="cuIcon-{{item.icon}} text-{{item.color}}">
+            </view>
+            <text class="text-xs text-grey">{{item.name}}</text>
+        </view>
+    </view>
+</view>
+<view  class="cu-list icon-text text-sm menu card-menu margin-top-sm margin-bottom-xl  radius shadow">
+    <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/contact/contact">
+        <view class="content">
+            <text class="cuIcon-community text-orange"></text>
+            <text class="text-grey text-sm">关于我们</text>
+        </view>
+    </view>
+    <view class="cu-item arrow text-xs" bindtap="VersionClick">
+        <view class="content">
+            <text class="cuIcon-settings text-olive"></text>
+            <text class="text-grey text-sm">更新版本</text>
+        </view>
+    </view>
+</view>
+
+<view class="text-center text-grey text-xs margin-top-xs">
+    微信: {{version}}
+</view>
+<view class="text-center text-grey text-xs">
+    操作系统：{{system}}
+</view>
+

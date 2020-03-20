@@ -1,0 +1,72 @@
+<view id="searchbar" class="cu-bar search bg-white box" style="box-sizing: border-box">
+    <view class="search-form round">
+        <text class="cuIcon-search"></text>
+        <input type="text" disabled="{{true}}"
+               bindtap='searchbtnclick' placeholder="搜索 {{placeholder}} 房源（^ - ^）"
+               confirm-type="search"/>
+    </view>
+    <view class="action" bindtap="CitySelect">
+        <text>{{placeholder}}</text>
+        <text class="cuIcon-triangledownfill"></text>
+    </view>
+</view>
+<swiper-banner id="swiperbanner" wx:if="{{banners.length>0}}" imgs_list="{{banners}}"  swiper_style="card-swiper"></swiper-banner>
+<view class="icon-list">
+    <view class="icon-item" wx:for="{{icon_list}}" wx:key bindtap="IconClick" data-type="{{item.type}}">
+        <image src="{{item.icon_url}}"></image>
+        <text class="text-center text-grey margin-top-xs text-xs">{{item.name}}</text>
+    </view>
+</view>
+<!--<view class="tabpanel-list where-filter text-sm text-grey">-->
+<!--    <view  class="tab-item {{activekey=='all'?'active-text':''}}" data-activeKey="all" bindtap="changeTabs">全部-->
+<!--    </view>-->
+<!--    <view class="tab-item {{activekey=='today'?'active-text':''}}"  data-activeKey="today" bindtap="changeTabs">今日房源</view>-->
+<!--    <view class="tab-item {{activekey=='newest'?'active-text':''}}"  data-activeKey="newest" bindtap="changeTabs">最新房源</view>-->
+<!--    <view class="tab-item {{activekey=='mostsee'?'active-text':''}}"  data-activeKey="mostsee" bindtap="changeTabs">查看最多</view>-->
+<!--</view>-->
+<!--首页筛选器-->
+<view style="padding-bottom: 50rpx">
+    <view wx:for="{{houses}}" wx:for-item='row' wx:key>
+        <view wx:for='{{row}}' wx:key="{{index}}" bindtap="handleClick" data-id="{{item.id}}">
+            <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
+                <view class="loadImg loadImg{{index}} {{item.imgshow? 'active' : ''}}">
+                    <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
+                          style="background-image: url('{{item.imgshow?item.imgs[0]:default_img}}');"></view>
+                </view>
+                <view class="card-content">
+                    <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
+                    <view class="user-info-group">
+                        <view class="imgurl avatar-user" style="background-image: url({{item.avatarUrl}});"></view>
+                        <view class="userinfo">
+                            <view class="username">{{item.nickname}}</view>
+                            <view class="upload_time">
+                                <text class="{{item.gender}}"></text>
+                                {{item.last_login}}来过
+                            </view>
+                        </view>
+                    </view>
+                    <view class="content">
+                        <view class='info'>
+                            <view class="houseinfo">
+                                <view class="bg-green cell-center">
+                                    {{item.house_type}}
+                                </view>
+                                <view class="margin-left-sm bg-gray cell-center light">
+                                    {{item.apartment}}
+                                </view>
+                            </view>
+                            <view class="price">
+                                <text class="cuIcon-moneybagfill"></text>
+                                {{item.price}} / 月
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+    <view class="empty" wx:if="{{houses.length == 0 && show_empty}}">
+        <image style="width: 150rpx;height: 150rpx" src="/image/empty-imgs/my-discuss.png"></image>
+        <text class="margin-top text-grey">等你来发布啦！</text>
+    </view>
+</view>

@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "l-textarea": "../../dist/textarea/index"
+  },
+    "navigationBarTitleText": "详情",
+    "navigationStyle": "custom"
+}

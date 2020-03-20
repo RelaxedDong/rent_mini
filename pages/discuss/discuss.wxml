@@ -1,0 +1,48 @@
+<view id="searchbar" class="cu-bar search bg-white box" style="box-sizing: border-box">
+    <view class="search-form round">
+        <text class="cuIcon-search"></text>
+        <input type="text" placeholder="搜索 {{city}} 房源（^ - ^）"
+               value="{{search_txt}}" bindinput='getSearch_txt' bindconfirm="searchSubmit" />
+    </view>
+    <view class="cu-form-group">
+        <picker mode="region" bindchange="RegionChange" value="{{region}}" custom-item="{{customItem}}">
+            <view class="picker">
+                <view wx:if="{{region[2]}}">{{region[2]}}</view>
+                <view wx:else>区域</view>
+            </view>
+        </picker>
+    </view>
+</view>
+<view style="padding-bottom: 50rpx">
+    <view wx:for="{{discusses}}"  wx:key bindtap="toDetail" data-id="{{item.id}}">
+            <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
+                <view class="loadImg" wx:if="{{item.house_face.length>0}}">
+                    <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
+                          style="background-image: url('{{item.house_face}}');"></view>
+                </view>
+                <view class="card-content">
+                            <text class="margin-left-xs l-title-class card-title card-title-primary">
+                                {{item.title}}
+                            </text>
+                    <view class="user-info-group">
+                        <view class="imgurl avatar-user" style="background-image: url({{item.avatar}});"></view>
+                        <view class="userinfo" style="margin-top: 5rpx">
+                            <view class="username">
+                                {{item.username}}
+                                    <view class="bg-green discuss-type">
+                                        {{item.rent_type}}
+                                    </view>
+                            </view>
+                            <view class="upload_time">
+                                {{item.create_time}}发布
+                            </view>
+                        </view>
+                    </view>
+                </view>
+        </view>
+    </view>
+    <view class="empty" wx:if="{{discusses.length === 0}}">
+        <image style="width: 150rpx;height: 150rpx" src="/image/empty-imgs/my-discuss.png"></image>
+        <text class="margin-top text-grey">没有相关话题！</text>
+    </view>
+</view>

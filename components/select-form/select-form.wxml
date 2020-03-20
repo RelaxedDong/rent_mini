@@ -1,0 +1,64 @@
+<!--components/select-form/select-form.wxml-->
+<view class="origin" wx-if="{{selectType=='regions'}}">
+    <view class="left-select">
+        <view class="lect-item {{ActiveColor?'active-color':''}}" bindtap='RigionsClick'>区域</view>
+        <view class="lect-item {{!ActiveColor?'active-color':''}}" bindtap='SubwayClick'>地铁</view>
+    </view>
+    <view class="left-right">
+        <scroll-view scroll-y style="height: 400rpx;">
+            <view bindtap='RigionsselectClick' data-key="region" data-value="{{item}}" wx-if="{{show_regions}}"
+                  class="lect-item" wx:for="{{formselects.regions}}" wx:key wx:for-item="item">
+                {{item}}
+            </view>
+            <view  style="background: {{color}};opacity: 0.8;color: white"
+                   wx-if="{{!show_regions}}"
+                  class="lect-item" wx:for="{{formselects.subway}}" wx:key wx:for-item="color">
+                <view style="display: flex;flex-direction: row;justify-content: center"
+                      data-key="subway" data-value="{{index}}"
+                      bindtap='RigionsselectClick'
+                >
+                    <image src="/image/icon/subway.png" style="width: 40rpx;height: 40rpx"
+                    class="cell-center"></image>
+                    <view style="margin-left: 20rpx">
+                        {{index}}{{item}}
+                    </view>
+                </view>
+
+            </view>
+        </scroll-view>
+    </view>
+</view>
+<view class="house-type" wx-if="{{selectType=='house-type'}}">
+    <scroll-view scroll-y style="height: 400rpx;">
+        <view class="lect-item" bindtap='RigionsselectClick' data-key="house_type" data-value="{{item[0]}}"
+              wx:for="{{formselects.house_type}}" wx:key="item" wx:for-item="item">
+            {{item[1]}}
+        </view>
+    </scroll-view>
+</view>
+<view class="apartment" wx-if="{{selectType=='money'}}">
+    <view class="solid bg-white text-xxl padding">
+        <view class="section section_gap">
+            <view class='price-info'>
+                <text class="cuIcon-moneybag lg text-pink icon-price"></text>
+                <view class="text-pink margin-left-xs">{{price}}</view>
+            </view>
+            <view class="body-view">
+                <slider bindchange="slider2change" step="10" max="300"/>
+            </view>
+            <view class='price-auto'>{{start}} - {{end}}</view>
+        </view>
+    </view>
+</view>
+<view class="apartment" wx-if="{{selectType=='apartment'}}">
+    <scroll-view scroll-y style="height: 400rpx;">
+        <view class="lect-item" bindtap='RigionsselectClick' data-key="apartment" data-value="{{item[0]}}"
+              wx:for="{{formselects.apartment}}" wx:key="item" wx:for-item="item">
+            {{item[1]}}
+        </view>
+    </scroll-view>
+</view>
+
+
+
+

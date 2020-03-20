@@ -1,0 +1,90 @@
+<!--pages/list/list.wxml-->
+<view class="header-select section-placeholder section-fixed" id='filter_bar'>
+        <search-bar currentvalue="{{searchinput}}"
+                    bind:ChildInputValue="ChildInputValueHanle"
+                    bind:SearchList="SearchList" placeholder="输入关键字，搜索 {{placeholder}} 房源..."></search-bar>
+        <view class="search-list">
+            <view  wx:for="{{search_list}}" wx:key  class="cu-tag round margin-xs" bindtap="AddressClick" data-address="{{item}}"
+            >{{item}}</view>
+        </view>
+        <view class='selectform'>
+          <view class='select-item'   bindtap='SelectBtnClick'  data-type="regions">
+          <view class="{{region.active ?'active-text':''}}">
+              {{region.text}}</view>
+              <view class="{{subway.active ?'active-text':''}}">/{{subway.text}}</view>
+          </view>
+            <view class='select-item'   bindtap='SelectBtnClick'  data-type="house-type">
+            <view class="{{choose_type.active ?'active-text':''}}">{{choose_type.text}}</view>
+          </view>
+            <view class='select-item' bindtap='SelectBtnClick' data-type="money">
+            <view class="{{money.active ?'active-text':''}}" style="font-weight: normal;">{{money.text}}</view>
+          </view>
+          <view class='select-item'   bindtap='SelectBtnClick'  data-type="apartment">
+            <view class="{{house_type.active ?'active-text':''}}">{{house_type.text}}</view>
+          </view>
+        </view>
+    <view class='selectformshow' wx-if="{{SelectForm}}" animation="{{animation}}">
+        <select-form formselects="{{selects}}" reginons="{{regions}}" lastConditions="{{conditions}}"
+                     selectType="{{type}}"
+                     clearfilters="{{clear}}"
+                     bind:SelectEvent="HandleSelectEvent"></select-form>
+        <view class="text-right margin-sm" bindtap="ClearFilters">
+            <view class="cu-capsule radius" hover-class="bg-blue light">
+                <view class="cu-tag bg-red">
+                    <text class="cuIcon-deletefill"></text>
+                </view>
+                <view class="cu-tag line-red">
+                    房源数：{{house_count}}
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+    <scroll-view scroll-top='{{topNum}}' bindscrolltolower="bindscrolltolower" bindtouchstart="touchStart" scroll-y
+                 style='height:{{scrollHeight}}px;padding-top: {{fiexed_top}}px;'>
+        <view wx:for="{{houses}}" wx:for-item='row' wx:key>
+            <view wx:for='{{row}}' wx:key="{{index}}" bindtap="handleClick" data-id="{{item.id}}">
+                <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
+                        <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
+                              style="background-image: url({{item.imgs[0]}});"></view>
+                    <view class="card-content">
+                        <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
+                        <view class="user-info-group">
+                            <view class="imgurl avatar-user" style="background-image: url({{item.avatarUrl}})"></view>
+                            <view class="userinfo">
+                                <view class="username">{{item.nickname}}</view>
+                                <view class="upload_time">
+                                    <text class="margin-right-xs {{item.publisher_gender}}"></text>
+                                    {{item.last_login}}来过
+                                </view>
+                            </view>
+                        </view>
+                        <view class="content">
+                            <view class='info'>
+                                <view class="houseinfo">
+                                    <view class="bg-green cell-center">
+                                        {{item.house_type}}
+                                    </view>
+                                    <view class="margin-left-sm bg-gray cell-center light">
+                                        {{item.apartment}}
+                                    </view>
+                                </view>
+                                <view class="price">
+                                    <text class="cuIcon-moneybagfill"></text>
+                                    {{item.price}} / 月
+                                </view>
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="empty" wx:if="{{houses.length == 0 && show_empty}}" style="margin-top: {{fiexed_top}}px">
+            <image src="/image/empty-imgs/search_none.png"></image>
+        </view>
+    </scroll-view>
+
+
+
+
+

@@ -1,0 +1,39 @@
+/* pages/appoint/appoint.wxss */
+.appoint_info{
+    padding: 0 10rpx;
+}
+.appoint-container{
+    margin: 20rpx;
+    padding: 20rpx;
+    border-bottom: 1px solid #EEE0E5;
+}
+.user-info-group{
+    margin-top: 20rpx;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.user-info-group image{
+    width: 70rpx;
+    height: 70rpx;
+    border-radius: 50%;
+}
+.userinfo{
+    margin-left: 15rpx;
+    display: flex;
+    height: 70rpx;
+    flex-direction: column;
+}
+.username{
+    font-size: 30rpx;
+    color: #2C354B;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space: nowrap;
+}
+.upload_time{
+    margin:5rpx 0;
+    color: #ABAFBA;
+    font-size: 20rpx;
+}

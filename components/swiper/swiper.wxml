@@ -1,0 +1,10 @@
+
+  <swiper wx-if="{{swiper_style == 'card-swiper'}}" class="{{swiper_style}} square-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" ndicator-active-color="#0081ff">
+    <swiper-item wx:for="{{imgs_list}}" wx:key class="{{cardCur==index?'cur':''}}">
+      <view class="swiper-item" bindtap="HandleClick" data-navigate="{{item.navigate}}">
+        <image src="{{item.url}}" mode="aspectFill" lazy-load></image>
+<!--        <video src="{{item.url}}" autoplay loop muted show-play-btn="{{false}}" controls="{{false}}" objectFit="cover" wx:if="{{item.type=='video'}}"></video>-->
+        {{imgs_list}}
+      </view>
+    </swiper-item>
+  </swiper>
