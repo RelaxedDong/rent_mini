@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "l-input": "../../dist/input/index"
+  },
+  "navigationBarTitleText": "动态发布"
+}

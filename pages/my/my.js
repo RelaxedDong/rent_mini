@@ -14,7 +14,7 @@ Page({
         grid_list: [
             {name: '编辑信息',icon:'profile',color:'blue',url:"/pages/userinfo/userinfo"},
             {name: '我的房源',icon:'write',color:'green', url:"/pages/mypublish/mypublish"},
-            {name: '我的求租',icon:'edit',color:'yellow', url:"/pages/my-discuss/my"},
+            {name: '我的动态',icon:'edit',color:'yellow', url:"/pages/my-discuss/my"},
             {name: '我的收藏',icon:'favor',color:'pink', url:"/pages/mycollects/mycollects"},
             {name: '收到预约',icon:'time',color:'red', url:"/pages/appoint/appoint"},
             {name: '意见反馈',icon:'service',color:'olive', url:"/pages/feedback/feedback"},

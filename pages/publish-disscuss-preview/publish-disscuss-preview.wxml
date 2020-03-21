@@ -1,0 +1,30 @@
+<view class="discuss-container">
+    <!--pages/details/details.wxml-->
+    <view class="card-top">
+        <view class="card-dot"></view>
+        <view class="content-name">标题</view>
+    </view>
+    <view class="text-black">
+        {{title}}
+    </view>
+    <view class="card-top">
+        <view class="card-dot"></view>
+        <view class="content-name">类型</view>
+    </view>
+    <view class="text-black">
+        {{rent_type}}
+    </view>
+    <view class="card-top">
+        <view class="card-dot"></view>
+        <view class="content-name">区域</view>
+    </view>
+    <view class="text-black">
+       {{city}}-{{region}}
+    </view>
+    <view class="card-top">
+        <view class="card-dot"></view>
+        <view class="content-name">详情</view>
+    </view>
+    <rich-text nodes="{{html}}" ></rich-text>
+    <button  class="bg-green text-white margin-top" bindtap="Publish">立即发布</button>
+</view>

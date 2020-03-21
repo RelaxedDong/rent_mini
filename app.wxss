@@ -114,6 +114,11 @@ page{
 .mycontainer{
   margin: 20rpx;
 }
+.space-between{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
 .itembox{
   box-sizing: border-box;
   width: 100%;

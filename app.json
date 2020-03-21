@@ -1,5 +1,7 @@
 {
   "pages": [
+    "pages/publish-discuss/publish-discuss",
+    "pages/publish-disscuss-preview/publish-disscuss-preview",
     "pages/index/index",
     "pages/discuss-detail/discuss-detail",
     "pages/discuss/discuss",

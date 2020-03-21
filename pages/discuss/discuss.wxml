@@ -43,6 +43,6 @@
     </view>
     <view class="empty" wx:if="{{discusses.length === 0}}">
         <image style="width: 150rpx;height: 150rpx" src="/image/empty-imgs/my-discuss.png"></image>
-        <text class="margin-top text-grey">没有相关话题！</text>
+        <text class="margin-top text-grey">没有相关动态！</text>
     </view>
 </view>

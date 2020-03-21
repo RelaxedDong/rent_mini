@@ -19,10 +19,10 @@ Page({
             url: '/pages/publish/publish'
           })
         }else{
-          // wx.navigateTo({
-          //   url: '/pages/publish-discuss/publish-discuss'
-          // })
-          app.ShowToast('敬请期待～');
+          wx.navigateTo({
+            url: '/pages/publish-discuss/publish-discuss'
+          })
+          // app.ShowToast('敬请期待～');
         }
     }
   },

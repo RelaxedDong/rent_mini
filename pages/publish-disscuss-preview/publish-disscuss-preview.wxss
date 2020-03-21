@@ -1,0 +1,12 @@
+/* pages/details/details.wxss */
+.ajc {
+  display: flex;
+  flex-direction: row;
+  margin-top: 40rpx;
+}
+.card-dot {
+  margin-left: 0;
+}
+.discuss-container {
+  margin: 0 20rpx;
+}

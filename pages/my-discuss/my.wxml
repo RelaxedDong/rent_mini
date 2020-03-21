@@ -5,23 +5,18 @@
             <view class="topbox" bindtap="ToDiscussDetail" data-discussid="{{discuss.id}}">
                 <view class="left">
                     <text class="cuIcon-location text-green padding-right-xs"></text>
-                    <text class="text-grey text-sm margin-right">{{discuss.region}} / {{discuss.address}}</text>
-                    <text class="text-sm margin-lr-xs text-grey">{{discuss.create_time}}</text>
+                    <text class="text-grey text-sm margin-right">{{discuss.city}} / {{discuss.region}}</text>
                 </view>
                 <view class="right">
-                    <text class="cuIcon-attention text-green padding-right-xs"></text>
-                    <text class="text-grey text-sm">浏览{{discuss.view_count}}</text>
+                    <text class="cuIcon-homefill text-green padding-right-xs"></text>
+                    <text class="text-grey text-sm">{{discuss.rent_type}}</text>
                 </view>
             </view>
-            <view class="title text-grey one-row" bindtap="ToDiscussDetail" data-discussid="{{discuss.id}}"  data-discuss-id="{{discuss.id}}">
-                {{discuss.title}}
-            </view>
-            <view bindtap="ToDiscussDetail" data-discussid="{{discuss.id}}" class="title text-grey one-row"  data-discuss-id="{{discuss.id}}">
-                {{discuss.desc}}
+            <view  bindtap="ToDiscussDetail" data-discussid="{{discuss.id}}"  data-discuss-id="{{discuss.id}}">
+                <view class="l-title-class margin-top-sm margin-left-xs card-title card-title-primary">标题:{{discuss.title}}</view>
+                <view class="text-sm margin-lr-xs margin-top-sm margin-left-xs text-grey">{{discuss.create_time}}</view>
             </view>
             <view class="text-right price  padding-xs">
-                <text class="cuIcon-moneybagfill text-red" bindtap="ToDiscussDetail" data-discussid="{{discuss.id}}"></text>
-                {{discuss.price}}
                 <text class="cuIcon-deletefill text-yellow margin-left" bindtap="DeleteClick" data-discuss-id="{{discuss.id}}"></text>
             </view>
         </view>

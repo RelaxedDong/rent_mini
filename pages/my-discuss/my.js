@@ -33,9 +33,6 @@ Page({
   GetDiscussesDone(res){
     var discusses = res.data.data;
     var curTime = new Date()
-    for(var i =0;i<discusses.length;i++){
-      discusses[i].create_time = app.handlePublishTimeDesc(curTime, app.get_show_time(discusses[i].create_time))
-    }
     this.setData({
       discusses:discusses
     })
@@ -43,7 +40,7 @@ Page({
   },
   ToDiscussDetail(res){
     wx.navigateTo({
-      url:"/pages/discuss-detail/discuss-detail?id="+res.currentTarget.dataset.discussid
+      url:"/pages/discuss-detail/discuss-detail?discuss_id="+res.currentTarget.dataset.discussid
     })
   },
   DeleteDone(res){
@@ -59,7 +56,7 @@ Page({
     var that = this;
     wx.showModal({
       title: '确认提示',
-      content: '确实删除该求租帖？',
+      content: '确实删除该动态？',
       success: function(res) {
         if (res.confirm) {
           var discussid = e.currentTarget.dataset.discussId;

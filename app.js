@@ -294,6 +294,17 @@ App({
     var new_time = time.split('T');
     return new_time[0] + ' ' + new_time[1].substr(0,8)
   },
+  get_html_imgs(html){
+    var reimg=/<img src=(.+?)>/gi;
+    let arr=html.match(reimg);
+    let imgs = [];
+    if(arr){
+      for(let i=0;i<arr.length;i++){
+        imgs.push(arr[i].replace(/<img src="([^\s]+)"\s*[^>]*>/gi,"$1"))
+      }
+    }
+    return imgs
+  },
   handlePublishTimeDesc(curTime, post_modified){
         // 拿到当前时间戳和发布时的时间戳，然后得出时间戳差
         // var postTime = new Date(post_modified);
