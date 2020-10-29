@@ -142,50 +142,6 @@
             <view class="card-dot"></view>
             <view class="content-name">周边房源</view>
         </view>
-        <view wx:for='{{nearby_houses}}' wx:key="{{index}}" bindtap="handleClick" data-id="{{item.id}}">
-                <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
-                    <view class="loadImg loadImg{{index}} {{item.imgshow? 'active' : ''}}">
-                        <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
-                              style="background-image: url('{{item.imgs[0]}}');"></view>
-                    </view>
-                    <view class="card-content">
-                        <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
-                        <view class="text-grey" style="font-size: 25rpx;margin: 10rpx 0">
-                            <text class="cuIcon-locationfill text-blue"></text>
-                            <block class="margin-left-sm">
-                                {{item.distance}} km
-                            </block>
-                        </view>
-                        <view class="user-info-group">
-                            <view class="imgurl avatar-user" style="background-image: url({{item.publisher.avatarUrl}});"></view>
-                            <view class="userinfo">
-                                <view class="">{{item.publisher.nickname}}</view>
-                                <view class="upload_time">
-                                    <text class="{{item.gender}}"></text>
-                                    {{item.last_login}}来过
-                                </view>
-                            </view>
-                        </view>
-                        <view class="content">
-                            <view class='info'>
-                                <view class="houseinfo">
-                                    {{item.house_type}}
-                                    <block style="color: #E2E3E7"> |</block>
-                                    {{item.apartment}}
-                                </view>
-                                <view class="price">
-                                    <text class="cuIcon-moneybagfill"></text>
-                                    {{item.price}} / 月
-                                </view>
-                            </view>
-                        </view>
-                    </view>
-                </view>
-            </view>
-        <view class="empty" wx:if="{{nearby_houses.length == 0}}">
-            <image style="width: 150rpx;height: 150rpx" src="/image/empty-imgs/my-discuss.png"></image>
-            <text class="margin-top text-grey">等你来发布啦！</text>
-        </view>
     </view>
 </scroll-view>
 <view class="cu-bar tabbar footer border shop bg-white">

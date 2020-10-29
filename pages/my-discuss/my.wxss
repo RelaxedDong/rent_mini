@@ -1,6 +1,0 @@
-/* pages/my-discuss/my.wxss */
-.one-row{
-    overflow: hidden;
-    text-overflow:ellipsis;
-    white-space: nowrap;
-}

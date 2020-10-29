@@ -1,10 +1,6 @@
 {
   "pages": [
-    "pages/publish-discuss/publish-discuss",
-    "pages/publish-disscuss-preview/publish-disscuss-preview",
     "pages/index/index",
-    "pages/discuss-detail/discuss-detail",
-    "pages/discuss/discuss",
     "pages/publish/publish",
     "pages/before-publish/before-publish",
     "pages/detail/detail",
@@ -17,7 +13,6 @@
     "pages/mypublish/mypublish",
     "pages/city/city",
     "pages/web/web",
-    "pages/my-discuss/my",
     "pages/userinfo/userinfo"
   ],
   "usingComponents": {

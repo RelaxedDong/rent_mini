@@ -29,9 +29,9 @@
     <view wx:for="{{houses}}" wx:for-item='row' wx:key>
         <view wx:for='{{row}}' wx:key="{{index}}" bindtap="handleClick" data-id="{{item.id}}">
             <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
-                <view class="loadImg loadImg{{index}} {{item.imgshow? 'active' : ''}}">
+                <view class="loadImg loadImg{{index}} active">
                     <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
-                          style="background-image: url('{{item.imgshow?item.imgs[0]:default_img}}');"></view>
+                          style="background-image: url('{{item.imgs[0]}}');"></view>
                 </view>
                 <view class="card-content">
                     <text class="l-title-class card-title card-title-primary">{{item.title}}</text>

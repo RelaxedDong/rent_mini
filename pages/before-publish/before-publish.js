@@ -7,8 +7,8 @@ Page({
    */
   data: {
     choose_item: [
-      {name:'房源转租',src:'/image/icon/publish-zhuanzu.png',type:'zhuanzu'},
-      {name:'租房动态',src:'/image/icon/hot.png',type:'discuss'}
+      {name:'房源转租',src:'/image/icon/publish-zhuanzu.png',type:'zhuanzu'}
+      // {name:'租房动态',src:'/image/icon/hot.png',type:'discuss'}
       ]
   },
   publish(e){

@@ -41,7 +41,6 @@ Page({
         ],
         publish_discuss:"right: 110rpx",
         activekey: 'all',
-        default_img: 'http://pybrrveqf.bkt.clouddn.com/loading.gif',
         page: 0,
         offset: 10,
         Loading: false,//加载动画的显示
@@ -138,7 +137,6 @@ Page({
                 house.avatarUrl = publisher.avatarUrl;
                 house.gender = publisher.gender=='2'?'cuIcon-female text-pink':'cuIcon-male text-blue';
                 house.last_login = app.handlePublishTimeDesc(curTime, app.get_show_time(publisher.last_login))
-                house.imgshow = false;
                 house.house_type = house_type[house.house_type];
                 house.apartment = apartment[house.apartment]
                 house.arratHeight = Math.floor(i/2)*(320/750)*520;
@@ -155,23 +153,7 @@ Page({
         }
         wx.hideLoading()
     },
-    ImgShow(top){
-        var page = this.data.page;
-        var houses = this.data.houses[this.data.page];
-        for (var i = 0; i < houses.length; i++) {
-            if (houses[i].arratHeight < top) {
-                if (houses[i].imgshow == false) {
-                    houses[i].imgshow = true
-                }
-            }
-        }
-        this.setData({
-            [`houses[${page}]`]: houses
-        })
-    },
     onPageScroll: function (e) {  // 调用showImg函数
-        var top = e.scrollTop;
-        try {this.ImgShow(top)}catch (e) {}
     },
     onReady: function () {
     },
