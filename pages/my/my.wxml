@@ -46,6 +46,12 @@
     </view>
 </view>
 <view  class="cu-list icon-text text-sm menu card-menu margin-top-sm margin-bottom-xl  radius shadow">
+        <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/feedback/feedback">
+        <view class="content">
+            <text class="cuIcon-service text-yellow"></text>
+            <text class="text-grey text-sm">意见反馈</text>
+        </view>
+    </view>
     <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/contact/contact">
         <view class="content">
             <text class="cuIcon-community text-orange"></text>

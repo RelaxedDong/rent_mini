@@ -29,16 +29,12 @@ Page({
      * 组件的属性列表
      */
     data: {
+        banners: [],
+        icon_list: [],
+        feed_conf: {},
         tabList: [],
         show_empty:false,
         houses: [],
-        //todo 4个 icon栏位，可后台配置, 调用IconClick函数。
-        icon_list: [
-            {name: '合租',icon:'edit',icon_url:"/image/icon/hezu.png",type:"2"},
-            {name: '整租',icon:'edit',icon_url:"/image/icon/zhengzu.png",type:"1"},
-            {name: '动态',icon:'write', icon_url:"/image/icon/topic.png",type:"publish"},
-            {name: '攻略',icon:'edit',icon_url:"/image/icon/zufangtishi.png",type:"rent_toast"},
-        ],
         publish_discuss:"right: 110rpx",
         activekey: 'all',
         page: 0,
@@ -48,23 +44,10 @@ Page({
         has_next: true,
         last_active_key: 'all'
     },
-    IconClick:function(e){
-        var type = e.currentTarget.dataset.type;
-        if(type === 'rent_toast'){
-            // webview 页面
-            wx.navigateTo({
-                url: '/pages/web/web?navigate=https://mp.weixin.qq.com/s/2fjoWIcnbbuN7gzmHWR1kw'
-            })
-        }else if(type === '1' || type === '2'){
-            // 跳转到搜索页面，添加类型（整租/合租）
-            wx.navigateTo({
-                url: '/pages/list/list?type='+type
-            })
-        }else{
-            wx.navigateTo({
-                url: '/pages/discuss/discuss'
-            })
-        }
+    ImageClick:function(e){
+        wx.navigateTo({
+            url: e.currentTarget.dataset.path
+        })
     },
     changeTabs(e) {
         var activekey = e.currentTarget.dataset.activekey;
@@ -108,10 +91,8 @@ Page({
             house.avatarUrl = publisher.avatarUrl;
             house.gender = publisher.gender=='2'?'cuIcon-female text-pink':'cuIcon-male text-blue';
             house.last_login = app.handlePublishTimeDesc(curTime, app.get_show_time(publisher.last_login))
-            house.imgshow = i <= 5;
             house.house_type = house_type[house.house_type];
             house.apartment = apartment[house.apartment];
-            house.arratHeight = Math.floor(i/2)*(320/750)*520;
         }
         if(length > 0){
             this.setData({
@@ -139,7 +120,6 @@ Page({
                 house.last_login = app.handlePublishTimeDesc(curTime, app.get_show_time(publisher.last_login))
                 house.house_type = house_type[house.house_type];
                 house.apartment = apartment[house.apartment]
-                house.arratHeight = Math.floor(i/2)*(320/750)*520;
             }
             this.setData({
                 [`houses[${page}]`]: houses,
@@ -163,10 +143,13 @@ Page({
             'city': app.globalData.city, 'page': page, 'activekey': this.data.activekey
         }, this.HandleIndexGetDone, app.InterError)
     },
-    GetBannerDone(res) {
-        app.globalData.banners = res.data.data
+    GetIndexConfigDone(res) {
+        // 获取首页banner、icon、feed配置列表
+        let configs = res.data.data
         this.setData({
-            banners: res.data.data
+            banners: configs.banner,
+            feed_conf: configs.feed_setting,
+            icon_list: configs.icons,
         })
     },
     onLoad: function (options) {
@@ -182,15 +165,8 @@ Page({
             city: city,
             placeholder: city,
         });
-        var banners  = app.globalData.banners;
         this.getHouseList(0);
-        if(!banners){
-            app.WxHttpRequestGet('house/banners', {city: city}, this.GetBannerDone, app.InterError);
-        }else{
-            this.setData({
-                banners:banners
-            })
-        }
+        app.WxHttpRequestGet('house/banners', {city: city}, this.GetIndexConfigDone, app.InterError);
         wx.getSetting({
             success: function (res) {
                 var statu = res.authSetting;

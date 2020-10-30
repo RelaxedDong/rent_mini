@@ -62,10 +62,10 @@
                         <view class="content">
                             <view class='info'>
                                 <view class="houseinfo">
-                                    <view class="bg-green cell-center">
-                                        {{item.house_type}}
-                                    </view>
-                                    <view class="margin-left-sm bg-gray cell-center light">
+                                <view class="bg-green cell-center margin-right-sm" wx:if="{{item.house_type}}">
+                                    {{item.house_type}}
+                                </view>
+                                    <view class="bg-gray cell-center light">
                                         {{item.apartment}}
                                     </view>
                                 </view>

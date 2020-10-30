@@ -12,12 +12,27 @@
 </view>
 <swiper-banner id="swiperbanner" wx:if="{{banners.length>0}}" imgs_list="{{banners}}"  swiper_style="card-swiper"></swiper-banner>
 <view class="icon-list">
-    <view class="icon-item" wx:for="{{icon_list}}" wx:key bindtap="IconClick" data-type="{{item.type}}">
+    <view class="icon-item" wx:for="{{icon_list}}" wx:key bindtap="ImageClick" data-path="{{item.path}}">
         <image src="{{item.icon_url}}"></image>
         <text class="text-center text-grey margin-top-xs text-xs">{{item.name}}</text>
     </view>
 </view>
-<!--<view class="tabpanel-list where-filter text-sm text-grey">-->
+<view class="feed-list">
+    <view class="feed-left">
+        <image data-path="{{feed_conf.one.path}}" class="feed-left" src="{{feed_conf.one.url}}" bindtap="ImageClick"
+        ></image>
+    </view>
+    <view class="feed-right">
+        <view class="r-top">
+            <image data-path="{{feed_conf.two.path}}" src="{{feed_conf.two.url}}" bindtap="ImageClick"></image>
+        </view>
+        <view class="r-bottom">
+            <image data-path="{{feed_conf.three.path}}" src="{{feed_conf.three.url}}" bindtap="ImageClick"></image>
+            <image data-path="{{feed_conf.four.path}}" src="{{feed_conf.four.url}}" bindtap="ImageClick"></image>
+        </view>
+    </view>
+</view>
+<!--<view class=" where-filter text-sm text-grey">-->
 <!--    <view  class="tab-item {{activekey=='all'?'active-text':''}}" data-activeKey="all" bindtap="changeTabs">全部-->
 <!--    </view>-->
 <!--    <view class="tab-item {{activekey=='today'?'active-text':''}}"  data-activeKey="today" bindtap="changeTabs">今日房源</view>-->
@@ -48,10 +63,10 @@
                     <view class="content">
                         <view class='info'>
                             <view class="houseinfo">
-                                <view class="bg-green cell-center">
+                                <view class="bg-green cell-center margin-right-sm" wx:if="{{item.house_type}}">
                                     {{item.house_type}}
                                 </view>
-                                <view class="margin-left-sm bg-gray cell-center light">
+                                <view class="bg-gray cell-center light">
                                     {{item.apartment}}
                                 </view>
                             </view>
