@@ -45,7 +45,7 @@
                     </view>
                     <view class="padding-xl">
                          <view class="imgbox">
-                             <image src="../../image/mes-share@1x.png"></image>
+                             <image src="../../image/icon/mes-share@1x.png"></image>
                          </view>
                         <view class="padding">
                             <text class="text-grey">顶帖次数不足</text>

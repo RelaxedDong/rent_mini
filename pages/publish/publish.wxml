@@ -73,7 +73,7 @@
                 bind:linremove="linremoveListem"
                 custom="{{true}}">
             <view class='add'>
-                <image class='add-icon' src='/image/camera_add.png'></image>
+                <image class='add-icon' src='/image/icon/camera_add.png'></image>
                 <text class='add-text'>选择图片</text>
             </view>
         </l-image-picker>

@@ -1,6 +1,6 @@
 <view class="margin bg-white shadow simple-radis icon-text text-sm">
     <view class="text-center padding-top-sm">
-        <image class="logo" src="/image/logo.jpeg"></image>
+        <image class="logo" src="/image/icon/logo.jpeg"></image>
     </view>
     <view class="padding text-center">
         <view class="margin-top"><text class="text-green"> 乐直租 </text>
