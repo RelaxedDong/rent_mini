@@ -50,19 +50,19 @@
                     <view class="card-content">
                         <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
                         <view class="user-info-group">
-                            <view class="imgurl avatar-user" style="background-image: url({{item.avatarUrl}})"></view>
+                            <view class="imgurl avatar-user" style="background-image: url({{item.publisher.avatarUrl}})"></view>
                             <view class="userinfo">
-                                <view class="username">{{item.nickname}}</view>
+                                <view class="username">{{item.publisher.nickname}}</view>
                                 <view class="upload_time">
-                                    <text class="margin-right-xs {{item.publisher_gender}}"></text>
-                                    {{item.last_login}}来过
+                                    <text class="margin-right-xs {{item.publisher.gender}}"></text>
+                                    {{item.publisher.last_login}}
                                 </view>
                             </view>
                         </view>
                         <view class="content">
                             <view class='info'>
                                 <view class="houseinfo">
-                                <view class="bg-green cell-center margin-right-sm" wx:if="{{item.house_type}}">
+                                <view class="bg-green cell-center margin-right-sm">
                                     {{item.house_type}}
                                 </view>
                                     <view class="bg-gray cell-center light">
@@ -80,7 +80,7 @@
             </view>
         </view>
         <view class="empty" wx:if="{{houses.length == 0 && show_empty}}" style="margin-top: {{fiexed_top}}px">
-            <image src="/image/empty-imgs/search_none.png"></image>
+            <image src="/image/empty-imgs/no-house.png"></image>
         </view>
     </scroll-view>
 

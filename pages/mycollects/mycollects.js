@@ -1,14 +1,12 @@
 // pages/mycollects/mycollects.js
 // 我的收藏
 const app = getApp();
-const BASE = require('../../utils/basic');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    apartment: BASE.base.apartment,
   },
 
   /**
@@ -40,15 +38,8 @@ Page({
 
   },
   GetPublishesDone(res){
-    var curTime = new Date();
-    var houses = res.data.data;
-    for(var i =0;i<houses.length;i++){
-      var house = houses[i];
-      house.create_time = app.handlePublishTimeDesc(curTime, app.get_show_time(house.collect_time))
-      house.last_user_login = app.handlePublishTimeDesc(curTime, app.get_show_time(house.last_login))
-    }
     this.setData({
-      houses:houses
+      houses:res.data.data
     })
     wx.hideLoading()
   },

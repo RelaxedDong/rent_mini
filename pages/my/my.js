@@ -64,6 +64,7 @@ Page({
         }
     },
     BindUserInfoDone(res) {
+        console.log(res)
         var that = this;
         var data = res.data;
         app.globalData.user_id = data.data.user_id;
@@ -154,8 +155,9 @@ Page({
     },
     ShowAccount(data) {
         var that = this;
+        console.log(data)
         that.setData({
-            gender: data.gender
+            gender: data.user.gender
         })
         let i = 0;
         numDH();
@@ -185,8 +187,7 @@ Page({
         wx.hideLoading()
     },
     HanleAjaxItemDone(res) {
-        var data = res.data.data;
-        this.ShowAccount(data)
+        this.ShowAccount(res.data.data)
     },
     /**
      * 页面上拉触底事件的处理函数

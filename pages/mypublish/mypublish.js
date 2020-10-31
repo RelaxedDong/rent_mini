@@ -1,13 +1,11 @@
 // pages/mypublish/mypublish.js
 const app = getApp();
-const BASE = require('../../utils/basic');
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    apartment: BASE.base.apartment,
   },
   HandleClick(res){
     var houseid = res.currentTarget.dataset.houseId;
@@ -62,7 +60,8 @@ Page({
         if (res.confirm) {
           app.WxHttpRequestPOST('house/house_refresh', {houseid:houseid},function (res) {
             var data = res.data;
-            if(data.code == 200){
+            console.log(data)
+            if(data.code === 200){
               const index = e.currentTarget.dataset.index;
               that.data.houses[index].create_time = '刚刚刷新';
               that.setData({
@@ -70,11 +69,7 @@ Page({
               })
               app.ShowToast('顶帖成功');
             }else{
-              if(data.data == 'just_fresh'){
-                app.ShowModel('该房源刚刚刷新','请10分钟后再试');
-              }else{
-                that.showModal('DialogModal1')
-              }
+              app.ShowToast(data.msg);
             }
           }, app.InterError);
         }
@@ -110,10 +105,6 @@ Page({
   GetPublishesDone(res){
     var curTime = new Date();
     var houses = res.data.data;
-    for(var i =0;i<houses.length;i++){
-      var house = houses[i];
-      house.create_time = app.handlePublishTimeDesc(curTime, app.get_show_time(house.create_time))
-    }
     this.setData({
       houses:houses
     })

@@ -1,6 +1,5 @@
 {
   "usingComponents": {
-    "l-icon": "../../dist/icon/index",
     "select-form": "../../components/select-form/select-form"
   },
   "disableScroll":true,

@@ -15,38 +15,21 @@
                         placeholder="详细的描述会给你带来快速转租～"
             />
         </view>
-        <view class='item-title'>户型</view>
-        <view class="facilitesbox">
-            <view class="f-item {{apartment[cur_house_type]==item?'bg-yellow-bright':'bg-gray'}}"  wx:if="{{index>0}}" wx:for="{{apartment}}" wx:key wx:for-index="index">
-                <view class="cu-tag "
-                      bindtap="houseType" data-key="{{index}}">{{item}}
-                </view>
-            </view>
-        </view>
-
-        <view class='item-title'>租房类型</view>
-        <view class="facilitesbox">
-            <view class="f-item {{house_type[cur_rent_type]==item?'bg-yellow-bright':'bg-gray'}}" wx:if="{{index>0}}" wx:for="{{house_type}}" wx:key wx:for-index="index">
-                <view class="cu-tag"
-                      bindtap="rentType" data-key="{{index}}">{{item}}
-                </view>
-            </view>
-        </view>
-        <view class="cu-form-group">
-            <view class="title">可入住时间</view>
-            <picker mode="date" value="{{date}}"
-                    start="{{date}}"
-                    end="2020-12-31" bindchange="DateChange">
+        <view class="cu-form-group border-bottom">
+            <view class="title">整租/合租</view>
+            <picker bindchange="HouseTypeChange" value='{{index}}' range-key="name" range="{{house_types}}">
                 <view class="picker">
-                    {{date}}
+                   {{choose_house_type?choose_house_type:'租房类型'}}
                 </view>
             </picker>
         </view>
         <view class="cu-form-group">
-            <view class="title">详细地址</view>
-            <input class="address-right" disabled='{{true}}'  required="{{true}}" name="address" value="{{address}}"
-                   bindtap="AddressInput"/>
-            <text class="cuIcon-locationfill text-orange"></text>
+            <view class="title">房型</view>
+            <picker bindchange="ApartmentChange" value='{{index}}' range-key="name" range="{{apartments}}">
+                <view class="picker">
+                   {{choose_apartment?choose_apartment:'户型选择'}}
+                </view>
+            </picker>
         </view>
         <view class="cu-form-group">
             <view class="title">房源区域</view>
@@ -57,7 +40,7 @@
             </picker>
         </view>
         <view class="cu-form-group margin-top" wx:if="{{have_subway}}">
-            <view class="title">地铁</view>
+            <view class="title">周边地铁</view>
             <picker bindchange="SubwayChange"
                     value="{{index}}" range="{{subway_list}}">
                 <view class="picker">
@@ -65,7 +48,14 @@
                 </view>
             </picker>
         </view>
-        <l-image-picker
+        <view class="cu-form-group border-bottom">
+            <view class="title">详细地址</view>
+            <input class="address-right" disabled='{{true}}'  required="{{true}}" name="address" value="{{address}}"
+                   bindtap="AddressInput"/>
+            <text class="cuIcon-locationfill text-green"></text>
+        </view>
+        <view class="border-bottom padding-bottom-sm">
+            <l-image-picker
                 urls="{{urls}}"
                 count="6"
                 size="3"
@@ -77,12 +67,14 @@
                 <text class='add-text'>选择图片</text>
             </view>
         </l-image-picker>
+        </view>
         <view class='item-title'>添加丰富信息，出租更快捷 ～</view>
-        <view class="facilitesbox">
-            <view class="f-item {{item.is_active?'bg-yellow-bright':'bg-gray'}}" wx:for="{{facilities}}"
-                  wx:key wx:for-index="key">
-                <view class="cu-tag"
-                      bindtap="TagChoose" data-key="{{key}}">{{item.name}}
+        <view class="facility_box padding-bottom-sm">
+            <view class="f-item {{item.is_active?'bg-green-grant':'bg-gray'}}" wx:for="{{facility_list}}"
+                  wx:key bindtap="TagChoose" data-key="{{index}}">
+                <view class="cu-tag">
+                <view class="iconfont {{item.icon}}"></view>
+                <view class="margin-left-sm">{{item.name}}</view>
                 </view>
             </view>
         </view>

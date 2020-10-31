@@ -1492,8 +1492,7 @@ button.icon.lg {
 	font-size: 25rpx;
 	position: relative;
 	/* height: 60rpx; */
-	line-height: 60rpx;
-	color: #ced6e0;
+	/*line-height: 60rpx;*/
 }
 
 .cu-form-group input {
@@ -2164,7 +2163,6 @@ scroll-view.cu-steps .cu-item {
 }
 .item-title{
 	margin: 20rpx 10rpx;
-	color: #ced6e0;
 	font-size: 25rpx;
 }
 .margin-sm {
@@ -2592,6 +2590,12 @@ scroll-view.cu-steps .cu-item {
 .bg-yellow-bright{
 	background-color: #fffa65;
 	color: var(--black);
+}
+
+.bg-green-grant{
+background: #6de195;
+		color: ghostwhite;
+
 }
 
 .bg-olive {

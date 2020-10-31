@@ -31,8 +31,7 @@ Page({
     data: {
         banners: [],
         icon_list: [],
-        feed_conf: {},
-        tabList: [],
+        cards: [],
         show_empty:false,
         houses: [],
         publish_discuss:"right: 110rpx",
@@ -81,55 +80,41 @@ Page({
         }
     },
     HandleIndexGetDone(res) {
-        var houses_result = res.data.house;
-        var curTime = new Date();
-        var length = houses_result.length
-        for (var i = 0; i < length; i++) {
-            var house = houses_result[i];
-            var publisher = house.publisher;
-            house.nickname = publisher.nickname;
-            house.avatarUrl = publisher.avatarUrl;
-            house.gender = publisher.gender=='2'?'cuIcon-female text-pink':'cuIcon-male text-blue';
-            house.last_login = app.handlePublishTimeDesc(curTime, app.get_show_time(publisher.last_login))
-            house.house_type = house_type[house.house_type];
-            house.apartment = apartment[house.apartment];
-        }
-        if(length > 0){
-            this.setData({
-                has_next: length > 0,
-                [`houses[${this.data.page}]`]: houses_result
-            });
-        }else{
-            this.setData({
-                show_empty: true
-            })
+        var resp = res.data;
+        if(resp.code === 200){
+            var houses_result = resp.data.house;
+            var length = houses_result.length
+            if(length > 0){
+                this.setData({
+                    has_next: length > 0,
+                    [`houses[${this.data.page}]`]: houses_result
+                });
+            }else{
+                this.setData({
+                    show_empty: true
+                })
+            }
+        } else {
+            app.ShowToast(resp.msg);
         }
         wx.hideLoading()
     },
     LoadMoreDone(res) {
-        var page = this.data.page + 1;
-        var houses = res.data.house;
-        if (houses.length > 0) {
-            var curTime = new Date();
-            for (let i = 0; i < houses.length; i++) {
-                var house = houses[i];
-                var publisher = house.publisher;
-                house.nickname = publisher.nickname;
-                house.avatarUrl = publisher.avatarUrl;
-                house.gender = publisher.gender=='2'?'cuIcon-female text-pink':'cuIcon-male text-blue';
-                house.last_login = app.handlePublishTimeDesc(curTime, app.get_show_time(publisher.last_login))
-                house.house_type = house_type[house.house_type];
-                house.apartment = apartment[house.apartment]
+        var resp = res.data;
+        if(resp.code === 200){
+            var page = this.data.page + 1;
+            var houses = resp.data.house;
+            if (houses.length > 0) {
+                this.setData({
+                    [`houses[${page}]`]: houses,
+                    page: page,
+                    Loading: false
+                })
+            } else {
+                this.setData({
+                    has_next: false
+                })
             }
-            this.setData({
-                [`houses[${page}]`]: houses,
-                page: page,
-                Loading: false
-            })
-        } else {
-            this.setData({
-                has_next: false
-            })
         }
         wx.hideLoading()
     },
@@ -147,8 +132,8 @@ Page({
         // 获取首页banner、icon、feed配置列表
         let configs = res.data.data
         this.setData({
-            banners: configs.banner,
-            feed_conf: configs.feed_setting,
+            banners: configs.banners,
+            cards: configs.cards,
             icon_list: configs.icons,
         })
     },
