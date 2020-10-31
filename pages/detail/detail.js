@@ -1,15 +1,14 @@
 const app = getApp();
-const BASE = require('../../utils/basic');
 Page({
   data: {
     StatusBar: app.globalData.StatusBar,
     CustomBar: app.globalData.CustomBar,
     gridCol: 12,
+    favor_counts: 0,
+    collect_counts: 0,
     skin: false,
-    base:BASE.base.facilities,
     facilities: [],
     house: [],
-    nearby_houses:[],
     is_favor: false,
     is_collect: false,
     choose_time:"",
@@ -116,13 +115,13 @@ Page({
   },
   HandleOperationDone(res){
     var type = res.data.data;
-    var user_favors = this.data.user_favors;
+    var favor_counts = this.data.favor_counts;
     var collect_counts = this.data.collect_counts;
     if(type === 'favor'){
-      user_favors += 1
+      favor_counts += 1
     }
     if(type === 'unfavor'){
-      user_favors -= 1
+      favor_counts -= 1
     }
     if(type === 'collect'){
       collect_counts +=1
@@ -131,7 +130,7 @@ Page({
       collect_counts -=1
     }
     this.setData({
-      user_favors:user_favors,
+      favor_counts:favor_counts,
       collect_counts:collect_counts,
     })
   },
@@ -215,31 +214,31 @@ Page({
   },
   HandleGetDone(res){
     const that = this;
-    const facilities_list = [];
     var resp = res.data;
     if (resp.code === 200 ){
       var house_data = resp.data;
-      for(var item in that.data.base){
-        facilities_list.push({facilities:that.data.base[item],is_active:
-              (house_data.facilities.indexOf(item) !== -1)})
-      }
       var house = house_data.house
-      house.create_time = app.handlePublishTimeDesc(new Date(), app.get_show_time(house.create_time));
+      var facilities_conf = house_data.facilities_list;
+      for(let i=0;i< house.facilities.length;i++){
+          facilities_conf[house.facilities[i]].is_active = true
+      }
+      console.log(facilities_conf)
       that.setData({
         house_id:house.id,
         house: house,
         user_id: app.globalData.user_id,
         markers: [{
-          iconPath: "/image/location.png",
+          iconPath: "/image/icon/location.png",
           latitude: house.latitude,
           longitude: house.longitude,
         }],
-        imglist:house_data.imgs,
-        user_favors:house_data.user_favors,
-        user_collects_avatar:house_data.user_collects_avatar,
-        facilities:facilities_list,
+        imglist:house.imgs,
+        user_favors:house.user_favors,
+        user_collects_avatar:house.user_collects_avatar,
+        facilities: facilities_conf,
         is_favor: house_data.is_favor,
         collect_counts: house_data.collect_counts,
+        favor_counts: house_data.favor_counts,
         is_collect: house_data.is_collect
       });
     }else{
@@ -291,20 +290,7 @@ Page({
     app.handlehouseClick(houseid)
   },
   DetailOnload(options){
-    let self = this;
     const house_id = options.house;
-    app.WxHttpRequestGet('house/periphery_house/'+ house_id,{},function (res) {
-      let houses = res.data.houses;
-      var curTime = new Date();
-      if(houses){
-        for(let i =0;i<houses.length;i++){
-          houses[i].last_login = app.handlePublishTimeDesc(curTime, app.get_show_time(houses[i].publisher.last_login))
-        }
-        self.setData({
-          nearby_houses:houses
-        })
-      }
-    })
     app.WxHttpRequestGet('house/detail/'+ house_id,{},this.HandleGetDone)
   },
   onLoad: function (options) {

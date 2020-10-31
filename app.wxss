@@ -22,8 +22,8 @@ page{
 }
 .empty image{
   align-self: center;
-  width: 300rpx;
-  height: 300rpx;
+  width: 400rpx;
+  height: 400rpx;
 }
 ::-webkit-scrollbar{
   width: 0;
@@ -154,7 +154,6 @@ page{
 }
 .title{
   padding: 20rpx 0;
-  color: #878787;
 }
 .topbox{
   justify-content: space-between;

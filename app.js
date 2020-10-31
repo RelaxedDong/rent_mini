@@ -88,9 +88,10 @@ App({
   GetUserInfo(res){
     var that = this;
     return new Promise((resolve, reject) => {
-      that.globalData.jwt_token = res.data.token;
-      that.globalData.user_id = res.data.user_id;
-      that.globalData.finish_user_info = res.data.finish_user_info=='1'?true:false;
+      let resp = res.data.data;
+      that.globalData.jwt_token = resp.token;
+      that.globalData.user_id = resp.user_id;
+      that.globalData.finish_user_info = resp.finish_user_info==1?true:false;
       wx.getSetting({
         success: function (res) {
           var statu = res.authSetting;
@@ -135,14 +136,6 @@ App({
         }
       });
     })
-  },
-  timestampToTime(timestamp) {
-    // 时间格式化
-    var date = new Date(timestamp);//时间戳为10位需*1000，时间戳为13位的话不需乘1000
-    var Y = date.getFullYear() + '-';
-    var M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
-    var D = date.getDate();
-    return Y+M+D;
   },
   /**
    * @return {string}
@@ -222,6 +215,7 @@ App({
   WxHttpRequestPOST(url,data,successback,failback){
     // 封装post请求
     data['jwt_token'] = this.globalData.jwt_token;
+    console.log(data)
     wx.request({
       url: this.globalData.api_host + url,
       data: data,
@@ -290,58 +284,9 @@ App({
       phoneNumber: phone
     })
   },
-  get_show_time(time){
-    var new_time = time.split('T');
-    return new_time[0] + ' ' + new_time[1].substr(0,8)
-  },
-  get_html_imgs(html){
-    var reimg=/<img src=(.+?)>/gi;
-    let arr=html.match(reimg);
-    let imgs = [];
-    if(arr){
-      for(let i=0;i<arr.length;i++){
-        imgs.push(arr[i].replace(/<img src="([^\s]+)"\s*[^>]*>/gi,"$1"))
-      }
-    }
-    return imgs
-  },
-  handlePublishTimeDesc(curTime, post_modified){
-        // 拿到当前时间戳和发布时的时间戳，然后得出时间戳差
-        // var postTime = new Date(post_modified);
-        post_modified=post_modified.replace(/-/g, '/'); // 解决ios 不识别xxxx-xx-xx格式
-        var postTime = new Date(post_modified);
-        var timeDiff = curTime.getTime() - postTime.getTime();
-        // 单位换算
-        var min = 60 * 1000;
-        var hour = min * 60;
-        var day = hour * 24;
-        var week = day * 7;
-        // 计算发布时间距离当前时间的周、天、时、分
-        var exceedWeek = Math.floor(timeDiff/week);
-        var exceedDay = Math.floor(timeDiff/day);
-        var exceedHour = Math.floor(timeDiff/hour);
-        var exceedMin = Math.floor(timeDiff/min);
-        // 最后判断时间差到底是属于哪个区间，然后return
-        if(exceedWeek > 0){
-          return post_modified;
-        }else{
-          if(exceedDay < 7 && exceedDay > 0){
-            return exceedDay + '天前';
-          }else{
-            if(exceedHour < 24 && exceedHour > 0){
-              return exceedHour + '小时前';
-            }else{
-              if(exceedMin<=0){
-                return "刚刚"
-              }
-              return exceedMin + '分钟前';
-            }
-          }
-        }
-      },
   globalData: {
     login_redirect:false,
-    api_host:'https://api.donghao.club/api/',
+    api_host:'http://127.0.0.1:8000/api/',
     discuss_page_run:false,
     has_pre: false,
     index_new_city:false,

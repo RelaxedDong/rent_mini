@@ -12,23 +12,23 @@
 </view>
 <swiper-banner id="swiperbanner" wx:if="{{banners.length>0}}" imgs_list="{{banners}}"  swiper_style="card-swiper"></swiper-banner>
 <view class="icon-list">
-    <view class="icon-item" wx:for="{{icon_list}}" wx:key bindtap="ImageClick" data-path="{{item.path}}">
-        <image src="{{item.icon_url}}"></image>
-        <text class="text-center text-grey margin-top-xs text-xs">{{item.name}}</text>
+    <view class="icon-item" wx:for="{{icon_list}}" wx:key bindtap="ImageClick" data-path="{{item.navigate}}">
+        <image src="{{item.url}}"></image>
+        <text class="text-center text-grey margin-top-xs text-xs">{{item.desc}}</text>
     </view>
 </view>
 <view class="feed-list">
     <view class="feed-left">
-        <image data-path="{{feed_conf.one.path}}" class="feed-left" src="{{feed_conf.one.url}}" bindtap="ImageClick"
+        <image data-path="{{cards[0].navigate}}" class="feed-left" src="{{cards[0].url}}" bindtap="ImageClick"
         ></image>
     </view>
     <view class="feed-right">
         <view class="r-top">
-            <image data-path="{{feed_conf.two.path}}" src="{{feed_conf.two.url}}" bindtap="ImageClick"></image>
+            <image data-path="{{cards[1].navigate}}" src="{{cards[1].url}}" bindtap="ImageClick"></image>
         </view>
         <view class="r-bottom">
-            <image data-path="{{feed_conf.three.path}}" src="{{feed_conf.three.url}}" bindtap="ImageClick"></image>
-            <image data-path="{{feed_conf.four.path}}" src="{{feed_conf.four.url}}" bindtap="ImageClick"></image>
+            <image data-path="{{cards[2].navigate}}" src="{{cards[2].url}}" bindtap="ImageClick"></image>
+            <image data-path="{{cards[3].navigate}}" src="{{cards[3].url}}" bindtap="ImageClick"></image>
         </view>
     </view>
 </view>
@@ -51,12 +51,12 @@
                 <view class="card-content">
                     <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
                     <view class="user-info-group">
-                        <view class="imgurl avatar-user" style="background-image: url({{item.avatarUrl}});"></view>
+                        <view class="imgurl avatar-user" style="background-image: url({{item.publisher.avatarUrl}});"></view>
                         <view class="userinfo">
-                            <view class="username">{{item.nickname}}</view>
+                            <view class="username">{{item.publisher.nickname}}
+                               <text class="{{item.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text></view>
                             <view class="upload_time">
-                                <text class="{{item.gender}}"></text>
-                                {{item.last_login}}来过
+                                {{item.publisher.last_login}}
                             </view>
                         </view>
                     </view>
@@ -81,7 +81,6 @@
         </view>
     </view>
     <view class="empty" wx:if="{{houses.length == 0 && show_empty}}">
-        <image style="width: 150rpx;height: 150rpx" src="/image/empty-imgs/my-discuss.png"></image>
-        <text class="margin-top text-grey">等你来发布啦！</text>
+        <image src="/image/empty-imgs/no-house.png"></image>
     </view>
 </view>

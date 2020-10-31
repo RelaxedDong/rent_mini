@@ -14,7 +14,7 @@
                 </view>
             </view>
             <view class="title text-grey" bindtap="HandleClick" data-house-id="{{house.id}}">
-                <view class="cu-tag round xs bg-mainbg text-green">{{apartment[house.apartment]}}</view>
+                <view class="cu-tag round xs bg-mainbg text-green">{{house.apartment}}</view>
                 {{house.title}}
             </view>
             <view class="img-group" bindtap="HandleClick" data-house-id="{{house.id}}">
@@ -71,6 +71,6 @@
         </view>
     </view>
     <view class="empty" wx:if="{{houses.length == 0}}">
-        <image src="/image/empty-imgs/no-record.png"></image>
+        <image src="/image/empty-imgs/no-publish.png"></image>
     </view>
 </view>

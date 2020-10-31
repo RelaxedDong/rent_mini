@@ -76,7 +76,7 @@
                     <text class="cuIcon-likefill"></text>
                 </view>
                 <view class="cu-tag {{is_favor?'line-orange':'line-grey'}} sm">
-                    {{user_favors}}
+                    {{favor_counts}}
                 </view>
             </view>
             <view class="cu-capsule" bindtap="OperationClick" data-house-id="{{house.id}}" data-type="collect">
@@ -110,7 +110,6 @@
             <text>
                 {{house.desc}}
             </text>
-            <text class="margin-top-sm">可入住时间: {{house.checkin}}</text>
             <text class="margin-top-sm" wx:if="{{house.subway}}">周边地铁：{{house.subway}}</text>
         </view>
         <view class="card-top">
@@ -132,15 +131,11 @@
         </view>
         <view class="iconlist">
             <view class="cu-list grid col-5 no-border">
-                <view class="cu-item" wx:for="{{facilities}}" wx:for-index="index" wx:key>
-                    <view class="iconfont {{item.is_active? 'active-icon':''}} {{item.facilities.icon}}"></view>
-                    <view class="{{item.is_active? 'active-icon':''}} icontext">{{item.facilities.name}}</view>
+                <view class="cu-item" wx:for="{{facilities}}" wx:for-item="value" wx:for-index="index" wx:key>
+                    <view class="iconfont {{value.is_active? 'active-icon':''}} {{value.icon}}"></view>
+                    <view class="{{value.is_active? 'active-icon':''}} icontext">{{value.name}}</view>
                 </view>
             </view>
-        </view>
-        <view class="card-top" wx:if="{{nearby_houses.length>0}}">
-            <view class="card-dot"></view>
-            <view class="content-name">周边房源</view>
         </view>
     </view>
 </scroll-view>

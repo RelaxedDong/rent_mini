@@ -26,7 +26,6 @@
             </view>
             <view class="cu-form-group">
                 <switch class="switch-sex" checked="{{gender == '1' ?'1':''}}" bindchange="GenderChange"></switch>
-                <view class="title">{{gender=='1'?'男':'女'}}</view>
             </view>
             <view class="cu-form-group margin-top">
         <textarea maxlength="-1"

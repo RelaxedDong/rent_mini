@@ -71,10 +71,10 @@ Page({
     });
     this.GoToTop()
     if(input){
-      app.WxHttpRequestGet('house/qq_search',{'title':input,
+      app.WxHttpRequestGet('house/search',{'title':input,
       'city':city},this.SearchCallback);
     }else{
-      app.WxHttpRequestGet('house/qq_search',{'city':city},this.SearchCallback, app.InterError);
+      app.WxHttpRequestGet('house/search',{'city':city},this.SearchCallback, app.InterError);
     }
   },
   HandleSelectEvent: function(e) {
@@ -115,7 +115,7 @@ Page({
         houses:[]
       });
     this.GoToTop()
-    app.WxHttpRequestGet('house/qq_search',conditions,this.SearchCallback, app.InterError);
+    app.WxHttpRequestGet('house/search',conditions,this.SearchCallback, app.InterError);
   },
   GoToTop(e){
     this.setData({
@@ -128,20 +128,6 @@ Page({
     var houes_length = houses.length;
     var search_count = res.data.count;
     if(houes_length>0){
-      var curTime = new Date();
-      for (let i = 0; i < houes_length; i++) {
-        var house = houses[i];
-        var publisher = house.publisher;
-        house.nickname = publisher.nickname;
-        house.avatarUrl = publisher.avatarUrl;
-        house.publisher_gender = publisher.gender=='2'?'cuIcon-female text-pink':'cuIcon-male text-blue';
-        house.last_login = app.handlePublishTimeDesc(curTime, app.get_show_time(publisher.last_login))
-        house.house_type = house_type[houses[i].house_type];
-        house.apartment = apartment[houses[i].apartment];
-      // this.setData({
-      //   [`houses[${this.data.page}][${i}]`]: houses
-      // })
-      }
       this.setData({
         has_next:true,
         house_count: search_count,
@@ -201,7 +187,7 @@ Page({
       houses:[]
     });
     this.GoToTop()
-    app.WxHttpRequestGet('house/qq_search',conditions,this.SearchCallback, app.InterError);
+    app.WxHttpRequestGet('house/search',conditions,this.SearchCallback, app.InterError);
   },
   /**
    * 生命周期函数--监听页面加载
@@ -214,7 +200,7 @@ Page({
       res.data['regions'] = regions;
       that.setData({
         regions: regions,
-        selects:res.data
+        selects: res.data
       })
     })
   },
@@ -236,7 +222,7 @@ Page({
             conditions:condition
           });
           app.wxshowloading('拼命加载中...');
-          app.WxHttpRequestGet('house/qq_search',condition,that.SearchCallback);
+          app.WxHttpRequestGet('house/search',condition,that.SearchCallback);
           app.WxHttpRequestGet('house/selects',{'city':city},that.ParamsDone, app.InterError)
       });
   },
@@ -301,7 +287,7 @@ Page({
       app.wxshowloading('房源加载中');
       var page = this.data.page;
       var condition = this.data.conditions
-      app.WxHttpRequestGet('house/qq_search?page='+page, condition, this.SearchCallback, app.InterError)
+      app.WxHttpRequestGet('house/search?page='+page, condition, this.SearchCallback, app.InterError)
     }else{
       app.ShowToast('没有更多了...')
     }
