@@ -1,55 +1,30 @@
 /* pages/list/list.wxss */
-.search-list{
-  padding:0 20rpx;
+.container {
+  height: 100%;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
 }
+
+/* 头部search filter*/
 
 .section-placeholder,.header-select {
   background-color: white;
   box-shadow: 0 4rpx 20rpx 0 rgba(212,217,223,.5);
 }
 .header-select{
-  z-index: 10;
-}
-.section-fixed {
   position: fixed;
-  background-color: white;
-  top: 0;
-  right: 0;
-  left: 0;
-}
-
-.selectform{
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  padding: 0 20rpx;
-  box-sizing: border-box;
-  background: #fff;
-  justify-content:  space-around;
-}
-.selectform view{
-  font-size: 22rpx;
-}
-.selectformshow{
-  min-height: 300rpx;
-  background: #fff;
-  border-bottom: 1px solid #EEE0E5;
+  width: 100%;
+  z-index: 99;
 }
 .l-icon{
   margin-left: 10rpx;
   margin-top: 8rpx;
 }
-.select-item{
-  color: gray;
-  font-size: 25rpx;
-  display: flex;
-  padding: 30rpx 0;
-  flex-direction: row;
-  flex-wrap: nowrap;
-}
+
 .active-text{
   color: #2DCB73;
 }
@@ -157,3 +132,4 @@
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 5;
 }
+/*slider*/

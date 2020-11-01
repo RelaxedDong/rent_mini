@@ -1,8 +1,6 @@
 const app = getApp();
 Page({
   data: {
-    StatusBar: app.globalData.StatusBar,
-    CustomBar: app.globalData.CustomBar,
     gridCol: 12,
     favor_counts: 0,
     collect_counts: 0,
@@ -294,11 +292,6 @@ Page({
     app.WxHttpRequestGet('house/detail/'+ house_id,{},this.HandleGetDone)
   },
   onLoad: function (options) {
-    if(app.globalData.has_pre){
-      this.setData({
-        has_pre:app.globalData.has_pre,
-      })
-    }
     app.wxshowloading('拼命加载中...');
     var that = this;
     var user_id = app.globalData.user_id;

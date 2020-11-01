@@ -1,14 +1,3 @@
-<view class='nav bg-white'>
-    <view class='nav-title'  style="top:{{StatusBar}}rpx">
-        <view class="cu-tag round bg-white">
-            <view wx:if="{{has_pre}}">
-                <text class="cuIcon-back  text-left padding-xs" bindtap="ReturnClick"></text>
-                <text class="margin-left-sm  margin-right-sm">|</text>
-            </view>
-            <text class="cuIcon-home  text-left padding-xs" bindtap="ToIndexClick"></text>
-        </view>
-    </view>
-</view>
 <swiper class="screen-swiper" bindchange="swiperchange" current="{{currentIndex}}"  circular="true" autoplay="true" interval="5000" duration="500">
     <swiper-item wx:for="{{imglist}}" wx:key bindtap="HandleImgClick"
                  data-urls="{{imglist}}" data-currenturl="{{item}}">

@@ -1,0 +1,90 @@
+<view class="nav-bar">
+    <view class="nav-son {{hyopen? 'active' : ''}}" bindtap="listqy" data-nav="1">
+      <view class="content">{{dropDownMenuTitle[0]}}</view>
+      <view class="icon"></view>
+    </view>
+    <view class="nav-son borders {{sqopen? 'active' : ''}}" bindtap="list" data-nav="2">
+      <view class="content">{{dropDownMenuTitle[1]}}</view>
+      <view class="icon"></view>
+    </view>
+    <view class="nav-son borders-right {{pxopen? 'active' : ''}}" bindtap="listpx" data-nav="3">
+      <view class="content">{{dropDownMenuTitle[2]}}</view>
+      <view class="icon"></view>
+    </view>
+    <view class="nav-son {{sortopen ? 'active' : ''}}" bindtap="listsort" data-nav="4">
+      <view class="content">{{dropDownMenuTitle[3]}}</view>
+      <view class="icon"></view>
+    </view>
+  </view>
+
+
+  <view class="temp temp3 {{hyopen ? 'show' : 'disappear'}} ">
+    <view class='tempheight'>
+      <view>
+        <block wx:for="{{dropDownMenuFirstData}}" wx:key="unique">
+          <view class="sortitem {{select1==item.id ? ' active ' : ' '}}" data-model='{{item}}' bindtap='selectsqitem'> {{item.name}}</view>
+        </block>
+      </view>
+    </view>
+  </view>
+
+  <view class="quyu {{sqopen ? 'show' : 'disappear'}} ">
+    <view class="qy quyu-left">
+      <view class="border-white {{select1 == item.value ? 'current' : ''}}" wx:for="{{dropDownMenuRegion}}" bindtap="selectleft" data-model='{{item}}'
+            wx:key="unique" data-left-index="{{index}}">
+        {{dropDownMenuRegion[index].name}}
+      </view>
+    </view>
+    <view class="qy quyu-center">
+      <view class="{{select2 == item.id ? 'current2' : ''}}" data-value="{{item}}" wx:for="{{dropDownMenuDataFirstRight}}" bindtap="selectcenter" data-model='{{item}}' wx:key="unique">
+        <view class="border-bottom" wx:if="{{leftIndex === 0}}">{{item}}</view>
+        <view class="border-bottom" wx:else style="color:white;background-color:transparent;background: {{item.color}}">{{item.name}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="temp temp3 {{sqopen ? 'show' : 'disappear'}} ">
+    <view class='tempheight'>
+      <view>
+        <block wx:for="{{dropDownMenuRegion}}" wx:key="unique">
+          <view class="sortitem {{selectedSq==item.id ? ' active ' : ' '}}" data-model='{{item}}' bindtap='selectsqitem'> {{item.title}}</view>
+        </block>
+      </view>
+    </view>
+  </view>
+  <view class="temp temp3 {{pxopen ? 'show' : 'disappear'}} ">
+    <view class='tempheight'>
+      <view class="flex">
+        <view class="price-tag border-bottom">
+            <view class="sortitem-button" wx:for="{{dropDownMenuThirdData}}" wx:key="unique">
+            <block class="sortitem {{selectedQt==item.value ? ' active ' : ' '}}" data-model='{{item}}' bindtap='selecqtlitem'>
+              {{item.name}}</block>
+          </view>
+        </view>
+          <view class="price-input-box">
+            <view class="bar-scroll">租金范围</view>
+            <view class="right-box">
+                <input type="text"  bindinput='getsuggest' bindconfirm="toSearch" placeholder="最低价格"></input>
+                <input type="text"  value="{{inputVal}}"  bindinput='getsuggest' placeholder="最高价格"></input>
+                <button class="btn-submit-sm">确定</button>
+            </view>
+          </view>
+      </view>
+    </view>
+  </view>
+  <view class="temp temp3 {{sortopen ? 'show' : 'disappear'}} ">
+    <view class='tempheight'>
+      <view>
+        <block wx:for="{{dropDownMenuFourthData}}" wx:key="unique">
+          <view class="sortitem" data-model='{{item}}' bindtap='selecsortlitem'>
+            <view>{{item.name}}</view>
+                <view class="price-tag">
+                <view class="sortitem-button" wx:for="{{item.components}}" wx:for-item="child">
+                  {{child.name}}
+              </view>
+            </view>
+          </view>
+        </block>
+      </view>
+    </view>
+  </view>

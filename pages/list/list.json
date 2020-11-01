@@ -1,8 +1,7 @@
 {
   "usingComponents": {
-    "select-form": "../../components/select-form/select-form"
+    "dropdownmenu": "../../components/dropdownmenu/dropdownmenu"
   },
-  "disableScroll":true,
   "navigationBarBackgroundColor": "#fff",
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "房源查询"
