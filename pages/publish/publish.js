@@ -83,7 +83,7 @@ Page({
     },
     SubwayChange(e) {
         this.setData({
-            subway: this.data.subway_list[e.detail.value]
+            subway: this.data.subway_list[e.detail.value].name
         })
     },
     TagChoose(e) {
@@ -98,7 +98,7 @@ Page({
         var region = e.detail.value;
         this.setData({
             region: region,
-            subway_list:[],
+            subway:"",
             select_origin:true
         });
         var data = {'city':region[1]};

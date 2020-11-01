@@ -42,7 +42,7 @@
         <view class="cu-form-group margin-top" wx:if="{{have_subway}}">
             <view class="title">周边地铁</view>
             <picker bindchange="SubwayChange"
-                    value="{{index}}" range="{{subway_list}}">
+                     value='{{index}}' range-key="name" range="{{subway_list}}">
                 <view class="picker">
                     {{subway?subway:'不限'}}
                 </view>
