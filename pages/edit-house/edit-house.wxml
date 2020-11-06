@@ -9,12 +9,15 @@
                  value="{{form.title}}"></l-input>
         <l-input label="租金" required="{{true}}" name="price" label-width="170" type="number"
                  value="{{form.price}}"></l-input>
-        <l-input label="房屋面积" name="area" type="number" label-width="170" value="{{form.area}}">
+        <l-input label="房屋面积" required="{{true}}" name="area" type="number" label-width="170" value="{{form.area}}">
         </l-input>
-        <l-textarea name="desc" value="{{form.desc}}" required="{{true}}" border="{{false}}" maxlength="400"
+        <l-input label="楼层" required="{{true}}" name="storey" type="number" label-width="170" value="{{form.storey}}">
+        </l-input>
+        <l-textarea  name="desc" value="{{form.desc}}" required="{{true}}" border="{{false}}" maxlength="400"
+                    placeholder="详细的描述会给你带来快速转租哦~"
         />
         <view class="padding flex flex-direction">
-            <button class="cu-btn grand margin-tb-sm lg" formType="submit">
+            <button class="bg-green margin-tb-sm lg" formType="submit">
                 <text class="text-white">立即修改</text>
             </button>
         </view>

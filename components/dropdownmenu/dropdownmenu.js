@@ -33,16 +33,44 @@ Component({
         shownavindex: '',
         dropDownMenuDataFirstRight: {},
         select1: '',
-        select2: '',
         leftIndex: 0,
         selectedQt: 0,
         selectedSq: 0,
         selectedSort: 1,
         // slider
-
+        selectedValue1: "",
+        selectedValue2: "",
+        selectedValue3: "",
+        selectedValue4: "",
+        // 筛选器多选
+        selectedSubwayList: [],
+        // price:
+        inputLow: "",
+        inputHigh: "",
     },
     methods: {
         // 这里是自定义方法
+        PriceInput: function(e){
+            let ty = e.currentTarget.dataset.ty;
+            if(ty === 'low'){
+                this.setData({
+                    inputLow: e.detail.value
+                })
+            } else {
+                this.setData({
+                    inputHigh: e.detail.value
+                })
+            }
+        },
+        CustomPriceClick: function(e){
+            this.triggerEvent("selectedItem", {
+                index: e.currentTarget.dataset.card,
+                selectedValue: this.data.inputLow+ '-' + this.data.inputHigh
+            })
+            this.setData({
+                selectedValue4: "",
+            })
+        },
         listqy: function (e) {
             if (this.data.hyopen) {
                 this.setData({
@@ -50,7 +78,6 @@ Component({
                     sqopen: false,
                     pxopen: false,
                     sortopen: false,
-                    shownavindex: 0
                 })
             } else {
                 this.setData({
@@ -58,7 +85,6 @@ Component({
                     pxopen: false,
                     sqopen: false,
                     sortopen: false,
-                    shownavindex: e.currentTarget.dataset.nav
                 })
             }
 
@@ -78,7 +104,6 @@ Component({
                     pxopen: false,
                     hyopen: false,
                     sortopen: false,
-                    shownavindex: e.currentTarget.dataset.nav
                 })
             }
         },
@@ -97,10 +122,8 @@ Component({
                     pxopen: true,
                     sortopen: false,
                     hyopen: false,
-                    shownavindex: e.currentTarget.dataset.nav
                 })
             }
-            console.log(e.target)
         },
         listsort: function (e) {
             if (this.data.sortopen) {
@@ -109,7 +132,6 @@ Component({
                     pxopen: false,
                     hyopen: false,
                     sortopen: false,
-                    shownavindex: 0
                 })
             } else {
                 this.setData({
@@ -117,80 +139,80 @@ Component({
                     pxopen: false,
                     hyopen: false,
                     sortopen: true,
-                    shownavindex: e.currentTarget.dataset.nav
                 })
             }
         },
         selectleft: function (e) {
-            var model = e.currentTarget.dataset.model.components;
+            var components = e.currentTarget.dataset.model.components;
+            let selectedSubwayList = this.data.selectedSubwayList;
+            for(let i =0;i<components.length; i++){
+                components[i].is_active = selectedSubwayList.indexOf(components[i].name) > -1;
+            }
             var value = e.target.dataset.model.value
-            var selectedTitle = e.target.dataset.model.title;
             this.setData({
-                dropDownMenuDataFirstRight: model == null ? "" : model,
+                dropDownMenuDataFirstRight:components,
                 select1: value,
                 leftIndex: e.currentTarget.dataset.leftIndex,
-                select2: '',
             })
-            if (model == null || model.length == 0) {
-                this.closeHyFilter();
-                this.triggerEvent("selectedItem", {
-                    index: this.data.shownavindex,
-                    selectedId: value,
-                    selectedTitle: selectedTitle
-                })
+        },
+        selectListItem: function (e) {
+            var selectedValue = e.currentTarget.dataset.value
+            var key = e.currentTarget.dataset.key
+            let setData = {
+                [key]: selectedValue
             }
-        },
-        selectcenter: function (e) {
-            var selectedId = e.target.dataset.model.id
-            var selectedTitle = e.target.dataset.model.title;
-            this.closeHyFilter();
-            this.setData({
-                select2: selectedId
-            })
+            if(key === 'selectedValue2') {
+                if(selectedValue === this.data.selectedValue2){
+                    selectedValue = ""
+                    setData['selectedValue2'] = ""
+                }
+                selectedValue = [selectedValue, this.data.selectedSubwayList]
+            }
+            if(key === 'selectedValue3') {
+                let selectedSubwayList = this.data.selectedSubwayList;
+                if(selectedSubwayList.indexOf(selectedValue) === -1) {
+                   selectedSubwayList.push(selectedValue)
+                } else {
+                   selectedSubwayList.pop(selectedValue)
+                }
+                let dropDownMenuDataFirstRight = this.data.dropDownMenuDataFirstRight
+                let index = e.currentTarget.dataset.index
+                dropDownMenuDataFirstRight[index]['is_active'] = !dropDownMenuDataFirstRight[index].is_active
+                setData['selectedSubwayList'] = selectedSubwayList
+                setData['dropDownMenuDataFirstRight'] = dropDownMenuDataFirstRight
+                selectedValue = [this.data.selectedValue2, selectedSubwayList]
+            }
+            if(key === 'selectedValue4') {
+                if(selectedValue === this.data.selectedValue4){
+                    selectedValue = ""
+                    setData['selectedValue4'] = ""
+                }
+                    setData['inputLow'] = ""
+                    setData['inputHigh'] = ""
+            }
+            if(key === 'selectedValues') {
+                var board_index = e.currentTarget.dataset.board;
+                var index = e.currentTarget.dataset.index;
+                var dropDownMenuFourthData = this.data.dropDownMenuFourthData;
+                var is_active = dropDownMenuFourthData[board_index].components[index].is_active;
+                dropDownMenuFourthData[board_index].components[index].is_active = !is_active;
+                var sources = {}
+                for(let board_index in dropDownMenuFourthData){
+                    sources[board_index] = []
+                    for(let i=0;i<dropDownMenuFourthData[board_index].components.length;i++){
+                        if(dropDownMenuFourthData[board_index].components[i].is_active){
+                            sources[board_index].push(dropDownMenuFourthData[board_index].components[i].value)
+                        }
+                    }
+                }
+                selectedValue = sources
+                setData['dropDownMenuFourthData'] = dropDownMenuFourthData
+            }
             this.triggerEvent("selectedItem", {
-                index: this.data.shownavindex,
-                selectedId: selectedId,
-                selectedTitle: selectedTitle
+                index: e.currentTarget.dataset.card,
+                selectedValue: selectedValue,
             })
-        },
-        selectsqitem: function (e) {
-            var selectedId = e.target.dataset.model.id
-            var selectedTitle = e.target.dataset.model.title;
-            this.closeHyFilter();
-            this.setData({
-                selectedSq: selectedId
-            })
-            this.triggerEvent("selectedItem", {
-                index: this.data.shownavindex,
-                selectedId: selectedId,
-                selectedTitle: selectedTitle
-            })
-        },
-        selecsortlitem: function (e) {
-            var selectedId = e.target.dataset.model.id
-            var selectedTitle = e.target.dataset.model.title;
-            this.closeHyFilter();
-            this.setData({
-                selectedSort: selectedId
-            })
-            this.triggerEvent("selectedItem", {
-                index: this.data.shownavindex,
-                selectedId: selectedId,
-                selectedTitle: selectedTitle
-            })
-        },
-        selecqtlitem: function (e) {
-            var selectedId = e.target.dataset.model.id
-            var selectedTitle = e.target.dataset.model.title;
-            this.closeHyFilter();
-            this.setData({
-                selectedQt: selectedId
-            })
-            this.triggerEvent("selectedItem", {
-                index: this.data.shownavindex,
-                selectedId: selectedId,
-                selectedTitle: selectedTitle
-            })
+            this.setData(setData)
         },
         lowValueChangeAction1: function (e) {
             this.setData({
@@ -201,38 +223,6 @@ Component({
             this.setData({
                 heigh1: e.detail.heighValue
             })
-        },
-        /**关闭筛选 */
-        closeHyFilter: function () {
-            if (this.data.hyopen) {
-                this.setData({
-                    hyopen: false,
-                    sqopen: false,
-                    pxopen: false,
-                    sortopen: false,
-                })
-            } else if (this.data.sqopen) {
-                this.setData({
-                    sqopen: false,
-                    pxopen: false,
-                    hyopen: false,
-                    sortopen: false,
-                })
-            } else if (this.data.pxopen) {
-                this.setData({
-                    sqopen: false,
-                    pxopen: false,
-                    hyopen: false,
-                    sortopen: false,
-                })
-            } else if (this.data.sortopen) {
-                this.setData({
-                    sqopen: false,
-                    pxopen: false,
-                    hyopen: false,
-                    sortopen: false,
-                })
-            }
         },
     },
     //组件生命周期函数，在组件实例进入页面节点树时执行

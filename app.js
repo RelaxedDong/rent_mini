@@ -287,10 +287,8 @@ App({
   globalData: {
     login_redirect:false,
     api_host:'http://127.0.0.1:8000/api/',
-    discuss_page_run:false,
     has_pre: false,
     index_new_city:false,
-    discuss_new_city:false,
     raw_city:true,
     share_img_list: ['../../image/share.png', '../../image/share1.png', '../../image/share2.png'],
     city:'深圳市', // 默认进入首页的地址

@@ -1,69 +1,75 @@
 <!--pages/mypublish/mypublish.wxml-->
 <view class="mycontainer">
-    <view class="itembox" data-houseid="{{house.id}}" wx:for="{{houses}}" wx:key  wx:for-item="house">
-        <view class="publish-item">
-            <view class="topbox" bindtap="HandleClick" data-house-id="{{house.id}}">
-                <view class="left text-grey">
-                    <text class="cuIcon-location text-green padding-right-xs"></text>
-                    <text class="text-sm margin-right">{{house.region}}</text>
-                    <text class="text-sm margin-lr-xs">{{house.create_time}}</text>
-                </view>
-                <view class="right">
-                    <text class="cuIcon-attention text-green padding-right-xs"></text>
-                    <text class="text-grey text-sm">浏览{{house.view_count}}</text>
-                </view>
+    <view wx:for='{{houses}}' wx:key="{{index}}" bindtap="HandleClick" data-id="{{item.id}}">
+        <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
+            <view class="loadImg loadImg{{index}} active">
+                <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
+                      style="background-image: url('{{item.imgs[0]}}');"></view>
             </view>
-            <view class="title text-grey" bindtap="HandleClick" data-house-id="{{house.id}}">
-                <view class="cu-tag round xs bg-mainbg text-green">{{house.apartment}}</view>
-                {{house.title}}
-            </view>
-            <view class="img-group" bindtap="HandleClick" data-house-id="{{house.id}}">
-                <image wx:for="{{house.imgs}}" src="{{item}}" wx:key
-                       wx:if="{{index<4}}"
-                       style='height:{{house.imgs.length == 1?"250rpx;width:250rpx":"150rpx"}}'>
-                </image>
-            </view>
-            <view class="cu-tag round xs bg-mainbg text-green margin-top" wx:if="{{house.status == '2'}}">已删除</view>
-            <view class="cu-tag round xs bg-mainbg text-yellow margin-top" wx:elif="{{house.status == '0'}}">审核中</view>
-            <view class="user-operation padding-top text-sm" wx:else>
-                <view  bindtap="RefrshHouse" class="padding-sm" data-house-id="{{house.id}}" data-index="{{index}}">
-                    <text class="cuIcon-refresh text-green padding-right-sm"></text>顶帖
-                </view>
-                <view  bindtap="EditHouse" class="padding-sm" data-index="{{index}}">
-                    <text class="cuIcon-write text-yellow padding-right-sm"></text>编辑
-                </view>
-                <view  bindtap="DeleteHouse" class="padding-sm" data-house-id="{{house.id}}" data-index="{{index}}">
-                    <text class="cuIcon-deletefill text-red padding-right-sm"></text>删除
-                </view>
-            </view>
-            <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
-                <view class="cu-dialog">
-                    <view class="cu-bar bg-white justify-end">
-                        <view class="action" bindtap="hideModal">
-                            <text class="cuIcon-close text-red"></text>
+            <view class="card-content">
+                <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
+                <view class="user-info-group">
+                    <view class="imgurl avatar-user"
+                          style="background-image: url({{item.publisher.avatarUrl}});"></view>
+                    <view class="userinfo">
+                        <view class="username">{{item.publisher.nickname}}
+                            <text class="{{item.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
+                        </view>
+                        <view class="upload_time">
+                            {{item.publisher.last_login}}
                         </view>
                     </view>
-                    <view class="padding-xl">
-                         <view class="imgbox">
-                             <image src="../../image/icon/mes-share@1x.png"></image>
-                         </view>
-                        <view class="padding">
-                            <text class="text-grey">顶帖次数不足</text>
+                </view>
+                <view class="content">
+                    <view class="cu-tag round xs bg-mainbg text-green margin-top" wx:if="{{item.status == '2'}}">已删除
+                    </view>
+                    <view class="cu-tag round xs bg-mainbg text-yellow margin-top" wx:elif="{{item.status == '0'}}">
+                        审核中
+                    </view>
+                    <view class="user-operation padding-top text-sm" wx:else>
+                        <view catchtap="RefrshHouse" data-house-id="{{item.id}}" data-index="{{index}}">
+                            <text class="cuIcon-refresh text-green padding-right-sm"></text>顶帖
                         </view>
-                        <view class="padding">
-                            <text class="text-grey">请转发微信群完成顶帖</text>
+                        <view catchtap="EditHouse" data-id="{{item.id}}">
+                            <text class="cuIcon-write text-yellow padding-right-sm"></text>编辑
                         </view>
-                        <view class="padding">
-                            <text class="text-grey">每转发一次，顶帖立即获得顶帖 x 1</text>
+                        <view catchtap="DeleteHouse" data-house-id="{{item.id}}" data-index="{{index}}">
+                            <text class="cuIcon-deletefill text-red padding-right-sm"></text>删除
                         </view>
                     </view>
-                    <view class="cu-bar bg-white justify-end">
-                        <view class="action">
-                            <button class="cu-btn bg-green margin-left" open-type="share" data-title="{{house.title}}"
-                            data-house-id="{{house.id}}">
-                                <text class="cuIcon-share margin-right-sm"></text>
-                                <text>顶帖</text>
-                            </button>
+                    <view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">
+                        <view class="cu-dialog">
+                            <view class="cu-bar bg-white justify-end">
+                                <view class="action" bindtap="hideModal">
+                                    <text class="cuIcon-close text-red"></text>
+                                </view>
+                            </view>
+                            <view class="padding-xl">
+                                <view class="imgbox">
+                                    <image src="../../image/icon/mes-share@1x.png"></image>
+                                </view>
+                                <view class="padding">
+                                    <text class="text-grey">顶帖次数不足</text>
+                                </view>
+                                <view class="padding">
+                                    <text class="text-grey">请转发微信群完成顶帖</text>
+                                </view>
+                                <view class="padding">
+                                    <text class="text-grey">每转发一次，顶帖立即获得顶帖 x 1</text>
+                                </view>
+                            </view>
+                            <view class="cu-bar bg-white justify-end">
+                                <view class="action">
+                                    <button class="cu-btn bg-green margin-left"
+                                            catchtap="toShare"
+                                            open-type="share"
+                                            data-title="{{item.title}}"
+                                            data-house-id="{{item.id}}">
+                                        <text class="cuIcon-share margin-right-sm"></text>
+                                        <text>顶帖</text>
+                                    </button>
+                                </view>
+                            </view>
                         </view>
                     </view>
                 </view>

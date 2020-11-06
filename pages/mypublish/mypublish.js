@@ -8,7 +8,7 @@ Page({
   data: {
   },
   HandleClick(res){
-    var houseid = res.currentTarget.dataset.houseId;
+    var houseid = res.currentTarget.dataset.id;
     wx.navigateTo({
       url: "/pages/detail/detail?house="+houseid
     })
@@ -70,6 +70,9 @@ Page({
               app.ShowToast('顶帖成功');
             }else{
               app.ShowToast(data.msg);
+              if(data.msg === '没有刷新次数了') {
+                  that.showModal("DialogModal1")
+              }
             }
           }, app.InterError);
         }
@@ -87,14 +90,8 @@ Page({
     })
   },
   EditHouse(e){
-    const index = e.currentTarget.dataset.index;
-    var house = this.data.houses[index];
     wx.navigateTo({
-      url: '/pages/edit-house/edit-house',
-      success: function(res) {
-        // 通过eventChannel向被打开页面传送数据
-        res.eventChannel.emit('acceptDataFromOpenerPage', { data:  house})
-      }
+      url: '/pages/edit-house/edit-house?id='+e.currentTarget.dataset.id,
     })
   },
   /**
@@ -103,12 +100,13 @@ Page({
   onShow: function () {
   },
   GetPublishesDone(res){
-    var curTime = new Date();
-    var houses = res.data.data;
     this.setData({
-      houses:houses
+      houses:res.data.data
     })
     wx.hideLoading()
+  },
+  toShare(e){
+    this.onShareAppMessage(e)
   },
   onShareAppMessage: function (ops) {
     var dataset = ops.target.dataset;
@@ -117,7 +115,7 @@ Page({
       if (ops.from === 'button') {
       // 来自页面内转发按钮
         app.WxHttpRequestPOST('house/house_refresh_add', {},function (res) {
-          app.ShowToast('获得刷新次数 x 1')
+          app.ShowToast(res.data.msg)
         });
         this.hideModal();
         var arr = app.globalData.share_img_list;
@@ -147,7 +145,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.onLoad()
   },
 
   /**

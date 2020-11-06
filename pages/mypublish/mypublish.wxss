@@ -1,7 +1,0 @@
-.imgbox{
-    text-align: center;
-}
-.imgbox image{
-    width: 100rpx;
-    height: 100rpx;
-}

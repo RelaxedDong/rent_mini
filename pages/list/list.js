@@ -21,38 +21,16 @@ Page({
         show_empty: false,
         scrollHeight: 0,
         animation: '',
-        page: 1,
+        page: 0,
         topNum: 0,
         fiexed_top: 0,
         conditions: {},
+        filter_conf: {},
         searchinput: "",
         houses: [],
         has_next: true,
         clear: false,
         //是否悬停
-    },
-    RegionChange: function (e) {
-        this.setData({
-            region: e.detail.value
-        })
-    },
-    ClearFilters(e) {
-        app.wxshowloading('拼命加载中...');
-        var city = app.globalData.city
-        var input = this.data.searchinput;
-        this.setData({
-            page: 1,
-            houses: []
-        });
-        this.GoToTop()
-        if (input) {
-            app.WxHttpRequestGet('house/search', {
-                'title': input,
-                'city': city
-            }, this.SearchCallback);
-        } else {
-            app.WxHttpRequestGet('house/search', {'city': city}, this.SearchCallback, app.InterError);
-        }
     },
     GoToTop(e) {
         this.setData({
@@ -60,25 +38,31 @@ Page({
         })
     },
     SearchCallback(res) {
-        var page = this.data.page + 1;
-        var houses = res.data.houses;
-        var houes_length = houses.length;
-        var search_count = res.data.count;
-        if (houes_length > 0) {
-            this.setData({
-                has_next: true,
-                house_count: search_count,
-                page: page,
-                [`houses[${this.data.page}]`]: houses
-            })
+        let resp = res.data;
+        if(resp.code === 200){
+            var page = this.data.page;
+            var houses = resp.data.houses;
+            var houes_length = houses.length;
+            if (houes_length > 0) {
+                let setData = {
+                    page: page+1,
+                    [`houses[${page}]`]: houses
+                }
+                if(houes_length === 10) {
+                    setData['has_next'] = true
+                }
+                this.setData(setData)
+            } else {
+                this.setData({
+                    has_next: false,
+                    show_empty: true,
+                })
+                app.ShowToast('没有更多了...');
+            }
         } else {
-            this.setData({
-                has_next: false,
-                show_empty: true,
-                house_count: search_count
-            })
+            app.ShowToast(resp.msg);
         }
-        wx.hideLoading()
+    wx.hideLoading()
     },
     handleClick: function (e) {
         app.handlehouseClick(e.currentTarget.dataset.id)
@@ -97,21 +81,17 @@ Page({
         })
     },
     ChildInputValueHanle: function (e) {
-        var data = e.detail;
-        app.wxshowloading('拼命加载中...');
         this.setData({
-            searchinput: data
+            searchinput: e.detail
         });
-        var conditions = this.data.conditions;
-        conditions['city'] = app.globalData.city;
-        conditions['title'] = data;
+        var conditions = this.get_conditions()
         this.setData({
-            page: 1,
+            page: 0,
             conditions: conditions,
             houses: []
         });
         this.GoToTop()
-        app.WxHttpRequestGet('house/search', conditions, this.SearchCallback, app.InterError);
+        this.get_house_list(conditions, 0)
     },
     /**
      * 生命周期函数--监听页面加载
@@ -136,20 +116,48 @@ Page({
                     apartment_list: resp.data.apartment,
                     house_type_list: resp.data.house_type,
                 })
-                console.log(that.data.dropDownMenuRegion)
             })
         }
     },
+    get_conditions(){
+        let conditions = this.data.conditions;
+        conditions['city'] = app.globalData.city
+        conditions['title'] = this.data.searchinput
+        return conditions
+    },
+    get_house_list(conditions, page=0) {
+        // 统一获取房源列表接口
+        app.wxshowloading('');
+        app.WxHttpRequestGet('house/search?page=' + page, conditions, this.SearchCallback, app.InterError);
+    },
+    selectedFourth: function (e) {
+        var filter_conf = this.data.filter_conf;
+        let conditions = this.get_conditions()
+        filter_conf[e.detail.index] = e.detail.selectedValue
+        conditions['filter_conf'] = filter_conf
+        this.setData({
+            filter_conf: filter_conf,
+            conditions: conditions,
+            houses: [],
+            page: 0,
+        })
+        this.GoToTop()
+        this.get_house_list(conditions, 0)
+    },
     onLoad: function (options) {
+        // todo: 基础card跳转
         var that = this;
         let query = wx.createSelectorQuery();
-        app.wxshowloading('拼命加载中...');
-        var city = app.globalData.city;
-        var condition = {'city': city};
-        if (options.type) {
-            condition['house_type'] = options.type
-        }
-        app.WxHttpRequestGet('house/search', condition, that.SearchCallback);
+        let conditions = this.data.conditions;
+        conditions['city'] = app.globalData.city
+        conditions['title'] = this.data.searchinput
+        // 拼接从首页跳转过来的card参数，直接合并
+        let result_conditions = Object.assign(conditions, options)
+        this.setData({
+            conditions: result_conditions
+        })
+        this.get_house_list(result_conditions)
+        let city = app.globalData.city
         app.WxHttpRequestGet('house/selects', {'city': city}, that.ParamsDone, app.InterError)
         query.select('#filter_bar').boundingClientRect()
         query.exec(function (res) {
@@ -157,8 +165,7 @@ Page({
             that.setData({
                 placeholder: city,
                 fiexed_top: height + 10,
-                scrollHeight: app.globalData.windowHeight + 30,
-                conditions: condition
+                scrollHeight: app.globalData.windowHeight + 30
             });
         });
     },
@@ -219,12 +226,9 @@ Page({
     bindscrolltolower: function () {
         var has_next = this.data.has_next;
         if (has_next) {
-            app.wxshowloading('房源加载中');
             var page = this.data.page;
-            var condition = this.data.conditions
-            app.WxHttpRequestGet('house/search?page=' + page, condition, this.SearchCallback, app.InterError)
-        } else {
-            app.ShowToast('没有更多了...')
+            var conditions = this.get_conditions()
+            this.get_house_list(conditions, page)
         }
     },
     /**
@@ -233,20 +237,15 @@ Page({
     onShareAppMessage: function () {
 
     },
-    selectedFourth: function (e) {
-        console.log("选中第" + e.detail.index + "个标签，选中的id：" + e.detail.selectedId + "；选中的内容：" + e.detail.selectedTitle);
-    },
     showDialog: function (e) {
 
     },
     //取消事件
     _cancelEvent: function (e) {
-        console.log('你点击了取消');
         this.dialog.hideDialog();
     },
     //确认事件
     _confirmEvent: function (e) {
-        console.log('你点击了确定');
         this.dialog.hideDialog();
     }
 })

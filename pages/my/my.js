@@ -179,7 +179,7 @@ Page({
                     collect_count: that.coutNum(data.collects | 0),
                     msg_len: that.coutNum(data.msgs | 0),
                     houses_count: that.coutNum(data.houses_count | 0),
-                    favors: that.coutNum(data.favorites | 0)
+                    favors: that.coutNum(data.favor_count | 0)
                 })
             }
         }

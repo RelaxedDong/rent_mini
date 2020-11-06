@@ -43,31 +43,8 @@ Page({
     })
     wx.hideLoading()
   },
-  HandleOperationDone(res){
-    var data = res.data;
-    if(data.code == 200){
-      app.ShowToast('取消收藏成功');
-      this.onLoad()
-    }else{
-      app.ShowToast('网络错误，请稍后再试～');
-    }
-  },
-  CollectClick(e){
-    var that = this;
-    wx.showModal({
-      title: '确认提示',
-      content: '取消收藏吗？',
-      success: function(res) {
-        if (res.confirm) {
-            var houseid = e.currentTarget.dataset.houseId;
-            var request_data = {houseId:parseInt(houseid),operation_type:'collect'};
-            app.WxHttpRequestPOST('account/operation',request_data,that.HandleOperationDone,app.InterError)
-        }
-      }
-    })
-  },
-  HandleClick(res){
-    var houseid = res.currentTarget.dataset.houseId;
+  handleClick(res){
+    var houseid = res.currentTarget.dataset.id;
     wx.navigateTo({
       url: "/pages/detail/detail?house="+houseid
     })
@@ -83,7 +60,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-
+    this.onLoad()
   },
 
   /**
