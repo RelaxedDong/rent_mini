@@ -10,7 +10,6 @@
 }
 
 /* 头部search filter*/
-
 .section-placeholder,.header-select {
   background-color: white;
   box-shadow: 0 4rpx 20rpx 0 rgba(212,217,223,.5);
@@ -19,117 +18,5 @@
   position: fixed;
   width: 100%;
   z-index: 99;
-}
-.l-icon{
-  margin-left: 10rpx;
-  margin-top: 8rpx;
-}
-
-.active-text{
-  color: #2DCB73;
-}
-.empty{
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  margin-top: 100rpx;
-}
-.empty image{
-  align-self: center;
-  width: 300rpx;
-  height: 300rpx;
-}
-.detail{
-  display: flex;
-  flex-direction: row;
-  margin-top: 15rpx;
-}
-
-.double-container{
-  width: 700rpx;
-  margin: 20rpx;
-  box-sizing: border-box;
-  overflow: hidden;
-  display: flex;
-  flex-wrap:wrap;
-  flex-direction: row;
-  justify-content: space-between;
-  box-shadow: 0 4rpx 20rpx 0 rgba(212,217,223,.5);
-  border-radius: 4px;
-
-}
-.double-house{
-  display: flex;
-  flex-direction: column;
-  font-size: 25rpx;
-  padding: 20rpx 5rpx;
-  box-sizing: border-box;
-  width: 50%;
-}
-.d-list-img{
-  text-align: center;
-}
-.d-list-img image {
-  width: 330rpx !important;
-  height: 200rpx !important;
-  border-radius: 10rpx;
-}
-.d-title{
-  font-weight: normal;
-  color: #333333;
-  padding: 10rpx 0;
-}
-.d-desc{
-  color: #9999;
-}
-.d-price{
-  color: #9999;
-  text-decoration:line-through;
-  margin-left: 20rpx;
-  font-weight: normal;
-}
-.d-price-box,.d-title{
-  padding: 0 5rpx;
-}
-
-.card-top {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  width: 750rpx;
-  height: 100rpx;
-}
-
-.content-name {
-  font-size: 28rpx;
-  font-family: PingFangSC-Regular;
-  font-weight: 400;
-  color: rgba(69, 82, 107, 1);
-  line-height: 20px;
-  margin-left: 8px;
-}
-.text-grey{
-  color: #b2afb0;
-}
-
-.card {
-  margin: 10rpx auto !important;
-}
-
-.right-card {
-  height: 180rpx !important;
-  width: 220rpx !important;
-  border-radius: 12rpx !important;
-}
-
-.content {
-  margin-top: 10rpx;
-  color: #666;
-  font-size: 26rpx;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 5;
 }
 /*slider*/

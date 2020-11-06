@@ -11,7 +11,7 @@ Page({
     is_collect: false,
     choose_time:"",
     has_show_appoint: false,
-    weekday:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"]
+    // weekday:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"]
   },
   bindinput(e){
     var content = e.detail.detail.value;
@@ -79,7 +79,7 @@ Page({
     })
   },
   Showmap(e){
-    console.log(e)
+    app.ShowToast('Showmap')
     var dataset = e.currentTarget.dataset;
     var latitude = dataset.houseLatitude;
     var longitude = dataset.houseLongitude;
@@ -172,44 +172,45 @@ Page({
       }
     }
   },
-  showModal(e) {
-    if(!app.globalData.finish_user_info){
-      app.ShowToast("请先完成资料后预约");
-      setTimeout(function () {
-        wx.navigateTo({
-          url: '/pages/userinfo/userinfo'
-        });
-      },1500);
-      return
-    }
-    if (!this.data.has_show_appoint) {
-      var dates = [];
-      var datestr;
-      var myDate = new Date();
-      var weekday = this.data.weekday;
-      myDate.setTime(myDate.getTime() + 1000 * 60 * 60 * 24);
-      for (var i = 0; i < 6; i++) {
-        var myddy = myDate.getDay();
-        datestr = Number(myDate.getMonth()) + 1 + "-" + myDate.getDate();
-        dates.push({day: datestr, myddy: weekday[myddy]});
-        myDate.setTime(myDate.getTime() + 1000 * 60 * 60 * 24);
-      }
-      this.setData({
-        modalName: e.currentTarget.dataset.target,
-        appointment_time: dates,
-        has_show_appoint:true
-      })
-    }else{
-      this.setData({
-        modalName: e.currentTarget.dataset.target,
-      })
-    }
-  },
-  hideModal(e) {
-    this.setData({
-      modalName: null
-    })
-  },
+  // showModal(e) {
+  // 预约看房
+  //   if(!app.globalData.finish_user_info){
+  //     app.ShowToast("请先完成资料后预约");
+  //     setTimeout(function () {
+  //       wx.navigateTo({
+  //         url: '/pages/userinfo/userinfo'
+  //       });
+  //     },1500);
+  //     return
+  //   }
+  //   if (!this.data.has_show_appoint) {
+  //     var dates = [];
+  //     var datestr;
+  //     var myDate = new Date();
+  //     var weekday = this.data.weekday;
+  //     myDate.setTime(myDate.getTime() + 1000 * 60 * 60 * 24);
+  //     for (var i = 0; i < 6; i++) {
+  //       var myddy = myDate.getDay();
+  //       datestr = Number(myDate.getMonth()) + 1 + "-" + myDate.getDate();
+  //       dates.push({day: datestr, myddy: weekday[myddy]});
+  //       myDate.setTime(myDate.getTime() + 1000 * 60 * 60 * 24);
+  //     }
+  //     this.setData({
+  //       modalName: e.currentTarget.dataset.target,
+  //       appointment_time: dates,
+  //       has_show_appoint:true
+  //     })
+  //   }else{
+  //     this.setData({
+  //       modalName: e.currentTarget.dataset.target,
+  //     })
+  //   }
+  // },
+  // hideModal(e) {
+  //   this.setData({
+  //     modalName: null
+  //   })
+  // },
   HandleGetDone(res){
     const that = this;
     var resp = res.data;
@@ -229,6 +230,7 @@ Page({
           iconPath: "/image/icon/location.png",
           latitude: house.latitude,
           longitude: house.longitude,
+          id: 1
         }],
         imglist:house.imgs,
         user_favors:house.user_favors,
@@ -288,11 +290,11 @@ Page({
     app.handlehouseClick(houseid)
   },
   DetailOnload(options){
+    app.wxshowloading('');
     const house_id = options.house;
     app.WxHttpRequestGet('house/detail/'+ house_id,{},this.HandleGetDone)
   },
   onLoad: function (options) {
-    app.wxshowloading('拼命加载中...');
     var that = this;
     var user_id = app.globalData.user_id;
     if(!user_id || typeof(user_id) == "undefined"){

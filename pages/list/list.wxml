@@ -9,20 +9,21 @@
 </view>
 <scroll-view scroll-top='{{topNum}}' bindscrolltolower="bindscrolltolower" bindtouchstart="touchStart" scroll-y
              style='height:{{scrollHeight}}px;padding-top: {{fiexed_top}}px;'>
-    <view wx:for="{{houses}}" wx:for-item='row' wx:key>
+        <view wx:for="{{houses}}" wx:for-item='row' wx:key>
         <view wx:for='{{row}}' wx:key="{{index}}" bindtap="handleClick" data-id="{{item.id}}">
             <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
-                <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
-                      style="background-image: url({{item.imgs[0]}});"></view>
+                <view class="loadImg loadImg{{index}} active">
+                    <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
+                          style="background-image: url('{{item.imgs[0]}}');"></view>
+                </view>
                 <view class="card-content">
                     <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
                     <view class="user-info-group">
-                        <view class="imgurl avatar-user"
-                              style="background-image: url({{item.publisher.avatarUrl}})"></view>
+                        <view class="imgurl avatar-user" style="background-image: url({{item.publisher.avatarUrl}});"></view>
                         <view class="userinfo">
-                            <view class="username">{{item.publisher.nickname}}</view>
+                            <view class="username">{{item.publisher.nickname}}
+                               <text class="{{item.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text></view>
                             <view class="upload_time">
-                                <text class="margin-right-xs {{item.publisher.gender}}"></text>
                                 {{item.publisher.last_login}}
                             </view>
                         </view>
@@ -30,16 +31,16 @@
                     <view class="content">
                         <view class='info'>
                             <view class="houseinfo">
-                                <view class="bg-green cell-center margin-right-sm">
+                                <view class="grey-icon light cell-center margin-right-sm" wx:if="{{item.house_type}}">
                                     {{item.house_type}}
                                 </view>
-                                <view class="bg-gray cell-center light">
+                                <view class="grey-icon cell-center">
                                     {{item.apartment}}
                                 </view>
                             </view>
                             <view class="price">
                                 <text class="cuIcon-moneybagfill"></text>
-                                {{item.price}} / 月
+                                {{item.price}} 元/月
                             </view>
                         </view>
                     </view>

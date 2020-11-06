@@ -1,31 +1,8 @@
-.nav{
-    position: relative;
-    left: 0;
-    top: 0;
-    z-index: 10;
-}
-.nav-title{
-    position: absolute;
-    left: 20rpx;
-    /*top: 32rpx;*/
-    z-index: 10;
-    text-align: left;
-    font-size:30rpx;
-    letter-spacing:2px;
-}
-
 .contanerbox{
-    border-top-right-radius: 30rpx;
-    border-top-left-radius: 30rpx;
-    position: relative;
     background: white;
-    top:-30rpx;
     width: 100%;
     /* margin-top: 150rpx; */
     margin-bottom: 100rpx;
-}
-.title{
-    padding: 10rpx 0;
 }
 .card-dot {
     margin-left: 0;
@@ -36,72 +13,14 @@
 .contentbox{
     padding: 20rpx;
 }
-.headerbox{
-    border-bottom: 1rpx solid #F7F7F7;
-    padding-bottom: 10rpx;
-}
-.title{
-    font-weight: bold;
-    color: #2d3436;
-}
-.distance{
-    color: #636e72;
-    margin-top: 20rpx;
-    font-size: 25rpx;
-}
-
-.infobox{
-    margin: 20rpx 0;
-    display: flex;
-    flex-direction: row;
-    align-items:center;
-    margin-left: auto;
-    flex: 1;
-    justify-content:space-between;
-    align-content: center;
-}
-.itembox{
-    display: flex;
-    flex-direction: column;
-    padding:  10rpx;
-    margin:     10rpx;
-}
-.top-item{
-    color: #2DCB73;
-    font-weight: bold;
-
-    text-align: center
-}
-.bottom-item{
-    color: #b2bec3;
-    font-weight: lighter;
-    font-size: 20rpx;
-    text-align: center;
-    margin-top: 10rpx;
-}
-.deractor{
-    color: #2d3436;
-    font-size: 24rpx;
-    font-weight: lighter;
-    margin-top: 20rpx;
-}
-
-.descbox{
-    border-top: 1px solid #f1f2f6;
-    display: flex;
-    justify-content:space-between;
-    flex-direction: row;
-}
 
 .house-desc{
     padding-bottom: 20rpx;
     display: flex;
     flex-direction: column;
-}
-.house-desc-title{
-    font-weight: bold;
-    text-align: left;
-    box-sizing: border-box;
+    color: #666666;
+    line-height: .9rem;
+    font-size: 25rpx;
 }
 .view-count{
     color: #636e72;
@@ -167,11 +86,58 @@
     display: flex;
     flex-direction: row-reverse;
 }
-.rightbox .cu-capsule{
-    padding-right: 20rpx;
+.icon-box {
+    box-shadow: 0 4rpx 20rpx 0 rgba(212,217,223,.5);
+    padding: 20rpx;
+    box-sizing: border-box;
+    border-bottom: 1px solid #f1f2f6;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 50rpx;
+}
+.icon-box text{
+    font-size: 35rpx;
+    font-weight: lighter;
+    margin: 0 20rpx;
 }
 
 .view-all{
     padding: 20rpx;
 }
-
+/*新样式*/
+.house_item_box{
+    padding-bottom: 20rpx;
+    font-size: 25rpx;
+    color: #666666;
+}
+.house_region{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.house_info{
+    display: flex;
+    flex-direction: column;
+}
+.item{
+    display: flex;
+    flex-direction: row;
+    margin: 15rpx;
+}
+.item_name {
+    width: 50%;
+}
+.detail-map {
+    width: 80px;
+    height: 80px;
+    z-index:99999
+}
+.operation{
+    width: 200rpx;
+    display: flex;
+    flex-direction: row;
+    justify-content: right;
+    border-radius: 20rpx;
+    box-sizing: border-box;
+    margin-left: auto;
+}

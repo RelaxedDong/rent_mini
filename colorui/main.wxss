@@ -2593,9 +2593,8 @@ scroll-view.cu-steps .cu-item {
 }
 
 .bg-green-grant{
-background: #6de195;
+		background: #6de195;
 		color: ghostwhite;
-
 }
 
 .bg-olive {

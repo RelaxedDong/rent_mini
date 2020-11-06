@@ -31,21 +31,17 @@ page{
   color: transparent;
 }
 .card-top {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
   width: 750rpx;
   height: 100rpx;
 }
 
 .content-name {
-  background-color: #E5FCED;
-  color: #8BE3B3;
-  font-size: 28rpx;
-  padding: 5rpx 15rpx;
-  font-weight: 400;
-  line-height: 20px;
-  border-radius: 10rpx;
+    width: 100%;
+    border-left: 8px solid #fd9301;
+    font-size: .45rem;
+    color: #333333;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .card {
@@ -166,7 +162,7 @@ page{
 }
 
 /* components/index-content/index-content.wxss */
-.card-container{margin:0 auto;padding:30rpx;box-sizing:border-box;display:flex}.card-container-unfull{width:690rpx;box-shadow:0 4rpx 20rpx 0 rgba(212,217,223,.5);border-radius:4px}.card-container-primary-right{flex-direction:row-reverse}.cover-img-unfull{width:630rpx;height:260rpx}.card-img-primary{height:240rpx;width:240rpx;overflow:hidden}.card-img-primary-right{margin-left:40rpx}.card-content{position:relative;display:flex;flex-direction:column;flex:1}.card-title{overflow:hidden;text-overflow:ellipsis;color:#333;}.card-title-primary{font-weight: lighter;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2}.describe{color:#ABAFBA;font-size:22rpx}
+.card-container{margin:0 auto;padding:30rpx;box-sizing:border-box;display:flex}.card-container-unfull{width:690rpx;box-shadow:0 4rpx 20rpx 0 rgba(212,217,223,.5);border-radius:4px}.card-container-primary-right{flex-direction:row-reverse}.cover-img-unfull{width:630rpx;height:260rpx}.card-img-primary{height:240rpx;width:240rpx;overflow:hidden}.card-img-primary-right{margin-left:40rpx}.card-content{position:relative;display:flex;flex-direction:column;flex:1}.card-title{overflow:hidden;font-weight:normal;}.card-title-primary{display:-webkit-box;font-size: 0.9rem;color:#383838;font-weight: normal;-webkit-box-orient:vertical;-webkit-line-clamp:2}.describe{color:#ABAFBA;font-size:22rpx}
 .margin-right-sm {
   margin-right: 10rpx;
 }
@@ -202,11 +198,12 @@ page{
 }
 .username{
   max-width: 300rpx;
-  font-size: 25rpx;
-  color: #2C354B;
   overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
+  font-size: 20rpx;
+  margin: 0.3rem 0 0.3rem 0;
+  color: #383838;
 }
 .upload_time{
   color: #ABAFBA;
@@ -223,8 +220,9 @@ page{
 }
 .price{
   margin-top: 10rpx;
-  color: #FD7302;
+  color: #ef8200;
   font-size: 25rpx;
+  font-weight: normal;
 }
 .info{
   display: flex;
@@ -233,16 +231,25 @@ page{
   width: 100%;
   margin-top: 10rpx;
 }
+.grey-icon {
+    font-style: normal;
+    font-size: 0.65rem;
+    color: #747577;
+    background: #f0f3f8;
+    border-radius: 2px;
+    padding: 0.15rem 0.1rem;
+}
 .houseinfo{
-  font-size: 19rpx;
+  font-size: 25rpx;
   display: flex;
 }
 .houseinfo view{
   text-align: center;
-  padding: 5rpx 10rpx 5rpx 8rpx;
+  padding: 5rpx 8rpx;
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 5rpx;
 }
 .tab-bar{
   display: flex;

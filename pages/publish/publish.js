@@ -200,14 +200,14 @@ Page({
             success: function(res) {
                 if(res.confirm){
                     app.wxshowloading('房源发布中...');
-                    var tags = [];
+                    var facility_list = [];
                     var facility_list_active = wxdata.facility_list;
                     for (var tag in facility_list_active) {
                         if (facility_list_active[tag].is_active) {
-                            tags.push(tag)
+                            facility_list.push(tag)
                         }
                     }
-                    params['tags'] = tags;
+                    params['facility_list'] = facility_list;
                     params['formId'] = formId;
                     var temprory = that.data.temporary_imgs;
                     if(temprory){

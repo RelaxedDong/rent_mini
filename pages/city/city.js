@@ -59,7 +59,6 @@ Page({
       app.globalData.city = cityName;
       app.globalData.district = "";
       app.globalData.index_new_city = true;
-      app.globalData.discuss_new_city = true;
       app.ShowToast('城市修改成功');
       var pre = app.getPrepage();
       pre.setData({

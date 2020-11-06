@@ -63,16 +63,16 @@
                     <view class="content">
                         <view class='info'>
                             <view class="houseinfo">
-                                <view class="bg-green cell-center margin-right-sm" wx:if="{{item.house_type}}">
+                                <view class="grey-icon light cell-center margin-right-sm" wx:if="{{item.house_type}}">
                                     {{item.house_type}}
                                 </view>
-                                <view class="bg-gray cell-center light">
+                                <view class="grey-icon cell-center">
                                     {{item.apartment}}
                                 </view>
                             </view>
                             <view class="price">
                                 <text class="cuIcon-moneybagfill"></text>
-                                {{item.price}} / 月
+                                {{item.price}} 元/月
                             </view>
                         </view>
                     </view>

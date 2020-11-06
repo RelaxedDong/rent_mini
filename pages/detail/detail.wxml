@@ -1,172 +1,121 @@
-<swiper class="screen-swiper" bindchange="swiperchange" current="{{currentIndex}}"  circular="true" autoplay="true" interval="5000" duration="500">
+<swiper class="screen-swiper" bindchange="swiperchange" current="{{currentIndex}}" circular="true" autoplay="true"
+        interval="5000" duration="500">
     <swiper-item wx:for="{{imglist}}" wx:key bindtap="HandleImgClick"
                  data-urls="{{imglist}}" data-currenturl="{{item}}">
-            <image src="{{item}}" mode="aspectFill" lazy-load="true"></image>
+        <image src="{{item}}" mode="aspectFill" lazy-load="true"></image>
     </swiper-item>
 </swiper>
+
 <scroll-view class="contanerbox" scroll-y="true" id="pagecontainer">
     <view class="contentbox">
-        <view class="headerbox">
+        <view class="user-info-group house_item_box border-bottom ">
+            <view class="imgurl avatar-user" style="background-image: url({{house.publisher.avatarUrl}});"></view>
+            <view class="userinfo">
+                <view class="username">{{house.publisher.nickname}}
+                    <text class="{{house.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
+                </view>
+                <view class="upload_time">
+                    发表于：{{house.create_time}}
+                </view>
+            </view>
+            <view class="operation">
+                <view class="rightbox">
+                    <view class="icon-box">
+                        <text class="{{is_favor?'text-pink cuIcon-likefill':'cuIcon-like'}}" bindtap="OperationClick"
+                              data-house-id="{{house.id}}" data-type="favor"></text>
+                        <text class="{{is_collect?'text-orange cuIcon-favorfill':'cuIcon-favor'}} "
+                              bindtap="OperationClick" data-house-id="{{house.id}}" data-type="collect"></text>
+                    </view>
+                </view>
+            </view>
+        </view>
+        <view class="border-bottom house_item_box">
             <view class="title">{{house.title}}</view>
-            <view bindtap="Showmap"
-                  data-house-longitude="{{house.longitude}}"
-                  data-house-address="{{house.address}}"
-                  data-house-latitude="{{house.latitude}}"
-            >
-                <view  class="margin-bottom-xs  text-sm text-lighter" wx:if="{{house.address}}"><text class="cuIcon-location text-blue padding-right-xs"></text>{{house.address}}
-                    <text class="cuIcon-right text-light margin-left-xs text-lighter"></text></view>
+            <view class="house-desc padding-bottom-xs">
+                <text>
+                    {{house.desc}}
+                </text>
             </view>
         </view>
-        <view class="infobox">
-            <view class="itembox">
-                <view class="top-item">
-                    {{house.region}}
+        <view class="border-bottom house_item_box">
+            <view class="title">房源位置</view>
+            <view class="house_region">
+                <view class="cell-center">
+                    <view class="item">区域：{{house.region}}</view>
+                    <view class="item">地址：{{house.address}}</view>
                 </view>
-                <view class="bottom-item">
-                    区域
-                </view>
-            </view>
-            <view class="itembox">
-                <view class="top-item">
-                    {{house.apartment}}
-                </view>
-                <view class="bottom-item">
-                    户型
-                </view>
-            </view>
-            <view class="itembox">
-                <view class="top-item">
-                    {{house.price}}
-                </view>
-                <view class="bottom-item">
-                    月租
-                </view>
-            </view>
-            <view class="itembox">
-                <view class="top-item">
-                    {{house.area}}
-                </view>
-                <view class="bottom-item">
-                    面积 ㎡
-                </view>
+                <map id="map"
+                     style="width: 80px; height: 80px; border-radius: 50%;overflow: hidden"
+                     longitude="{{house.longitude}}"
+                     latitude="{{house.latitude}}"
+                     scale="11"
+                     markers="{{markers}}"
+                     data-house-longitude="{{house.longitude}}"
+                     data-house-latitude="{{house.latitude}}"
+                     data-house-address="{{house.address}}"
+                     bindtap="Showmap"
+                >
+                </map>
             </view>
         </view>
-        <view class="infobox">
-            <view class="deractor">
-                楼层：{{house.storey}}
-            </view>
-            <view class="deractor">
-                更新时间：{{house.create_time}}
-            </view>
-        </view>
-        <view class="rightbox">
-            <view class="cu-capsule" bindtap="OperationClick" data-house-id="{{house.id}}" data-type="favor">
-                <view class="cu-tag {{is_favor?'bg-orange':'bg-grey'}}  sm">
-                    <text class="cuIcon-likefill"></text>
+        <view class="border-bottom house_item_box">
+            <view class="title">详情信息</view>
+            <view class="house_info">
+                <view class="item">
+                    <view class="item_name"><text class="cuIcon-usefull margin-right-sm"></text>面积
+                    </view>
+                    <view class="item_value">{{house.area}}㎡</view>
                 </view>
-                <view class="cu-tag {{is_favor?'line-orange':'line-grey'}} sm">
-                    {{favor_counts}}
+                <view class="item">
+                    <view class="item_name"><text class="cuIcon-rank margin-right-sm"></text>楼层
+                    </view>
+                    <view class="item_value">{{house.storey}}楼</view>
                 </view>
-            </view>
-            <view class="cu-capsule" bindtap="OperationClick" data-house-id="{{house.id}}" data-type="collect">
-                <view class="cu-tag sm {{is_collect?'bg-red':'bg-grey'}}">
-                    <text class="cuIcon-favorfill"></text>
+                <view class="item">
+                    <view class="item_name"><text class="cuIcon-apps margin-right-sm"></text>类型
+                    </view>
+                    <view class="item_value">{{house.house_type}}</view>
                 </view>
-                <view class="cu-tag  sm {{is_collect?'line-red':'line-grey'}}">
-                    {{collect_counts}}
+                <view class="item">
+                    <view class="item_name"><text class="cuIcon-moneybag margin-right-sm"></text>租金
+                    </view>
+                    <view class="item_value">{{house.price}}元</view>
+                </view>
+                <view class="item">
+                    <view class="item_name"><text class="cuIcon-home margin-right-sm"></text>户型
+                    </view>
+                    <view class="item_value">{{house.apartment}}</view>
                 </view>
             </view>
         </view>
-        <view class='view-count padding-bottom'>
-            {{house.view_count}}浏览
-            <view class="cu-avatar-group">
-                <view class="cu-avatar round sm" wx:for="{{user_collects_avatar}}"
-                      wx:key
-                      wx:if="{{index < 10}}"
-                      wx:for-index="index"
-                      style="background-image: url({{item}})">
-                </view>
-            </view>
-            <text wx:if="{{collect_counts > 0}}">{{collect_counts}}收藏</text>
-        </view>
-        <view class='descbox'>
-            <view class="card-top">
-                <view class="card-dot"></view>
-                <view class="content-name">描述</view>
-            </view>
-        </view>
-        <view class="house-desc padding-bottom-xs text-grey">
-            <text>
-                {{house.desc}}
-            </text>
-            <text class="margin-top-sm" wx:if="{{house.subway}}">周边地铁：{{house.subway}}</text>
-        </view>
-        <view class="card-top">
-            <view class="card-dot"></view>
-            <view class="content-name">位置信息</view>
-        </view>
-        <map  id="map"
-              style="width: 100%; height: 200px;touch-action: none;z-index: 0"
-              longitude="{{house.longitude}}"
-              latitude="{{house.latitude}}"
-              scale="11"
-              bindmarkertap="{{false}}"
-              markers="{{markers}}"
-              show-location>
-        </map>
-        <view class="card-top">
-            <view class="card-dot"></view>
-            <view class="content-name">房间配置</view>
-        </view>
-        <view class="iconlist">
-            <view class="cu-list grid col-5 no-border">
-                <view class="cu-item" wx:for="{{facilities}}" wx:for-item="value" wx:for-index="index" wx:key>
-                    <view class="iconfont {{value.is_active? 'active-icon':''}} {{value.icon}}"></view>
-                    <view class="{{value.is_active? 'active-icon':''}} icontext">{{value.name}}</view>
+        <view class="border-bottom house_item_box">
+            <view class="title">设置设备</view>
+            <view class="iconlist">
+                <view class="cu-list grid col-5 no-border">
+                    <view class="cu-item" wx:for="{{facilities}}" wx:for-item="value" wx:for-index="index" wx:key>
+                        <view class="iconfont {{value.is_active? 'active-icon':''}} {{value.icon}}"></view>
+                        <view class="{{value.is_active? 'active-icon':''}} icontext">{{value.name}}</view>
+                    </view>
                 </view>
             </view>
         </view>
+
     </view>
 </scroll-view>
 <view class="cu-bar tabbar footer border shop bg-white">
     <button class="action bg-white" open-type="share">
-        <view class="cuIcon-share"></view> 转发
+        <view class="cuIcon-share"></view>
+        转发
     </button>
-    <view class="action" bindtap="make_call" data-phone="{{house.publisher.phone}}">
-        <view class="cuIcon-phone"></view> 电话联系
-    </view>
-<!--    <view class="grand submit text-white" bindtap="showModal" data-target="DialogModal1">预约看房</view>-->
+    <!--    <view class="action" bindtap="make_call" data-phone="{{house.publisher.phone}}">-->
+    <!--        <view class="cuIcon-phone"></view>-->
+    <!--        电话联系-->
+    <!--    </view>-->
     <view class="bg-green submit text-white"
-          bindtap="Wechat"  data-wechat="{{house.publisher.wechat}}"
+          bindtap="Wechat" data-wechat="{{house.publisher.wechat}}"
           data-target="DialogModal1">
-        <view class="cuIcon-weixin margin-right-sm"></view> 微信
+        <view class="cuIcon-weixin margin-right-sm"></view>
+        微信
     </view>
 </view>
-<!--<view class="cu-modal {{modalName=='DialogModal1'?'show':''}}">-->
-<!--    <view class="cu-dialog">-->
-<!--        <view class="cu-bar bg-white justify-end">-->
-<!--            <view class="content">预约时间选择</view>-->
-<!--            <view class="action" bindtap="hideModal">-->
-<!--                <text class="cuIcon-close text-red"></text>-->
-<!--            </view>-->
-<!--        </view>-->
-<!--        <view class="padding-xl">-->
-<!--            <radio-group class="block" bindchange="radioChange">-->
-<!--                <view class="cu-list menu text-left">-->
-<!--                    <view class="cu-item" wx:for="{{appointment_time}}" wx:key>-->
-<!--                        <label class="flex justify-between align-center flex-sub">-->
-<!--                            <view class="flex-sub">{{item.day}} / {{item.myddy}}</view>-->
-<!--                            <radio class="round" value="{{item.day}} / {{item.myddy}}"></radio>-->
-<!--                        </label>-->
-<!--                    </view>-->
-<!--                </view>-->
-<!--            </radio-group>-->
-<!--        </view>-->
-<!--        <view class="cu-bar bg-white justify-end">-->
-<!--            <view class="action">-->
-<!--                <button class="cu-btn line-green text-green" bindtap="hideModal">取消</button>-->
-<!--                <button class="cu-btn bg-green margin-left" bindtap="ShureAppointment" data-house-user-id="{{house.publisher.id}}">确定</button>-->
-<!--            </view>-->
-<!--        </view>-->
-<!--    </view>-->
-<!--</view>-->
+
