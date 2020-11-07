@@ -138,14 +138,8 @@ Page({
         })
     },
     onLoad: function (options) {
-        if (typeof(options) != "undefined") {
-            if(options.scene){
-                app.globalData.new_house = decodeURIComponent(options.scene).split('=')[1];
-            }
-        }
         var that = this;
         var city = app.globalData.city;
-        app.globalData.has_pre = true;
         that.setData({
             city: city,
             placeholder: city,

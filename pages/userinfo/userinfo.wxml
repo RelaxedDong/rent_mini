@@ -25,7 +25,12 @@
                        value="{{form.age}}"></input>
             </view>
             <view class="cu-form-group">
-                <switch class="switch-sex" checked="{{gender == '1' ?'1':''}}" bindchange="GenderChange"></switch>
+                <view class="title">性别</view>
+                <picker bindchange="GenderChange" data-sex='{{index}}' range-key="name" range="{{gender_list}}">
+                    <view class="picker">
+                       {{gender === '1'?'男':'女'}}
+                    </view>
+                </picker>
             </view>
             <view class="cu-form-group margin-top">
         <textarea maxlength="-1"

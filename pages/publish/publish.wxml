@@ -54,6 +54,10 @@
                    bindtap="AddressInput"/>
             <text class="cuIcon-locationfill text-green"></text>
         </view>
+            <view class="cu-form-group border-bottom">
+                <view class="title">可短租</view>
+                <switch class="switch-sex" checked="{{short_rent}}" bindchange="ShortRentClick"></switch>
+            </view>
         <view class="border-bottom padding-bottom-sm">
             <l-image-picker
                 urls="{{urls}}"

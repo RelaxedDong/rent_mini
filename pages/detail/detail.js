@@ -1,16 +1,13 @@
 const app = getApp();
 Page({
   data: {
-    gridCol: 12,
-    favor_counts: 0,
-    collect_counts: 0,
-    skin: false,
     facilities: [],
     house: [],
     is_favor: false,
     is_collect: false,
-    choose_time:"",
-    has_show_appoint: false,
+    authModal: false,
+    // choose_time:"",
+    // has_show_appoint: false,
     // weekday:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"]
   },
   bindinput(e){
@@ -19,11 +16,11 @@ Page({
       content:content
     })
   },
-  radioChange(e){
-    this.setData({
-      choose_time:e.detail.value
-    })
-  },
+  // radioChange(e){
+  //   this.setData({
+  //     choose_time:e.detail.value
+  //   })
+  // },
   appointDone(res){
     app.ShowToast(res.data.msg);
     this.hideModal()
@@ -31,39 +28,46 @@ Page({
   makePhoneCall(e){
     app.makePhoneCall(e.currentTarget.dataset.phone);
   },
-  ShureAppointment(e){
-    var that = this;
-    var choose = this.data.choose_time;
-    var house_user_id = e.currentTarget.dataset.houseUserId;
-    wx.showModal({
-          title: '预约确认',
-          content: '确认在'+ choose +'预约看房吗 ？',
-          success: function(res) {
-            if(res.confirm){
-              app.WxHttpRequestPOST('house/appoint',{house_user_id:house_user_id,desc:choose},that.appointDone,
-                  app.InterError)
-            }
-          }
-        }
-    )
-  },
+  // ShureAppointment(e){
+  //   var that = this;
+  //   var choose = this.data.choose_time;
+  //   var house_user_id = e.currentTarget.dataset.houseUserId;
+  //   wx.showModal({
+  //         title: '预约确认',
+  //         content: '确认在'+ choose +'预约看房吗 ？',
+  //         success: function(res) {
+  //           if(res.confirm){
+  //             app.WxHttpRequestPOST('house/appoint',{house_user_id:house_user_id,desc:choose},that.appointDone,
+  //                 app.InterError)
+  //           }
+  //         }
+  //       }
+  //   )
+  // },
   click_check(){
     let now = new Date();
     let hour = now.getHours();
     return !(hour < 8 || hour > 22);
   },
+  hideModal (e){
+    this.setData({
+        authModal: false
+      })
+  },
   /**
    * @return {boolean}
    */
-  Wechat(e){
+  WechatCopyClick(e){
+    if(!app.globalData.user_id){
+      this.setData({
+        authModal: true
+      })
+      return false
+    }
     let can_operation = this.click_check();
     if(!can_operation){
       app.ShowToast('8点后才能进行操作哦~');
       return
-    }
-    if(!app.globalData.user_id){
-      this.ShowToast("请先完成授权");
-      return false
     }
     wx.setClipboardData({
       data: e.currentTarget.dataset.wechat,
@@ -79,7 +83,6 @@ Page({
     })
   },
   Showmap(e){
-    app.ShowToast('Showmap')
     var dataset = e.currentTarget.dataset;
     var latitude = dataset.houseLatitude;
     var longitude = dataset.houseLongitude;
@@ -92,7 +95,16 @@ Page({
       }
     })
   },
+  login(e){
+    app.user_info_bind(this, e)
+  },
   OperationClick (e){
+    if(!app.globalData.user_id){
+      this.setData({
+        authModal: true
+      })
+      return
+    }
     var dataset = e.currentTarget.dataset;
     var houseId = dataset.houseId;
     if(!houseId){
@@ -112,6 +124,12 @@ Page({
     app.WxHttpRequestPOST('account/operation',request_data,this.HandleOperationDone)
   },
   HandleOperationDone(res){
+    if(!app.globalData.user_id){
+      this.setData({
+        authModal: true
+      })
+      return false
+    }
     var type = res.data.data;
     var favor_counts = this.data.favor_counts;
     var collect_counts = this.data.collect_counts;
@@ -132,15 +150,29 @@ Page({
       collect_counts:collect_counts,
     })
   },
+  BindUserInfoDone(res) {
+        var data = res.data;
+        if (data.code === 200) {
+            app.ShowToast('授权成功')
+            app.globalData.user_id = data.data.user_id;
+            this.setData({
+              authModal: false
+            })
+        } else {
+            app.ShowToast(data.msg)
+        }
+    },
   make_call(e){
+    if(!app.globalData.user_id){
+      this.setData({
+        authModal: true
+      })
+      return
+    }
     let can_operation = this.click_check();
     if(!can_operation){
       app.ShowToast('8点后才能进行操作哦~');
       return
-    }
-    if(!app.globalData.user_id){
-      this.ShowToast("请先完成授权");
-      return false
     }
     app.makePhoneCall(e.currentTarget.dataset.phone);
   },
@@ -221,11 +253,9 @@ Page({
       for(let i=0;i< house.facilities.length;i++){
           facilities_conf[house.facilities[i]].is_active = true
       }
-      console.log(facilities_conf)
       that.setData({
         house_id:house.id,
         house: house,
-        user_id: app.globalData.user_id,
         markers: [{
           iconPath: "/image/icon/location.png",
           latitude: house.latitude,
@@ -237,12 +267,10 @@ Page({
         user_collects_avatar:house.user_collects_avatar,
         facilities: facilities_conf,
         is_favor: house_data.is_favor,
-        collect_counts: house_data.collect_counts,
-        favor_counts: house_data.favor_counts,
         is_collect: house_data.is_collect
       });
     }else{
-      app.InterError('网络错误，请稍后再试')
+      app.ShowModel('错误', resp.msg)
     }
     wx.hideLoading()
   },
@@ -264,22 +292,6 @@ Page({
       }
     }
   },
-  ToIndexClick(){
-    wx.switchTab({
-      url:'/pages/index/index'
-    })
-  },
-  onUserOpStatistic: function(e) {
-    if(e.op == 'share') {
-      var path = e.path;
-      app.ShowToast('转发成功...')
-    }
-  },
-  ReturnClick(){
-    wx.navigateBack({//返回
-      delta: 1
-    })
-  },
   onShow:function(e){
   },
   handleClick: function (e) {
@@ -290,32 +302,12 @@ Page({
     app.handlehouseClick(houseid)
   },
   DetailOnload(options){
-    app.wxshowloading('');
+    app.wxshowloading('加载中...');
     const house_id = options.house;
-    app.WxHttpRequestGet('house/detail/'+ house_id,{},this.HandleGetDone)
+    app.WxHttpRequestGet('house/detail/'+ house_id, {}, this.HandleGetDone)
   },
   onLoad: function (options) {
     var that = this;
-    var user_id = app.globalData.user_id;
-    if(!user_id || typeof(user_id) == "undefined"){
-      app.MinaLogin().then(function (res) {
-        app.globalData.jwt_token = res.data.token;
-        app.globalData.user_id = res.data.user_id;
-        if(!res.data.user_id){
-          wx.hideLoading()
-          app.ShowToast("请先完成授权")
-          setTimeout(function () {
-            app.globalData.login_redirect = '/pages/detail/detail?house='+ options.house;
-            wx.switchTab({
-              url: '/pages/my/my'
-            })
-          },1500)
-        }else{
-          that.DetailOnload(options)
-        }
-      })
-    }else{
-      that.DetailOnload(options)
-    }
+    that.DetailOnload(options)
   }
 });

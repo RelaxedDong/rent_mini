@@ -38,12 +38,12 @@ Component({
         selectedSq: 0,
         selectedSort: 1,
         // slider
+        selectedSubwayList: [],
         selectedValue1: "",
         selectedValue2: "",
         selectedValue3: "",
         selectedValue4: "",
         // 筛选器多选
-        selectedSubwayList: [],
         // price:
         inputLow: "",
         inputHigh: "",
@@ -166,18 +166,19 @@ Component({
                     selectedValue = ""
                     setData['selectedValue2'] = ""
                 }
+                // todo:selectedSubwayList
                 selectedValue = [selectedValue, this.data.selectedSubwayList]
             }
             if(key === 'selectedValue3') {
-                let selectedSubwayList = this.data.selectedSubwayList;
-                if(selectedSubwayList.indexOf(selectedValue) === -1) {
-                   selectedSubwayList.push(selectedValue)
-                } else {
-                   selectedSubwayList.pop(selectedValue)
-                }
                 let dropDownMenuDataFirstRight = this.data.dropDownMenuDataFirstRight
                 let index = e.currentTarget.dataset.index
                 dropDownMenuDataFirstRight[index]['is_active'] = !dropDownMenuDataFirstRight[index].is_active
+                let selectedSubwayList = []
+                for (let i=0;i<dropDownMenuDataFirstRight.length;i++){
+                    if(dropDownMenuDataFirstRight[i].is_active){
+                        selectedSubwayList.push(dropDownMenuDataFirstRight[i].name)
+                    }
+                }
                 setData['selectedSubwayList'] = selectedSubwayList
                 setData['dropDownMenuDataFirstRight'] = dropDownMenuDataFirstRight
                 selectedValue = [this.data.selectedValue2, selectedSubwayList]

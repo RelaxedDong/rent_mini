@@ -191,6 +191,10 @@ page{
   line-height: 80rpx;
   /*transform: rotate(40deg);*/
 }
+.auth-content{
+ display: flex;
+  flex-direction: column;
+}
 .user-info-group image,.user-info-group .avatar-user{
   width: 70rpx;
   height: 70rpx;
@@ -198,16 +202,15 @@ page{
 }
 .username{
   max-width: 300rpx;
-  overflow: hidden;
   text-overflow:ellipsis;
   white-space: nowrap;
-  font-size: 20rpx;
+  font-size: 23rpx;
   margin: 0.3rem 0 0.3rem 0;
   color: #383838;
 }
 .upload_time{
   color: #ABAFBA;
-  font-size: 20rpx;
+  font-size: 23rpx;
 }
 .back-index{
   position: fixed;

@@ -1140,6 +1140,7 @@ button.icon.lg {
 	bottom: 0;
 	height: calc(100rpx + env(safe-area-inset-bottom) / 2);
 	padding-bottom: calc(env(safe-area-inset-bottom) / 2);
+    border-top: 1px solid #f1f2f6;
 }
 
 .cu-tabbar-height {
@@ -1610,9 +1611,9 @@ button.icon.lg {
 	margin-right: auto;
 	width: 680rpx;
 	max-width: 100%;
-	background-color: #f8f8f8;
 	border-radius: 10rpx;
 	overflow: hidden;
+	background: #fff;
 }
 
 .cu-modal.bottom-modal::before {

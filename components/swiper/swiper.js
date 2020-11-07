@@ -32,12 +32,8 @@ Component({
    */
   methods: {
     HandleClick(res){
-      var navigate = res.currentTarget.dataset.navigate;
-      if(!navigate){
-        return
-      }
       wx.navigateTo({
-        url: '/pages/web/web?navigate='+navigate
+        url: res.currentTarget.dataset.navigate
       })
     },
     intervalChange(e) {

@@ -115,6 +115,10 @@
     flex-direction: row;
     justify-content: space-between;
 }
+.upload_time, .username{
+  color: #ABAFBA;
+  font-size: 25rpx;
+}
 .house_info{
     display: flex;
     flex-direction: column;
