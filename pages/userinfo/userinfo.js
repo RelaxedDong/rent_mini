@@ -13,7 +13,8 @@ Page({
       phone: "",
       signature: "",
     },
-    gender: '1'
+    gender: '1',
+    gender_list: [{"name": "男", "value": '1'}, {"name": "女", "value": '2'}]
   },
   initValidate() {
     const rules = {
@@ -51,7 +52,7 @@ Page({
   },
   GenderChange(e){
     this.setData({
-      gender: e.detail.value==true?'1':'2'
+      gender: this.data.gender_list[e.detail.value].value
     })
   },
   /**
@@ -71,11 +72,7 @@ Page({
   },
   EditDone(res){
     var data = res.data;
-    if(data.code == 200){
-      var pre = app.getPrepage();
-      pre.setData({
-        change_user_info: true
-      });
+    if(data.code === 200){
       app.globalData.finish_user_info = true;
       app.ShowToast("信息编辑成功！");
       setTimeout(function () {

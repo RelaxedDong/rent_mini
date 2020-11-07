@@ -13,6 +13,7 @@ Page({
             area: "",
             desc: "",
         },
+        short_rent: false,
         address: "",
         index: "",
         select_origin:false,
@@ -30,6 +31,11 @@ Page({
         apartment: "",
         house_type: "",
     },
+    ShortRentClick(e){
+        this.setData({
+            short_rent: e.detail.value
+        })
+    },
     AddressInput(e) {
         wx.getSetting({
             success: function (res) {
@@ -40,6 +46,7 @@ Page({
                         content: '请确认授权，否则地图功能将无法使用',
                         success: function (tip) {
                             if (tip.confirm) {
+                                console.log(tip.confirm)
                                 wx.openSetting({
                                     success: function (data) {
                                         if (data.authSetting["scope.userLocation"] === true) {
@@ -47,6 +54,10 @@ Page({
                                         } else {
                                             app.ShowToast("授权失败，请重新点击")
                                         }
+                                    },
+                                    fail: function (data) {
+                                        console.log(data)
+
                                     }
                                 })
                             }else{app.ShowToast("授权失败，请重新点击")}
@@ -209,7 +220,8 @@ Page({
                     }
                     params['facility_list'] = facility_list;
                     params['formId'] = formId;
-                    var temprory = that.data.temporary_imgs;
+                    params['short_rent'] = wxdata.short_rent;
+                    var temprory = wxdata.temporary_imgs;
                     if(temprory){
                         params['img'] = temprory
                         app.WxHttpRequestPOST('house/house_add',params,that.AjaxDone,that.AjaxError)

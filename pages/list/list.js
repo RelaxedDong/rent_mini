@@ -135,6 +135,7 @@ Page({
         let conditions = this.get_conditions()
         filter_conf[e.detail.index] = e.detail.selectedValue
         conditions['filter_conf'] = filter_conf
+        console.log(filter_conf)
         this.setData({
             filter_conf: filter_conf,
             conditions: conditions,
@@ -145,6 +146,7 @@ Page({
         this.get_house_list(conditions, 0)
     },
     onLoad: function (options) {
+        console.log(options)
         // todo: 基础card跳转
         var that = this;
         let query = wx.createSelectorQuery();

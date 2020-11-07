@@ -15,7 +15,7 @@
     text-align: right;
 }
 .f-item{
-    margin: 10rpx;
+    margin: 10rpx 8rpx;
     box-sizing: border-box;
     border-radius: 10rpx;
     padding: 5rpx;
@@ -39,7 +39,7 @@
 .facility_box {
     display: flex;
     display: -webkit-flex;
-    justify-content: space-between;
+    justify-content: left;
     flex-direction: row;
     flex-wrap: wrap;
 }

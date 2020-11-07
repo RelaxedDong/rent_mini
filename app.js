@@ -61,6 +61,24 @@ App({
       })
     })
   },
+  user_info_bind: function (page_this, e) {
+    // 微信授权绑定
+        if (e.detail.formId) {
+            page_this.setData({
+                formId: e.detail.formId
+            });
+            return
+        }
+        var that = page_this;
+        var userinfo = e.detail.userInfo;
+        if (!userinfo) {
+            this.ShowToast('信息获取失败，请重新点击')
+            return
+        }
+        userinfo['formId'] = that.data.formId;
+        this.globalData.userInfo = userinfo;
+        this.WxHttpRequestPOST('account/user_info', userinfo, page_this.BindUserInfoDone, this.InterError);
+    },
   /**
    * @return {boolean}
    */
@@ -285,9 +303,7 @@ App({
     })
   },
   globalData: {
-    login_redirect:false,
-    api_host:'http://127.0.0.1:8000/api/',
-    has_pre: false,
+    api_host:'https://rent.donghao.club/api/',
     index_new_city:false,
     raw_city:true,
     share_img_list: ['../../image/share.png', '../../image/share1.png', '../../image/share2.png'],

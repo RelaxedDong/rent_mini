@@ -31,29 +31,9 @@ Page({
         }
         return e
     },
-    login: function (e) {
-        if (e.detail.formId) {
-            this.setData({
-                formId: e.detail.formId
-            });
-            return
-        }
-        var that = this;
-        var userinfo = e.detail.userInfo;
-        if (!userinfo) {
-            app.ShowToast('信息获取失败，请重新点击')
-            return
-        }
-        var new_house = app.globalData.new_house;
-        if (new_house) {
-            // 该用户授权绑定信息，含一个房源
-            userinfo['new_house'] = new_house;
-            app.globalData.new_house = false
-        }
-        userinfo['formId'] = that.data.formId;
-        app.globalData.userInfo = userinfo;
-        app.WxHttpRequestPOST('account/user_info', userinfo, that.BindUserInfoDone, app.InterError);
-    },
+  login(e){
+    app.user_info_bind(this, e)
+  },
     Navigator_to(e) {
         if (!this.data.is_auth) {
             app.ShowToast("请先完成授权")
@@ -64,24 +44,13 @@ Page({
         }
     },
     BindUserInfoDone(res) {
-        console.log(res)
-        var that = this;
         var data = res.data;
-        app.globalData.user_id = data.data.user_id;
-        if (data.code == 200) {
+        if (data.code === 200) {
+            app.globalData.user_id = data.data.user_id;
             this.setData({
                 is_auth: true
             });
-            var redirect = app.globalData.login_redirect;
-            if (redirect) {
-                app.globalData.redirect = false;
-                app.WxHttpRequestGet('account/item_list', {}, that.HanleAjaxItemDone, that.HanleAjaxItemFail);
-                wx.navigateTo({
-                    url: redirect
-                })
-            } else {
-                this.onLoad()
-            }
+            this.onLoad()
         } else {
             app.ShowModel('网络错误', '绑定注册用户失败，请检查网络后再试~');
         }
@@ -90,21 +59,6 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (e) {
-        var that = this;
-        wx.getSetting({
-            success: function (res) {
-                var statu = res.authSetting;
-                if (!statu['scope.userInfo']) {
-                    that.setData({is_auth: false})
-                } else {
-                    wx.showLoading({
-                        title: '数据加载中',
-                        mask: true,
-                    });
-                    app.WxHttpRequestGet('account/item_list', {}, that.HanleAjaxItemDone, that.HanleAjaxItemFail);
-                }
-            }
-        })
     },
     HanleAjaxItemFail(res) {
         app.ShowModel('网络错误', '请刷新后再试');
@@ -120,12 +74,15 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        if (this.data.change_user_info) {
-            this.setData({
-                change_user_info: false
-            });
-            this.onLoad()
+        if(!app.globalData.user_id) {
+            this.setData({is_auth: false})
+            return
         }
+        wx.showLoading({
+            title: '数据加载中',
+            mask: true,
+        });
+        app.WxHttpRequestGet('account/item_list', {}, this.ShowAccount, this.HanleAjaxItemFail);
     },
     /**
      * 生命周期函数--监听页面隐藏
@@ -153,9 +110,15 @@ Page({
         // 停止下拉动作
         wx.stopPullDownRefresh();
     },
-    ShowAccount(data) {
+    ShowAccount(res) {
+        let resp = res.data;
+        wx.hideLoading()
+        if(resp.code !== 200){
+            app.ShowToast(resp.msg);
+            return
+        }
+        let data = resp.data;
         var that = this;
-        console.log(data)
         that.setData({
             gender: data.user.gender
         })
@@ -183,11 +146,6 @@ Page({
                 })
             }
         }
-
-        wx.hideLoading()
-    },
-    HanleAjaxItemDone(res) {
-        this.ShowAccount(res.data.data)
     },
     /**
      * 页面上拉触底事件的处理函数
