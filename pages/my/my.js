@@ -59,6 +59,9 @@ Page({
      * 生命周期函数--监听页面加载
      */
     onLoad: function (e) {
+        this.setData({
+            is_superuser: app.globalData.is_superuser
+        })
     },
     HanleAjaxItemFail(res) {
         app.ShowModel('网络错误', '请刷新后再试');

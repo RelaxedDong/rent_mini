@@ -2,7 +2,7 @@
     <view class="search-form round">
         <text class="cuIcon-search"></text>
         <input type="text" disabled="{{true}}"
-               bindtap='searchbtnclick' placeholder="搜索 {{placeholder}} 房源（^ - ^）"
+               bindtap='searchbtnclick' placeholder="搜索 {{placeholder}} 房源..."
                confirm-type="search"/>
     </view>
     <view class="action" bindtap="CitySelect">
@@ -32,15 +32,29 @@
         </view>
     </view>
 </view>
-<!--<view class=" where-filter text-sm text-grey">-->
-<!--    <view  class="tab-item {{activekey=='all'?'active-text':''}}" data-activeKey="all" bindtap="changeTabs">全部-->
+<!--<view class="sub-model space-between">-->
+<!--    <view class="sub-title text-black">品牌公寓</view>-->
+<!--    <view class="sub-title-right text-grey">-->
+<!--        查看更多-->
+<!--        <text class="cuIcon-right"></text>-->
 <!--    </view>-->
-<!--    <view class="tab-item {{activekey=='today'?'active-text':''}}"  data-activeKey="today" bindtap="changeTabs">今日房源</view>-->
-<!--    <view class="tab-item {{activekey=='newest'?'active-text':''}}"  data-activeKey="newest" bindtap="changeTabs">最新房源</view>-->
-<!--    <view class="tab-item {{activekey=='mostsee'?'active-text':''}}"  data-activeKey="mostsee" bindtap="changeTabs">查看最多</view>-->
 <!--</view>-->
-<!--首页筛选器-->
-<view style="padding-bottom: 50rpx">
+<!--  <view class="scroll_box border-main">-->
+<!--    <scroll-view class="scroll-view_x" scroll-x style="width: auto;overflow:hidden;">-->
+<!--      <view class="item_list" wx:for="{{recommend}}">-->
+<!--        <image src="{{item.face}}" class="item_book_img" mode="aspectFill"></image>-->
+<!--        <view class="text-center text-grey font-size-25">{{item.address}}</view>-->
+<!--      </view>-->
+<!--    </scroll-view>-->
+<!--</view>-->
+<view class="sub-model space-between">
+    <view class="sub-title text-black">最近更新</view>
+    <view class="sub-title-right text-grey" bindtap='searchbtnclick'>
+        查看更多
+        <text class="cuIcon-right"></text>
+    </view>
+</view>
+<view style="padding-bottom: 50rpx;margin-top: 25rpx">
     <view wx:for="{{houses}}" wx:for-item='row' wx:key>
         <view wx:for='{{row}}' wx:key="{{index}}" bindtap="handleClick" data-id="{{item.id}}">
             <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">

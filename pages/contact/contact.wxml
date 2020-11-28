@@ -3,7 +3,7 @@
         <image class="logo" src="/image/icon/logo.jpeg"></image>
     </view>
     <view class="padding text-center">
-        <view class="margin-top"><text class="text-green"> 乐直租 </text>
+        <view class="margin-top"><text class="text-green"> 本小程序 </text>
             是一个免费的发布转租合租找室友的平台
         </view>
         <view class="margin-top">我们提供的服务全部免费，看房前请确保房源真实性！</view>

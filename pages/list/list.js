@@ -127,7 +127,7 @@ Page({
     },
     get_house_list(conditions, page=0) {
         // 统一获取房源列表接口
-        app.wxshowloading('');
+        // app.wxshowloading('');
         app.WxHttpRequestGet('house/search?page=' + page, conditions, this.SearchCallback, app.InterError);
     },
     selectedFourth: function (e) {
@@ -236,8 +236,23 @@ Page({
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
-
+    onShareAppMessage: function (res) {
+        var path ='/pages/index/index'
+        var arr = app.globalData.share_img_list;
+        var imageurl = arr[Math.floor((Math.random()*arr.length))];
+        return {
+          title: "快速找房租房平台",
+          path: path,
+          imageUrl:imageurl, // 分享的封面图
+          success: function(res) {
+            app.ShowModel('恭喜', '转发成功~');
+            // 转发成功
+          },
+          fail: function(res) {
+            app.ShowModel('网络错误', '转发失败~');
+            // 转发失败
+          }
+        }
     },
     showDialog: function (e) {
 

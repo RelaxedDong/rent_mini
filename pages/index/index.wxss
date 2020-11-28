@@ -8,8 +8,8 @@
   justify-content: space-between;
 }
 .icon-list image{
-  width: 60rpx;
-  height: 60rpx;
+  width: 80rpx;
+  height: 80rpx;
   border-radius: 50%;
   text-align: center;
   align-self: center;
@@ -18,6 +18,11 @@
 .icon-item{
   display: flex;
   flex-direction: column;
+}
+.recent-update {
+  font-size: 30rpx;
+  font-weight: bold;
+  padding: 10rpx 25rpx;
 }
 /* pages/test/test.wxss */
 .imgurl{
@@ -81,8 +86,48 @@
 .r-bottom image {
   height: 150rpx;
   width: 50%;
-  margin-top:10rpx;
+  margin-top:5rpx;
 }
 .r-bottom image:last-child {
     margin-left: 10rpx;
+}
+/*公寓推荐*/
+.scroll_box{
+  width: 100%;
+  overflow: hidden;
+  padding: 0 20rpx;
+  background: #fff;
+  white-space: nowrap;
+}
+.sub-model{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 20rpx 25rpx;
+  padding: 10rpx;
+  box-sizing: border-box;
+}
+.sub-title{
+  font-weight: bold;
+  font-size: 28rpx;
+}
+.sub-title-right {
+  font-size: 25rpx;
+}
+.scroll_box{
+  width: 100%;
+  overflow: hidden;
+  background: #fff;
+  white-space: nowrap;
+}
+.item_list{
+  width: 250rpx;
+  height: 180rpx;
+  margin-right: 23rpx;
+  display: inline-block;
+}
+.item_list image{
+  width: 100%;
+  height: 100%;
+  border-radius: 15rpx;
 }
