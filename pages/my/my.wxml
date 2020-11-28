@@ -46,7 +46,7 @@
     </view>
 </view>
 <view  class="cu-list icon-text text-sm menu card-menu margin-top-sm margin-bottom-xl  radius shadow">
-        <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/feedback/feedback">
+    <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/feedback/feedback">
         <view class="content">
             <text class="cuIcon-service text-yellow"></text>
             <text class="text-grey text-sm">意见反馈</text>
@@ -62,6 +62,13 @@
         <view class="content">
             <text class="cuIcon-settings text-olive"></text>
             <text class="text-grey text-sm">更新版本</text>
+        </view>
+    </view>
+    <view class="cu-item arrow text-xs" bindtap="Navigator_to" wx:if="{{is_superuser}}"
+          data-url="/pages/web/web?navigate=https://rent.donghao.club/admin/">
+        <view class="content">
+            <text class="cuIcon-pullright text-blue"></text>
+            <text class="text-grey text-sm">房源审核</text>
         </view>
     </view>
 </view>

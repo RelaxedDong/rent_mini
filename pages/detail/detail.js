@@ -6,6 +6,7 @@ Page({
     is_favor: false,
     is_collect: false,
     authModal: false,
+    is_loading: true,
     // choose_time:"",
     // has_show_appoint: false,
     // weekday:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"]
@@ -75,7 +76,7 @@ Page({
         wx.getClipboardData({
           success: function (res) {
             app.ShowModel('可自行联系啦～（^ - ^）',
-              '好友添加请注明：乐直租～'
+              '添加好友后，可分享该房源给对方'
               );
           }
         })
@@ -267,21 +268,18 @@ Page({
         user_collects_avatar:house.user_collects_avatar,
         facilities: facilities_conf,
         is_favor: house_data.is_favor,
-        is_collect: house_data.is_collect
+        is_collect: house_data.is_collect,
+        is_loading: false,
       });
     }else{
       app.ShowModel('错误', resp.msg)
     }
-    wx.hideLoading()
   },
   onShareAppMessage: function (res) {
     var path ='/pages/detail/detail?house=' + this.data.house_id;
-    var arr = app.globalData.share_img_list;
-    var imageurl = arr[Math.floor((Math.random()*arr.length))];
     return {
       title: this.data.house.title,
       path: path,
-      imageUrl:imageurl, // 分享的封面图
       success: function(res) {
         app.ShowModel('恭喜', '转发成功~');
         // 转发成功
@@ -302,12 +300,20 @@ Page({
     app.handlehouseClick(houseid)
   },
   DetailOnload(options){
-    app.wxshowloading('加载中...');
     const house_id = options.house;
     app.WxHttpRequestGet('house/detail/'+ house_id, {}, this.HandleGetDone)
   },
   onLoad: function (options) {
     var that = this;
-    that.DetailOnload(options)
+    var user_id = app.globalData.user_id;
+    if(!user_id){
+      app.MinaLogin().then(function (res) {
+        app.globalData.jwt_token = res.data.data.token;
+        app.globalData.user_id = res.data.data.user_id;
+        that.DetailOnload(options)
+      })
+    }else{
+      that.DetailOnload(options)
+    }
   }
 });

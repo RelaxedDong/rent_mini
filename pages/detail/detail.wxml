@@ -1,132 +1,136 @@
-<swiper class="screen-swiper" bindchange="swiperchange" current="{{currentIndex}}" circular="true" autoplay="true"
+
+
+<view class="loading-gif" wx:if="{{is_loading}}">
+    <image src="/image/icon/loading.gif"></image>
+</view>
+<view wx:else>
+    <swiper class="screen-swiper" bindchange="swiperchange" current="{{currentIndex}}" circular="true" autoplay="true"
         interval="5000" duration="500">
     <swiper-item wx:for="{{imglist}}" wx:key bindtap="HandleImgClick"
                  data-urls="{{imglist}}" data-currenturl="{{item}}">
         <image src="{{item}}" mode="aspectFill" lazy-load="true"></image>
     </swiper-item>
 </swiper>
-
-<scroll-view class="contanerbox" scroll-y="true" id="pagecontainer">
-    <view class="contentbox">
-        <view class="user-info-group house_item_box border-bottom ">
-            <view class="imgurl avatar-user" style="background-image: url({{house.publisher.avatarUrl}});"></view>
-            <view class="userinfo">
-                <view class="username">{{house.publisher.nickname}}
-                    <text class="{{house.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
+    <scroll-view class="contanerbox" scroll-y="true" id="pagecontainer">
+        <view class="contentbox">
+            <view class="user-info-group house_item_box border-bottom ">
+                <view class="imgurl avatar-user" style="background-image: url({{house.publisher.avatarUrl}});"></view>
+                <view class="userinfo">
+                    <view class="username">{{house.publisher.nickname}}
+                        <text class="{{house.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
+                    </view>
+                    <view class="upload_time">
+                        发表于：{{house.create_time}}
+                    </view>
                 </view>
-                <view class="upload_time">
-                    发表于：{{house.create_time}}
-                </view>
-            </view>
-            <view class="operation">
-                <view class="rightbox">
-                    <view class="icon-box">
-                        <text class="{{is_favor?'text-pink cuIcon-likefill':'cuIcon-like'}}" bindtap="OperationClick"
-                              data-house-id="{{house.id}}" data-type="favor"></text>
-                        <text class="{{is_collect?'text-orange cuIcon-favorfill':'cuIcon-favor'}} "
-                              bindtap="OperationClick" data-house-id="{{house.id}}" data-type="collect"></text>
+                <view class="operation">
+                    <view class="rightbox">
+                        <view class="icon-box">
+                            <text class="{{is_favor?'text-pink cuIcon-likefill':'cuIcon-like'}}" bindtap="OperationClick"
+                                  data-house-id="{{house.id}}" data-type="favor"></text>
+                            <text class="{{is_collect?'text-orange cuIcon-favorfill':'cuIcon-favor'}} "
+                                  bindtap="OperationClick" data-house-id="{{house.id}}" data-type="collect"></text>
+                        </view>
                     </view>
                 </view>
             </view>
-        </view>
-        <view class="border-bottom house_item_box">
-            <view class="title">标题：{{house.title}}</view>
-            <view class="house-desc padding-bottom-xs">
-                <text>
-                   描述：{{house.desc}}
-                </text>
-            </view>
-        </view>
-                <view class="border-bottom house_item_box">
-            <view class="title">详情信息</view>
-            <view class="house_info">
-                <view class="item">
-                    <view class="item_name"><text class="cuIcon-usefull margin-right-sm"></text>面积
-                    </view>
-                    <view class="item_value">{{house.area}}㎡</view>
-                </view>
-                <view class="item">
-                    <view class="item_name"><text class="cuIcon-rank margin-right-sm"></text>楼层
-                    </view>
-                    <view class="item_value">{{house.storey}}楼</view>
-                </view>
-                <view class="item">
-                    <view class="item_name"><text class="cuIcon-moneybag margin-right-sm"></text>可短租
-                    </view>
-                    <view class="item_value">{{house.can_short_rent?'是':'否'}}</view>
-                </view>
-                <view class="item">
-                    <view class="item_name"><text class="cuIcon-apps margin-right-sm"></text>类型
-                    </view>
-                    <view class="item_value">{{house.house_type}}</view>
-                </view>
-                <view class="item">
-                    <view class="item_name"><text class="cuIcon-moneybag margin-right-sm"></text>租金
-                    </view>
-                    <view class="item_value">{{house.price}}元</view>
-                </view>
-                <view class="item">
-                    <view class="item_name"><text class="cuIcon-home margin-right-sm"></text>户型
-                    </view>
-                    <view class="item_value">{{house.apartment}}</view>
+            <view class="border-bottom house_item_box">
+                <view class="title">标题：{{house.title}}</view>
+                <view class="house-desc padding-bottom-xs">
+                    <text>
+                       描述：{{house.desc}}
+                    </text>
                 </view>
             </view>
-        </view>
-        <view class="border-bottom house_item_box">
-            <view class="title">房源位置</view>
-            <view class="house_region">
-                <view class="cell-center">
-                    <view class="item">区域：{{house.region}}</view>
-                    <view class="item text-yellow border-bottom" bindtap="Showmap"
-                     data-house-longitude="{{house.longitude}}"
-                     data-house-latitude="{{house.latitude}}"
-                     data-house-address="{{house.address}}"
+                    <view class="border-bottom house_item_box">
+                <view class="title">详情信息</view>
+                <view class="house_info">
+                    <view class="item">
+                        <view class="item_name"><text class="cuIcon-usefull margin-right-sm"></text>面积
+                        </view>
+                        <view class="item_value">{{house.area}}㎡</view>
+                    </view>
+                    <view class="item">
+                        <view class="item_name"><text class="cuIcon-rank margin-right-sm"></text>楼层
+                        </view>
+                        <view class="item_value">{{house.storey}}楼</view>
+                    </view>
+                    <view class="item">
+                        <view class="item_name"><text class="cuIcon-moneybag margin-right-sm"></text>可短租
+                        </view>
+                        <view class="item_value">{{house.can_short_rent?'是':'否'}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="item_name"><text class="cuIcon-apps margin-right-sm"></text>类型
+                        </view>
+                        <view class="item_value">{{house.house_type}}</view>
+                    </view>
+                    <view class="item">
+                        <view class="item_name"><text class="cuIcon-moneybag margin-right-sm"></text>租金
+                        </view>
+                        <view class="item_value">{{house.price}}元</view>
+                    </view>
+                    <view class="item">
+                        <view class="item_name"><text class="cuIcon-home margin-right-sm"></text>户型
+                        </view>
+                        <view class="item_value">{{house.apartment}}</view>
+                    </view>
+                </view>
+            </view>
+            <view class="border-bottom house_item_box">
+                <view class="title">房源位置</view>
+                <view class="house_region">
+                    <view class="cell-center">
+                        <view class="item">区域：{{house.region}}</view>
+                        <view class="item text-yellow border-bottom" bindtap="Showmap"
+                         data-house-longitude="{{house.longitude}}"
+                         data-house-latitude="{{house.latitude}}"
+                         data-house-address="{{house.address}}"
+                        >
+                           地址：{{house.address}} >
+                        </view>
+                    </view>
+                </view>
+                <map id="map"
+                        style="width: 100%"
+                         longitude="{{house.longitude}}"
+                         latitude="{{house.latitude}}"
+                         scale="12"
+                         markers="{{markers}}"
                     >
-                       地址：{{house.address}} >
+                </map>
+            </view>
+            <view class="house_item_box">
+                <view class="title">设施设备</view>
+                <view class="iconlist">
+                    <view class="cu-list grid col-5 no-border">
+                        <view class="cu-item" wx:for="{{facilities}}" wx:for-item="value" wx:for-index="index" wx:key>
+                            <view class="iconfont {{value.is_active? 'active-icon':''}} {{value.icon}}"></view>
+                            <view class="{{value.is_active? 'active-icon':''}} icontext">{{value.name}}</view>
+                        </view>
                     </view>
                 </view>
             </view>
-            <map id="map"
-                    style="width: 100%"
-                     longitude="{{house.longitude}}"
-                     latitude="{{house.latitude}}"
-                     scale="12"
-                     markers="{{markers}}"
-                >
-            </map>
-        </view>
-        <view class="house_item_box">
-            <view class="title">设施设备</view>
-            <view class="iconlist">
-                <view class="cu-list grid col-5 no-border">
-                    <view class="cu-item" wx:for="{{facilities}}" wx:for-item="value" wx:for-index="index" wx:key>
-                        <view class="iconfont {{value.is_active? 'active-icon':''}} {{value.icon}}"></view>
-                        <view class="{{value.is_active? 'active-icon':''}} icontext">{{value.name}}</view>
-                    </view>
-                </view>
-            </view>
-        </view>
 
+        </view>
+    </scroll-view>
+    <view class="cu-bar tabbar footer border shop bg-white">
+        <button class="action bg-white" open-type="share">
+            <view class="cuIcon-share"></view>
+            <view>分享</view>
+        </button>
+        <!--    <view class="action" bindtap="make_call" data-phone="{{house.publisher.phone}}">-->
+        <!--        <view class="cuIcon-phone"></view>-->
+        <!--        电话联系-->
+        <!--    </view>-->
+        <view class="bg-green submit text-white"
+              bindtap="WechatCopyClick" data-wechat="{{house.publisher.wechat}}"
+              data-target="DialogModal1">
+            <view class="cuIcon-weixin margin-right-sm"></view>
+            微信
+        </view>
     </view>
-</scroll-view>
-<view class="cu-bar tabbar footer border shop bg-white">
-    <button class="action bg-white" open-type="share">
-        <view class="cuIcon-share"></view>
-        <view>分享</view>
-    </button>
-    <!--    <view class="action" bindtap="make_call" data-phone="{{house.publisher.phone}}">-->
-    <!--        <view class="cuIcon-phone"></view>-->
-    <!--        电话联系-->
-    <!--    </view>-->
-    <view class="bg-green submit text-white"
-          bindtap="WechatCopyClick" data-wechat="{{house.publisher.wechat}}"
-          data-target="DialogModal1">
-        <view class="cuIcon-weixin margin-right-sm"></view>
-        微信
-    </view>
-</view>
-
-<view class="cu-modal {{authModal?'show':''}}">
+    <view class="cu-modal {{authModal?'show':''}}">
     <view class="cu-dialog">
         <view class="cu-bar justify-end">
             <view class="content">微信授权</view>
@@ -154,4 +158,5 @@
             </view>
         </view>
     </view>
+</view>
 </view>

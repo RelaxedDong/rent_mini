@@ -29,6 +29,25 @@ Page({
      * 组件的属性列表
      */
     data: {
+        recommend: [
+            {
+                id: 1,
+                face: 'https://szs-renting.oss-cn-shenzhen.aliyuncs.com/house/20201112193613671tp5hFDMKi7p6bT7PhCcXC8HXE3xeFENm.jpg',
+                name: '老君山',
+                address: '岸新四季御园',
+            },
+            {
+                id: 1,
+                face: "https://szs-renting.oss-cn-shenzhen.aliyuncs.com/house/2020083143610153GT65TXdCJBRWRkF7z7apHiHraaG4fSB5.jpg",
+                name: '西峡老界岭',
+                address: '莲塘口岸新四季御园',
+            },
+            {
+                id: 1,
+                name: '宝天曼',
+                face: "https://szs-renting.oss-cn-shenzhen.aliyuncs.com/house/20201112193613655WWffFjaPeDDPEtHteHjD4mTNzETceGFz.jpg",
+                address: '莲塘口岸新四季御园',
+            }],
         banners: [],
         icon_list: [],
         cards: [],
@@ -70,7 +89,6 @@ Page({
         var has_next = this.data.has_next;
         var activekey = this.data.activekey;
         if (has_next) {
-            app.wxshowloading('检索中...');
             var page = this.data.page + 1;
             app.WxHttpRequestGet('house/index', {
                 'city': app.globalData.city, 'page': page, activekey: activekey
@@ -123,7 +141,6 @@ Page({
     onReady: function () {
     },
     getHouseList: function (page) {
-        app.wxshowloading('拼命加载中...');
         app.WxHttpRequestGet('house/index', {
             'city': app.globalData.city, 'page': page, 'activekey': this.data.activekey
         }, this.HandleIndexGetDone, app.InterError)
@@ -178,7 +195,7 @@ Page({
                                 pla:city,
                                 placeholder: city
                             })
-                            app.WxHttpRequestGet('house/banners', {city: that.data.city}, that.GetBannerDone, app.InterError);
+                            app.WxHttpRequestGet('house/banners', {city: that.data.city}, that.GetIndexConfigDone, app.InterError);
                             that.getHouseList(0);
                             app.ShowToast('定位城市：' + city)
                         },
@@ -191,6 +208,24 @@ Page({
                 },
             })
         })
+    },
+    onShareAppMessage: function (res) {
+        var path ='/pages/index/index'
+        var arr = app.globalData.share_img_list;
+        var imageurl = arr[Math.floor((Math.random()*arr.length))];
+        return {
+          title: "快速找房租房平台",
+          path: path,
+          imageUrl:imageurl, // 分享的封面图
+          success: function(res) {
+            app.ShowModel('恭喜', '转发成功~');
+            // 转发成功
+          },
+          fail: function(res) {
+            app.ShowModel('网络错误', '转发失败~');
+            // 转发失败
+          }
+        }
     },
     onShow: function () {
         var new_city = app.globalData.index_new_city;

@@ -14,7 +14,8 @@ Page({
             desc: "",
         },
         short_rent: false,
-        address: "",
+        address: "", // 详细地址
+        resident: "", // 小区名
         index: "",
         select_origin:false,
         subway: '',
@@ -69,8 +70,10 @@ Page({
         var that = this;
         wx.chooseLocation({
             success: function (res) {
+                console.log(res)
                 that.setData({
-                    address: res.name,      //调用成功直接设置地址
+                    address: res.address,      //调用成功直接设置地址
+                    resident: res.name,
                     longitude:res.longitude,
                     latitude:res.latitude
                 })
@@ -187,7 +190,6 @@ Page({
         var  formId = e.detail.formId;
         var wxdata = that.data;
         const params = e.detail.value;
-        params['address'] = wxdata.address;
         params['house_type'] = wxdata.house_type;
         params['apartment'] = wxdata.apartment;
         params['subway'] = wxdata.subway;
@@ -195,6 +197,8 @@ Page({
         params['imgs'] = wxdata.urls;
         params['latitude'] = wxdata.latitude;
         params['longitude'] = wxdata.longitude;
+        params['address'] = wxdata.address;
+        params['resident'] = wxdata.resident;
         if (!that.WxValidate.checkForm(params)) {
             const error = that.WxValidate.errorList[0];
             that.showModal(error);
@@ -205,6 +209,7 @@ Page({
             app.ShowModel('操作错误','请选择房源具体区域');
             return false
         }
+        app.requestMsg();
         wx.showModal({
             title: '确认提示',
             content: '确认发布吗房源',
@@ -244,7 +249,6 @@ Page({
         var data = res.data;
         wx.hideLoading()
         if (data.code === 200) {
-            app.ShowModel( '恭喜！房源发布成功!', '审核过程大概2分钟!')
             that.setData({
                 form:{},
                 cur_house_type:"",
@@ -253,6 +257,7 @@ Page({
                 subway:"",
                 urls:[],
             });
+            app.ShowModel( '恭喜！房源发布成功!', '快马加鞭审核中...')
             setTimeout(function () {
                 wx.switchTab({
                     url: '/pages/index/index'

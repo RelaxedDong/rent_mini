@@ -109,6 +109,7 @@ App({
       let resp = res.data.data;
       that.globalData.jwt_token = resp.token;
       that.globalData.user_id = resp.user_id;
+      that.globalData.is_superuser = resp.is_superuser;
       that.globalData.finish_user_info = resp.finish_user_info==1?true:false;
       wx.getSetting({
         success: function (res) {
@@ -302,14 +303,40 @@ App({
       phoneNumber: phone
     })
   },
+  requestMsg(){
+    // 订阅消息
+      return new Promise((resolve, reject) => {
+        wx.requestSubscribeMessage({
+          tmplIds: ["pgPr22zr2nBHa1hwWaMXA4ZA9AxQ7P2dBbcF3M1QIVA"],
+          success: (res) => {
+            if (res['pgPr22zr2nBHa1hwWaMXA4ZA9AxQ7P2dBbcF3M1QIVA'] === 'accept'){
+              wx.showToast({
+                title: '订阅OK！',
+                duration: 1000,
+                success(data) {
+                  //成功
+                  resolve()
+                }
+              })
+            }
+          },
+          fail(err) {
+            //失败
+            console.error(err);
+            reject()
+          }
+        })
+      })
+    },
   globalData: {
     api_host:'https://rent.donghao.club/api/',
     index_new_city:false,
+    is_superuser:false,
     raw_city:true,
-    share_img_list: ['../../image/share.png', '../../image/share1.png', '../../image/share2.png'],
-    city:'深圳市', // 默认进入首页的地址
-    province:'广东省',
-    district:'南山区',
+    share_img_list: ['../../image/icon/share.png', '../../image/icon/share1.png', '../../image/icon/share2.png'],
+    city:'北京市', // 默认进入首页的地址
+    province:'北京市',
+    district:'',
     last_page:''
   }
 });

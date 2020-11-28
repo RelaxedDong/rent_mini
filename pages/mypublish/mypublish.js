@@ -109,6 +109,9 @@ Page({
     this.onShareAppMessage(e)
   },
   onShareAppMessage: function (ops) {
+    if(!ops.target){
+      return
+    }
     var dataset = ops.target.dataset;
     var title = dataset.title;
     var house_id = dataset.houseId;

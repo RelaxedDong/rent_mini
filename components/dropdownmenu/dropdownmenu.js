@@ -143,12 +143,13 @@ Component({
             }
         },
         selectleft: function (e) {
+            console.log(e)
             var components = e.currentTarget.dataset.model.components;
             let selectedSubwayList = this.data.selectedSubwayList;
             for(let i =0;i<components.length; i++){
                 components[i].is_active = selectedSubwayList.indexOf(components[i].name) > -1;
             }
-            var value = e.target.dataset.model.value
+            var value = e.currentTarget.dataset.model.value
             this.setData({
                 dropDownMenuDataFirstRight:components,
                 select1: value,
@@ -226,6 +227,14 @@ Component({
             })
         },
     },
+     lifetimes:{
+     ready(){
+        let that = this;
+        setTimeout(function(){
+            that.selectleft({currentTarget: {dataset: {model: that.data.dropDownMenuRegion[0], index: 0}}})
+        },800)
+        }
+     },
     //组件生命周期函数，在组件实例进入页面节点树时执行
     attached: function () {
         // 可以在这里发起网络请求获取插件的数据
