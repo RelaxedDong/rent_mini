@@ -1,6 +1,5 @@
 // pages/list/list.js
 const app = getApp();
-const CHINA = require('../../utils/china_city');
 Page({
     /**
      * 页面的初始数据
@@ -29,7 +28,6 @@ Page({
         searchinput: "",
         houses: [],
         has_next: true,
-        clear: false,
         //是否悬停
     },
     GoToTop(e) {
@@ -39,16 +37,16 @@ Page({
     },
     SearchCallback(res) {
         let resp = res.data;
-        if(resp.code === 200){
+        if (resp.code === 200) {
             var page = this.data.page;
             var houses = resp.data.houses;
             var houes_length = houses.length;
             if (houes_length > 0) {
                 let setData = {
-                    page: page+1,
+                    page: page + 1,
                     [`houses[${page}]`]: houses
                 }
-                if(houes_length === 10) {
+                if (houes_length === 10) {
                     setData['has_next'] = true
                 }
                 this.setData(setData)
@@ -62,10 +60,7 @@ Page({
         } else {
             app.ShowToast(resp.msg);
         }
-    wx.hideLoading()
-    },
-    handleClick: function (e) {
-        app.handlehouseClick(e.currentTarget.dataset.id)
+        wx.hideLoading()
     },
     AddressClick(e) {
         var address = e.currentTarget.dataset.address;
@@ -79,6 +74,20 @@ Page({
         this.setData({
             search_list: search_list
         })
+    },
+    matchClick(e) {
+        this.setData({
+            searchinput: e.currentTarget.dataset.value
+        });
+        var conditions = this.get_conditions()
+        this.setData({
+            page: 0,
+            conditions: conditions,
+            houses: [],
+            search_list: [],
+        });
+        this.GoToTop()
+        this.get_house_list(conditions, 0)
     },
     ChildInputValueHanle: function (e) {
         this.setData({
@@ -96,36 +105,29 @@ Page({
     /**
      * 生命周期函数--监听页面加载
      */
-    ParamsDone(res) {
-        let resp = res.data;
-        if (resp.code === 200) {
-            var province = app.globalData.province;
-            var city = app.globalData.city;
-            var that = this;
-            this.getcities(province, city).then(function (regions) {
-                var region_key = 'dropDownMenuRegion[0].components'
-                var subway_key = 'dropDownMenuRegion[1].components'
-                var filter_conf = resp.data.filter_conf;
-                that.setData({
-                    [region_key]: regions,
-                    [subway_key]: resp.data.subway,
-                    dropDownMenuFourthData: filter_conf['dropDownMenuFourthData'],
-                    dropDownMenuThirdData: filter_conf['dropDownMenuThirdData'],
-                    dropDownMenuFirstData: filter_conf['dropDownMenuFirstData'],
-                    dropDownMenuTitle: filter_conf['dropDownMenuTitle'],
-                    apartment_list: resp.data.apartment,
-                    house_type_list: resp.data.house_type,
-                })
-            })
-        }
+    initSearchComponent() {
+        var filter_conf = app.globalData.filter_conf
+        var region_key = 'dropDownMenuRegion[0].components'
+        var subway_key = 'dropDownMenuRegion[1].components'
+        this.setData({
+            [region_key]: filter_conf['regions'],
+            [subway_key]: filter_conf['subway_list'],
+            dropDownMenuFourthData: filter_conf['dropDownMenuFourthData'],
+            dropDownMenuThirdData: filter_conf['dropDownMenuThirdData'],
+            dropDownMenuFirstData: filter_conf['dropDownMenuFirstData'],
+            dropDownMenuTitle: filter_conf['dropDownMenuTitle'],
+            apartment_list: filter_conf['apartment_list'],
+            house_type_list: filter_conf['house_type_list'],
+        })
+        console.log(filter_conf)
     },
-    get_conditions(){
+    get_conditions() {
         let conditions = this.data.conditions;
         conditions['city'] = app.globalData.city
         conditions['title'] = this.data.searchinput
         return conditions
     },
-    get_house_list(conditions, page=0) {
+    get_house_list(conditions, page = 0) {
         // 统一获取房源列表接口
         // app.wxshowloading('');
         app.WxHttpRequestGet('house/search?page=' + page, conditions, this.SearchCallback, app.InterError);
@@ -135,61 +137,41 @@ Page({
         let conditions = this.get_conditions()
         filter_conf[e.detail.index] = e.detail.selectedValue
         conditions['filter_conf'] = filter_conf
-        console.log(filter_conf)
         this.setData({
             filter_conf: filter_conf,
             conditions: conditions,
             houses: [],
+            search_list: [],
             page: 0,
         })
         this.GoToTop()
         this.get_house_list(conditions, 0)
     },
     onLoad: function (options) {
-        console.log(options)
         // todo: 基础card跳转
         var that = this;
         let query = wx.createSelectorQuery();
         let conditions = this.data.conditions;
         conditions['city'] = app.globalData.city
         conditions['title'] = this.data.searchinput
+        wx.setNavigationBarTitle({
+            title: app.globalData.city + "房源搜索"
+        })
         // 拼接从首页跳转过来的card参数，直接合并
         let result_conditions = Object.assign(conditions, options)
-        this.setData({
-            conditions: result_conditions
-        })
+        this.setData({conditions: result_conditions})
         this.get_house_list(result_conditions)
-        let city = app.globalData.city
-        app.WxHttpRequestGet('house/selects', {'city': city}, that.ParamsDone, app.InterError)
         query.select('#filter_bar').boundingClientRect()
         query.exec(function (res) {
             var height = res[0].height;
             that.setData({
-                placeholder: city,
+                placeholder: app.globalData.city,
                 fiexed_top: height + 10,
                 scrollHeight: app.globalData.windowHeight + 30
             });
         });
-    },
-    /**
-     * 生命周期函数--监听页面初次渲染完成
-     */
-    getcities(pro, city) {
-        var cities = CHINA.cites;
-        var province = cities[0];
-        return new Promise(function (resolve, reject) {
-            for (var k in province) {
-                if (province[k] === pro) {
-                    var p = '0,' + k;
-                    for (var i in cities[p]) {
-                        if (cities[p][i] === city) {
-                            var rcode = p + ',' + i;
-                            resolve(cities[rcode])
-                        }
-                    }
-                }
-            }
-        })
+        this.initSearchComponent()
+
     },
     onReady: function () {
 
@@ -237,21 +219,19 @@ Page({
      * 用户点击右上角分享
      */
     onShareAppMessage: function (res) {
-        var path ='/pages/index/index'
-        var arr = app.globalData.share_img_list;
-        var imageurl = arr[Math.floor((Math.random()*arr.length))];
+        var path = '/pages/index/index'
         return {
-          title: "快速找房租房平台",
-          path: path,
-          imageUrl:imageurl, // 分享的封面图
-          success: function(res) {
-            app.ShowModel('恭喜', '转发成功~');
-            // 转发成功
-          },
-          fail: function(res) {
-            app.ShowModel('网络错误', '转发失败~');
-            // 转发失败
-          }
+            title: "蚁租房|快速的找房租房平台",
+            path: path,
+            imageUrl: "", // 分享的封面图
+            success: function (res) {
+                app.ShowModel('恭喜', '转发成功~');
+                // 转发成功
+            },
+            fail: function (res) {
+                app.ShowModel('网络错误', '转发失败~');
+                // 转发失败
+            }
         }
     },
     showDialog: function (e) {

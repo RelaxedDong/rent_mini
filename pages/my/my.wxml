@@ -46,16 +46,22 @@
     </view>
 </view>
 <view  class="cu-list icon-text text-sm menu card-menu margin-top-sm margin-bottom-xl  radius shadow">
+<!--        <button class="cu-item arrow text-xs custom-btn" open-type="contact" bindcontact="handleContact" >-->
+<!--                    <view class="content">-->
+<!--            <text class="cuIcon-service text-purple"></text>-->
+<!--            <text class="text-grey text-sm">客服会话</text>-->
+<!--        </view>-->
+<!--    </button>-->
+<!--    <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/contact/contact">-->
+<!--        <view class="content">-->
+<!--            <text class="cuIcon-community text-cyan"></text>-->
+<!--            <text class="text-grey text-sm">关于我们</text>-->
+<!--        </view>-->
+<!--    </view>-->
     <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/feedback/feedback">
         <view class="content">
-            <text class="cuIcon-service text-yellow"></text>
+            <text class="cuIcon-mail text-yellow"></text>
             <text class="text-grey text-sm">意见反馈</text>
-        </view>
-    </view>
-    <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/contact/contact">
-        <view class="content">
-            <text class="cuIcon-community text-orange"></text>
-            <text class="text-grey text-sm">关于我们</text>
         </view>
     </view>
     <view class="cu-item arrow text-xs" bindtap="VersionClick">
@@ -73,10 +79,10 @@
     </view>
 </view>
 
-<view class="text-center text-grey text-xs margin-top-xs">
-    微信: {{version}}
-</view>
-<view class="text-center text-grey text-xs">
-    操作系统：{{system}}
-</view>
+<!--<view class="text-center text-grey text-xs margin-top-xs">-->
+<!--    微信: {{version}}-->
+<!--</view>-->
+<!--<view class="text-center text-grey text-xs">-->
+<!--    操作系统：{{system}}-->
+<!--</view>-->
 

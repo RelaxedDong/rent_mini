@@ -1,0 +1,67 @@
+<!--pages/sxauguide/nyistguide.wxml-->
+<view>
+    <!--地图-->
+    <map
+            id="map"
+            longitude="{{longitude}}"
+            latitude="{{latitude}}"
+            scale="{{scale}}"
+            style="width: 100%; height: 100vh"
+            markers='{{markers}}'
+            show-location='true'
+            bindmarkertap="markertap"
+            bindlabeltap="markertap"
+    ></map>
+</view>
+<view class="zan-dialog {{ showDialog ? 'zan-dialog--show' : '' }}" >
+  <view class="zan-dialog__mask" bindtap="toggleDialog" />
+    <navigator class="zan-dialog__container"
+               bindtap="toDetail"
+               open-type="navigate" target="self" url="/pages/detail/detail?house={{active_house.id}}">
+        <view class="content">
+            <view   style="box-shadow: none"
+                    class="card card-container card-container-primary card-container-primary-right card-container-unfull">
+                <view class="loadImg active" wx:if="{{active_house.imgs.length > 0}}">
+                    <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
+                          style="background-image: url('{{active_house.imgs[0]}}');"></view>
+                </view>
+                <view class="card-content">
+                    <text class="l-title-class card-title card-title-primary">{{active_house.title}}</text>
+                    <view class="user-info-group">
+                        <view class="imgurl avatar-user"
+                              style="background-image: url({{active_house.publisher.avatarUrl}});"></view>
+                        <view class="userinfo">
+                            <view class="username">{{active_house.publisher.nickname}}
+                                <text wx:if="{{active_house.publisher.gender}}"
+                                      class="{{active_house.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
+                            </view>
+                            <view class="upload_time">
+                                {{active_house.publisher.last_login}}
+                            </view>
+                        </view>
+                    </view>
+                    <view class="content">
+                        <view class='info'>
+                            <view class="houseinfo">
+                                <view class="grey-icon light cell-center" wx:if="{{active_house.house_type}}">
+                                    {{active_house.house_type}}
+                                </view>
+                                <view class="grey-icon light cell-center" wx:if="{{active_house.apartment}}">
+                                    {{active_house.apartment}}
+                                </view>
+                                <view class="grey-icon light cell-center" wx:if="{{active_house.direction}}">
+                                    {{active_house.direction}}
+                                </view>
+                            </view>
+                            <view class="price" wx:if="{{active_house.price}}">
+                                <text class="cuIcon-moneybagfill"></text>
+                                {{active_house.price}} 元/月
+                            </view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+
+    </navigator>
+</view>

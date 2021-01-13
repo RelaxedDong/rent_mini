@@ -107,13 +107,6 @@
   padding: 10rpx;
   box-sizing: border-box;
 }
-.sub-title{
-  font-weight: bold;
-  font-size: 28rpx;
-}
-.sub-title-right {
-  font-size: 25rpx;
-}
 .scroll_box{
   width: 100%;
   overflow: hidden;

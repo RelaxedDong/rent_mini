@@ -10,14 +10,15 @@
         <text class="cuIcon-triangledownfill"></text>
     </view>
 </view>
-<swiper-banner id="swiperbanner" wx:if="{{banners.length>0}}" imgs_list="{{banners}}"  swiper_style="card-swiper"></swiper-banner>
+<swiper-banner id="swiperbanner" wx:if="{{banners.length>0}}" imgs_list="{{banners}}"
+               swiper_style="card-swiper"></swiper-banner>
 <view class="icon-list">
     <view class="icon-item" wx:for="{{icon_list}}" wx:key bindtap="ImageClick" data-path="{{item.navigate}}">
         <image src="{{item.url}}"></image>
         <text class="text-center text-grey margin-top-xs text-xs">{{item.desc}}</text>
     </view>
 </view>
-<view class="feed-list">
+<view class="feed-list" wx:if="{{cards.length>0}}">
     <view class="feed-left">
         <image data-path="{{cards[0].navigate}}" class="feed-left" src="{{cards[0].url}}" bindtap="ImageClick"
         ></image>
@@ -32,22 +33,22 @@
         </view>
     </view>
 </view>
-<!--<view class="sub-model space-between">-->
-<!--    <view class="sub-title text-black">品牌公寓</view>-->
-<!--    <view class="sub-title-right text-grey">-->
-<!--        查看更多-->
-<!--        <text class="cuIcon-right"></text>-->
-<!--    </view>-->
-<!--</view>-->
-<!--  <view class="scroll_box border-main">-->
-<!--    <scroll-view class="scroll-view_x" scroll-x style="width: auto;overflow:hidden;">-->
-<!--      <view class="item_list" wx:for="{{recommend}}">-->
-<!--        <image src="{{item.face}}" class="item_book_img" mode="aspectFill"></image>-->
-<!--        <view class="text-center text-grey font-size-25">{{item.address}}</view>-->
-<!--      </view>-->
-<!--    </scroll-view>-->
-<!--</view>-->
-<view class="sub-model space-between">
+<!--    <view class="sub-model space-between">-->
+<!--            <view class="sub-title text-black">品牌公寓</view>-->
+<!--            <view class="sub-title-right text-grey">-->
+<!--                查看更多-->
+<!--                <text class="cuIcon-right"></text>-->
+<!--            </view>-->
+<!--        </view>-->
+<!--          <view class="scroll_box border-main">-->
+<!--            <scroll-view class="scroll-view_x" scroll-x style="width: auto;overflow:hidden;">-->
+<!--              <view class="item_list" wx:for="{{recommend}}">-->
+<!--                <image src="{{item.face}}" class="item_book_img" mode="aspectFill"></image>-->
+<!--                <view class="text-center text-grey font-size-25">{{item.address}}</view>-->
+<!--              </view>-->
+<!--            </scroll-view>-->
+<!--        </view>-->
+<view class="sub-model space-between" wx:if="{{houses.length !== 0 }}">
     <view class="sub-title text-black">最近更新</view>
     <view class="sub-title-right text-grey" bindtap='searchbtnclick'>
         查看更多
@@ -56,19 +57,28 @@
 </view>
 <view style="padding-bottom: 50rpx;margin-top: 25rpx">
     <view wx:for="{{houses}}" wx:for-item='row' wx:key>
-        <view wx:for='{{row}}' wx:key="{{index}}" bindtap="handleClick" data-id="{{item.id}}">
-            <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
-                <view class="loadImg loadImg{{index}} active">
+        <view wx:for='{{row}}' wx:key="{{index}}">
+            <navigator open-type="navigate" target="self" url="/pages/detail/detail?house={{item.id}}" class="card card-container card-container-primary card-container-primary-right card-container-unfull">
+                <view class="loadImg active" wx:if="{{item.imgs.length > 0}}">
                     <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
-                          style="background-image: url('{{item.imgs[0]}}');"></view>
+                          style="background-image: url('{{item.imgs[0]}}');">
+                    </view>
+                </view>
+                <view class="loadImg active" wx:if="{{item.video_url}}">
+                    <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl">
+                        <video style="width: 240rpx;height: 240rpx" controls="{{true}}" custom-cache="{{false}}" src="{{item.video_url}}"></video>
+                    </view>
                 </view>
                 <view class="card-content">
                     <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
                     <view class="user-info-group">
-                        <view class="imgurl avatar-user" style="background-image: url({{item.publisher.avatarUrl}});"></view>
+                        <view class="imgurl avatar-user"
+                              style="background-image: url({{item.publisher.avatarUrl}});"></view>
                         <view class="userinfo">
                             <view class="username">{{item.publisher.nickname}}
-                               <text class="{{item.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text></view>
+                                <text wx:if="{{item.publisher.gender}}"
+                                      class="{{item.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
+                            </view>
                             <view class="upload_time">
                                 {{item.publisher.last_login}}
                             </view>
@@ -76,22 +86,19 @@
                     </view>
                     <view class="content">
                         <view class='info'>
-                            <view class="houseinfo">
-                                <view class="grey-icon light cell-center margin-right-sm" wx:if="{{item.house_type}}">
-                                    {{item.house_type}}
-                                </view>
-                                <view class="grey-icon cell-center">
-                                    {{item.apartment}}
+                            <view class="houseinfo" wx:if="{{item.tags.length > 0}}">
+                                <view class="{{index===0?'green-icon':'grey-icon'}} cell-center" wx:for="{{item.tags}}" wx:if="{{index < 3}}">
+                                    {{item}}
                                 </view>
                             </view>
-                            <view class="price">
+                            <view class="price" wx:if="{{item.price}}">
                                 <text class="cuIcon-moneybagfill"></text>
-                                {{item.price}} 元/月
+                                {{item.price}} 元
                             </view>
                         </view>
                     </view>
                 </view>
-            </view>
+            </navigator>
         </view>
     </view>
     <view class="empty" wx:if="{{houses.length == 0 && show_empty}}">

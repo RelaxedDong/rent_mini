@@ -1,10 +1,11 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/detail/detail",
+    "pages/map/map",
     "pages/web/web",
     "pages/publish/publish",
     "pages/before-publish/before-publish",
-    "pages/detail/detail",
     "pages/edit-house/edit-house",
     "pages/contact/contact",
     "pages/my/my",
@@ -20,13 +21,12 @@
     "tags-list": "components/tags/tags"
   },
   "window": {
-    "navigationBarTitleText": "授权验证",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTextStyle": "black"
   },
   "tabBar": {
-    "color": "#cdcdcd",
-    "selectedColor": "#82ea9c",
+    "color": "#333332",
+    "selectedColor": "#22DD65",
     "list": [
       {
         "selectedIconPath": "image/footer/home-active.png",

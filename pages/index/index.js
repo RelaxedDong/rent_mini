@@ -154,9 +154,20 @@ Page({
             icon_list: configs.icons,
         })
     },
+    onPullDownRefresh: function () {
+        // 显示顶部刷新图标
+        wx.showNavigationBarLoading();
+        this.onLoad()
+        // 隐藏导航栏加载框
+        wx.hideNavigationBarLoading();
+        // 停止下拉动作
+        wx.stopPullDownRefresh();
+    },
     onLoad: function (options) {
         var that = this;
         var city = app.globalData.city;
+        wx.setNavigationBarTitle({title: "蚁租房"})
+        app.initSearchComponent(city);
         that.setData({
             city: city,
             placeholder: city,
@@ -195,8 +206,9 @@ Page({
                                 pla:city,
                                 placeholder: city
                             })
-                            app.WxHttpRequestGet('house/banners', {city: that.data.city}, that.GetIndexConfigDone, app.InterError);
+                            app.WxHttpRequestGet('house/banners', {city: that.data.city}, app.GetIndexConfigDone, app.InterError);
                             that.getHouseList(0);
+                            app.initSearchComponent(city);
                             app.ShowToast('定位城市：' + city)
                         },
                         fail:function (res) {
@@ -211,12 +223,10 @@ Page({
     },
     onShareAppMessage: function (res) {
         var path ='/pages/index/index'
-        var arr = app.globalData.share_img_list;
-        var imageurl = arr[Math.floor((Math.random()*arr.length))];
         return {
-          title: "快速找房租房平台",
+          title: "蚁租房|快速的找房租房平台",
           path: path,
-          imageUrl:imageurl, // 分享的封面图
+          imageUrl:app.globalData.share_img, // 分享的封面图
           success: function(res) {
             app.ShowModel('恭喜', '转发成功~');
             // 转发成功
@@ -238,9 +248,5 @@ Page({
         wx.navigateTo({
             url: '/pages/list/list'
         })
-    },
-    handleClick: function (e) {
-        var houseid = e.currentTarget.dataset.id;
-        app.handlehouseClick(houseid)
     },
 });

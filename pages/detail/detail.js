@@ -26,9 +26,6 @@ Page({
     app.ShowToast(res.data.msg);
     this.hideModal()
   },
-  makePhoneCall(e){
-    app.makePhoneCall(e.currentTarget.dataset.phone);
-  },
   // ShureAppointment(e){
   //   var that = this;
   //   var choose = this.data.choose_time;
@@ -58,6 +55,20 @@ Page({
   /**
    * @return {boolean}
    */
+  Mycopy(e){
+    wx.setClipboardData({
+      data: e.currentTarget.dataset.value,
+      success: function (res) {
+        wx.getClipboardData({
+          success: function (res) {
+            app.ShowModel('操作成功',
+              '链接复制成功'
+              );
+          }
+        })
+      }
+    })
+  },
   WechatCopyClick(e){
     if(!app.globalData.user_id){
       this.setData({
@@ -70,13 +81,17 @@ Page({
       app.ShowToast('8点后才能进行操作哦~');
       return
     }
+    if(!e.currentTarget.dataset.wechat){
+      app.ShowToast('用户未公开哦~');
+      return
+    }
     wx.setClipboardData({
       data: e.currentTarget.dataset.wechat,
       success: function (res) {
         wx.getClipboardData({
           success: function (res) {
-            app.ShowModel('可自行联系啦～（^ - ^）',
-              '添加好友后，可分享该房源给对方'
+            app.ShowModel('操作成功',
+              '微信复制成功'
               );
           }
         })
@@ -121,7 +136,7 @@ Page({
         is_collect:!this.data.is_collect
       });
     }
-    var request_data = {houseId:parseInt(houseId),operation_type:type}
+    var request_data = {houseId: houseId,operation_type:type}
     app.WxHttpRequestPOST('account/operation',request_data,this.HandleOperationDone)
   },
   HandleOperationDone(res){
@@ -168,6 +183,10 @@ Page({
       this.setData({
         authModal: true
       })
+      return false
+    }
+    if(!e.currentTarget.dataset.phone){
+      app.ShowToast('用户未公开哦~');
       return
     }
     let can_operation = this.click_check();
@@ -175,7 +194,9 @@ Page({
       app.ShowToast('8点后才能进行操作哦~');
       return
     }
-    app.makePhoneCall(e.currentTarget.dataset.phone);
+    wx.makePhoneCall({
+      phoneNumber: e.currentTarget.dataset.phone
+    })
   },
   HandleImgClick (e) {
     var dataset = e.target.dataset;
@@ -271,6 +292,9 @@ Page({
         is_collect: house_data.is_collect,
         is_loading: false,
       });
+        wx.setNavigationBarTitle({
+          title: house.title
+        })
     }else{
       app.ShowModel('错误', resp.msg)
     }
@@ -292,15 +316,12 @@ Page({
   },
   onShow:function(e){
   },
-  handleClick: function (e) {
-    wx.navigateBack({//返回
-      delta: 1
-    });
-    var houseid = e.currentTarget.dataset.id;
-    app.handlehouseClick(houseid)
-  },
   DetailOnload(options){
-    const house_id = options.house;
+    let scene = options.scene
+    var house_id = options.house;
+    if(scene && scene !== 'undefined') {
+       house_id = decodeURIComponent(scene).split("house=")[1]
+    }
     app.WxHttpRequestGet('house/detail/'+ house_id, {}, this.HandleGetDone)
   },
   onLoad: function (options) {

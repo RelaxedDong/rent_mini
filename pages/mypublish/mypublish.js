@@ -121,12 +121,10 @@ Page({
           app.ShowToast(res.data.msg)
         });
         this.hideModal();
-        var arr = app.globalData.share_img_list;
-        var imageurl = arr[Math.floor((Math.random()*arr.length))];
         return {
           title: title,
           path: '/pages/detail/detail?house='+house_id,
-          imageUrl: imageurl, // 分享的封面图
+          imageUrl: app.globalData.share_img, // 分享的封面图
         }
     }
   },

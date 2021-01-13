@@ -1,7 +1,19 @@
 {
   "desc": "关于本文件的更多信息，请参考文档 https://developers.weixin.qq.com/miniprogram/dev/framework/sitemap.html",
   "rules": [{
-  "action": "allow",
+    "action": "allow",
+    "page": "pages/index/index"
+  },{
+    "action": "allow",
+    "page": "pages/detail/detail"
+  },{
+    "action": "allow",
+    "page": "pages/list/list"
+  },{
+    "action": "allow",
+    "page": "pages/map/map"
+  },{
+  "action": "disallow",
   "page": "*"
   }]
 }

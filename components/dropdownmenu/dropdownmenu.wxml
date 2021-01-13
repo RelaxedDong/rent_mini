@@ -23,7 +23,8 @@
         <view>
             <block wx:for="{{dropDownMenuFirstData}}" wx:key="unique">
                 <view class="sortitem {{selectedValue1===item.value ? ' active ' : ' '}}"
-                      data-value='{{item.value}}' data-card="1" data-key="selectedValue1" bindtap='selectListItem'>
+                      data-value='{{item.value}}' data-card="1" data-key="selectedValue1" bindtap='selectListItem'
+                      data-name="{{item.name}}">
                     {{item.name}}
                 </view>
             </block>
@@ -35,75 +36,85 @@
     <view class="qy quyu-left">
         <view class="border-white {{select1 === item.value ? 'current' : ''}}" wx:for="{{dropDownMenuRegion}}"
               bindtap="selectleft" data-model='{{item}}'
-              wx:key="unique" data-left-index="{{index}}">
+              wx:key="unique" data-left-index="{{index}}"
+        >
             {{dropDownMenuRegion[index].name}}
         </view>
     </view>
     <view class="qy quyu-center">
         <block wx:if="{{leftIndex === 0}}">
-          <view class="{{selectedValue2 === item ? 'current2' : ''}}"
-              data-value="{{item}}" wx:for="{{dropDownMenuDataFirstRight}}"
-              bindtap="selectListItem" wx:key="unique" data-card="2" data-key="selectedValue2">
-            <view class="border-bottom">{{item}}</view>
-        </view>
+            <view class="{{selectedValue2 === item ? 'current2' : ''}}"
+                  data-value="{{item}}" wx:for="{{dropDownMenuDataFirstRight}}"
+                  bindtap="selectListItem" wx:key="unique" data-card="2" data-key="selectedValue2"
+                  data-name="{{item}}">
+                <view class="border-bottom">{{item}}</view>
+            </view>
         </block>
         <block wx:else>
             <view data-value="{{item.name}}" wx:for="{{dropDownMenuDataFirstRight}}"
-              bindtap="selectListItem" wx:key="unique" data-card="2" data-key="selectedValue3" data-index="{{index}}">
-            <view wx:if="{{!item.is_active}}"  class="border-bottom">
-                {{item.name}}
+                  bindtap="selectListItem" wx:key="unique" data-card="2" data-key="selectedValue3"
+                  data-index="{{index}}"
+                  data-name="{{item.name}}">
+                <view wx:if="{{!item.is_active}}" class="border-bottom">
+                    {{item.name}}
+                </view>
+                <view wx:else class="border-bottom"
+                      style="color:white;background-color:transparent;background: {{item.color}}">
+                    {{item.name}}
+                </view>
             </view>
-            <view wx:else class="border-bottom" style="color:white;background-color:transparent;background: {{item.color}}">
-                {{item.name}}
-            </view>
-        </view>
         </block>
 
 
     </view>
 </view>
-    <view class="temp temp3 {{pxopen ? 'show' : 'disappear'}} ">
-        <view class='tempheight'>
-            <view class="flex">
-                <view class="price-tag border-bottom">
-                    <view class="sortitem-button {{selectedValue4===item.value ? ' bg-green-grant ' : ' bg-grey '}}" wx:for="{{dropDownMenuThirdData}}" wx:key="unique"
-                          data-value='{{item.value}}' data-index="index" bindtap='selectListItem' data-card="3" data-key="selectedValue4">
-                        <block class="sortitem">
-                            {{item.name}}
-                        </block>
-                    </view>
+<view class="temp temp3 {{pxopen ? 'show' : 'disappear'}} ">
+    <view class='tempheight'>
+        <view class="flex">
+            <view class="price-tag border-bottom">
+                <view class="sortitem-button {{selectedValue4===item.value ? ' bg-green-grant ' : ' bg-grey '}}"
+                      wx:for="{{dropDownMenuThirdData}}" wx:key="unique"
+                      data-value='{{item.value}}' data-index="index" bindtap='selectListItem' data-card="3"
+                      data-key="selectedValue4"
+                      data-name="{{item.name}}">
+                    <block class="sortitem">
+                        {{item.name}}
+                    </block>
                 </view>
-                <view class="price-input-box">
-                    <view class="bar-scroll">租金范围</view>
-                    <view class="right-box">
-                        <input type="number" data-ty="low"  value="{{inputLow}}" bindinput='PriceInput' bindconfirm="toSearch" placeholder="最低价格"></input>
-                        <input type="number" data-ty="high" value="{{inputHigh}}" bindinput='PriceInput' placeholder="最高价格"></input>
-                        <button class="btn-submit-sm" data-card="3" bindtap="CustomPriceClick">确定</button>
-                    </view>
+            </view>
+            <view class="price-input-box">
+                <view class="bar-scroll">租金范围</view>
+                <view class="right-box">
+                    <input type="number" data-ty="low" value="{{inputLow}}" bindinput='PriceInput'
+                           bindconfirm="toSearch" placeholder="最低价格"></input>
+                    <input type="number" data-ty="high" value="{{inputHigh}}" bindinput='PriceInput'
+                           placeholder="最高价格"></input>
+                    <button class="btn-submit-sm" data-card="3" bindtap="CustomPriceClick">确定</button>
                 </view>
             </view>
         </view>
     </view>
-    <view class="temp temp3 {{sortopen ? 'show' : 'disappear'}} ">
-        <view class='tempheight'>
-            <view>
-                <block wx:for="{{dropDownMenuFourthData}}" wx:key="unique" wx:for-index="board_index">
-                    <view class="sortitem">
-                        <view class="title-sortitem">{{item.name}}</view>
-                        <view class="price-tag">
-                            <view class="sortitem-button {{child.is_active? ' bg-green-grant ' : ' bg-grey '}}"
-                                  wx:for="{{item.components}}" wx:for-item="child"
-                                  data-value='{{child.name}}'
-                                  bindtap='selectListItem' data-card="4"
-                                  data-key="selectedValues"
-                                  data-board="{{board_index}}"
-                                  data-index="{{index}}"
-                            >
-                                {{child.name}}
-                            </view>
+</view>
+<view class="temp temp3 {{sortopen ? 'show' : 'disappear'}} ">
+    <view class='tempheight'>
+        <view>
+            <block wx:for="{{dropDownMenuFourthData}}" wx:key="unique" wx:for-index="board_index">
+                <view class="sortitem">
+                    <view class="title-sortitem">{{item.name}}</view>
+                    <view class="price-tag">
+                        <view class="sortitem-button {{child.is_active? ' bg-green-grant ' : ' bg-grey '}}"
+                              wx:for="{{item.components}}" wx:for-item="child"
+                              data-value='{{child.name}}'
+                              bindtap='selectListItem' data-card="4"
+                              data-key="selectedValues"
+                              data-board="{{board_index}}"
+                              data-index="{{index}}"
+                        >
+                            {{child.name}}
                         </view>
                     </view>
-                </block>
-            </view>
+                </view>
+            </block>
         </view>
     </view>
+</view>

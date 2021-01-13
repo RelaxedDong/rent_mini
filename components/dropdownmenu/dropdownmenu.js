@@ -1,4 +1,5 @@
 //Component() 来注册组件，并提供组件的属性定义、内部数据和自定义方法
+const app = getApp();
 Component({
     properties: {
         // 这里定义了innerText属性，属性值可以在组件使用时指定
@@ -50,9 +51,9 @@ Component({
     },
     methods: {
         // 这里是自定义方法
-        PriceInput: function(e){
+        PriceInput: function (e) {
             let ty = e.currentTarget.dataset.ty;
-            if(ty === 'low'){
+            if (ty === 'low') {
                 this.setData({
                     inputLow: e.detail.value
                 })
@@ -62,14 +63,36 @@ Component({
                 })
             }
         },
-        CustomPriceClick: function(e){
+        CustomPriceClick: function (e) {
+            if (this.data.inputLow > this.data.inputHigh || this.data.inputLow < 0) {
+                app.ShowToast("价格输入不合法");
+                return
+            }
+
+
+            let dropDownMenuTitle = this.data.dropDownMenuTitle;
+            if (!this.data.inputLow && !this.data.inputHigh) {
+                dropDownMenuTitle[2] = '价格'
+            } else if (!this.data.inputLow) {
+                dropDownMenuTitle[2] = '<' + this.data.inputHigh
+            } else if (!this.data.inputHigh) {
+                dropDownMenuTitle[2] = '>' + this.data.inputLow
+            } else {
+                dropDownMenuTitle[2] = this.data.inputLow + '-' + this.data.inputHigh
+            }
             this.triggerEvent("selectedItem", {
                 index: e.currentTarget.dataset.card,
-                selectedValue: this.data.inputLow+ '-' + this.data.inputHigh
+                selectedValue: this.data.inputLow + '-' + this.data.inputHigh
             })
             this.setData({
                 selectedValue4: "",
+                hyopen: false,
+                pxopen: false,
+                sqopen: false,
+                sortopen: false,
+                dropDownMenuTitle: dropDownMenuTitle
             })
+
         },
         listqy: function (e) {
             if (this.data.hyopen) {
@@ -146,12 +169,12 @@ Component({
             console.log(e)
             var components = e.currentTarget.dataset.model.components;
             let selectedSubwayList = this.data.selectedSubwayList;
-            for(let i =0;i<components.length; i++){
+            for (let i = 0; i < components.length; i++) {
                 components[i].is_active = selectedSubwayList.indexOf(components[i].name) > -1;
             }
             var value = e.currentTarget.dataset.model.value
             this.setData({
-                dropDownMenuDataFirstRight:components,
+                dropDownMenuDataFirstRight: components,
                 select1: value,
                 leftIndex: e.currentTarget.dataset.leftIndex,
             })
@@ -159,24 +182,35 @@ Component({
         selectListItem: function (e) {
             var selectedValue = e.currentTarget.dataset.value
             var key = e.currentTarget.dataset.key
+            var card = e.currentTarget.dataset.card
             let setData = {
-                [key]: selectedValue
+                [key]: selectedValue,
+                hyopen: false,
+                pxopen: false,
+                sqopen: false,
+                sortopen: false
             }
-            if(key === 'selectedValue2') {
-                if(selectedValue === this.data.selectedValue2){
+            let dropDownMenuTitle = this.data.dropDownMenuTitle;
+            let index_0 = parseInt(card) - 1
+            if (key !== 'selectedValue3' && key !== 'selectedValues') {
+                dropDownMenuTitle[index_0] = e.currentTarget.dataset.name
+            }
+            if (key === 'selectedValue2') {
+                if (selectedValue === this.data.selectedValue2) {
                     selectedValue = ""
                     setData['selectedValue2'] = ""
+                    dropDownMenuTitle[index_0] = "区域"
                 }
                 // todo:selectedSubwayList
                 selectedValue = [selectedValue, this.data.selectedSubwayList]
             }
-            if(key === 'selectedValue3') {
+            if (key === 'selectedValue3') {
                 let dropDownMenuDataFirstRight = this.data.dropDownMenuDataFirstRight
                 let index = e.currentTarget.dataset.index
                 dropDownMenuDataFirstRight[index]['is_active'] = !dropDownMenuDataFirstRight[index].is_active
                 let selectedSubwayList = []
-                for (let i=0;i<dropDownMenuDataFirstRight.length;i++){
-                    if(dropDownMenuDataFirstRight[i].is_active){
+                for (let i = 0; i < dropDownMenuDataFirstRight.length; i++) {
+                    if (dropDownMenuDataFirstRight[i].is_active) {
                         selectedSubwayList.push(dropDownMenuDataFirstRight[i].name)
                     }
                 }
@@ -184,25 +218,26 @@ Component({
                 setData['dropDownMenuDataFirstRight'] = dropDownMenuDataFirstRight
                 selectedValue = [this.data.selectedValue2, selectedSubwayList]
             }
-            if(key === 'selectedValue4') {
-                if(selectedValue === this.data.selectedValue4){
+            if (key === 'selectedValue4') {
+                if (selectedValue === this.data.selectedValue4) {
                     selectedValue = ""
                     setData['selectedValue4'] = ""
+                    dropDownMenuTitle[index_0] = "价格"
                 }
-                    setData['inputLow'] = ""
-                    setData['inputHigh'] = ""
+                setData['inputLow'] = ""
+                setData['inputHigh'] = ""
             }
-            if(key === 'selectedValues') {
+            if (key === 'selectedValues') {
                 var board_index = e.currentTarget.dataset.board;
                 var index = e.currentTarget.dataset.index;
                 var dropDownMenuFourthData = this.data.dropDownMenuFourthData;
                 var is_active = dropDownMenuFourthData[board_index].components[index].is_active;
                 dropDownMenuFourthData[board_index].components[index].is_active = !is_active;
                 var sources = {}
-                for(let board_index in dropDownMenuFourthData){
+                for (let board_index in dropDownMenuFourthData) {
                     sources[board_index] = []
-                    for(let i=0;i<dropDownMenuFourthData[board_index].components.length;i++){
-                        if(dropDownMenuFourthData[board_index].components[i].is_active){
+                    for (let i = 0; i < dropDownMenuFourthData[board_index].components.length; i++) {
+                        if (dropDownMenuFourthData[board_index].components[i].is_active) {
                             sources[board_index].push(dropDownMenuFourthData[board_index].components[i].value)
                         }
                     }
@@ -211,9 +246,10 @@ Component({
                 setData['dropDownMenuFourthData'] = dropDownMenuFourthData
             }
             this.triggerEvent("selectedItem", {
-                index: e.currentTarget.dataset.card,
+                index: card,
                 selectedValue: selectedValue,
             })
+            setData['dropDownMenuTitle'] = dropDownMenuTitle
             this.setData(setData)
         },
         lowValueChangeAction1: function (e) {
@@ -227,14 +263,14 @@ Component({
             })
         },
     },
-     lifetimes:{
-     ready(){
-        let that = this;
-        setTimeout(function(){
-            that.selectleft({currentTarget: {dataset: {model: that.data.dropDownMenuRegion[0], index: 0}}})
-        },800)
+    lifetimes: {
+        ready() {
+            let that = this;
+            setTimeout(function () {
+                that.selectleft({currentTarget: {dataset: {model: that.data.dropDownMenuRegion[0], index: 0}}})
+            }, 800)
         }
-     },
+    },
     //组件生命周期函数，在组件实例进入页面节点树时执行
     attached: function () {
         // 可以在这里发起网络请求获取插件的数据

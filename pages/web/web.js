@@ -1,4 +1,5 @@
 // pages/web/web.js
+const app = getApp();
 Page({
 
   /**
@@ -12,7 +13,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var url = options.navigate;
+    var url = options.navigate + '?city=' + app.globalData.city + '&jwt_token='+app.globalData.jwt_token;
+    console.log(url)
     this.setData({
       url: url,
       show_web: true
