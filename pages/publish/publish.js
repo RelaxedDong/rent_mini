@@ -1,5 +1,6 @@
 // pages/publish/publish.js
 import WxValidate from '../../utils/WxValidate.js'
+
 const app = getApp();
 Page({
     /**
@@ -17,14 +18,14 @@ Page({
         address: "", // 详细地址
         resident: "", // 小区名
         index: "",
-        select_origin:false,
+        select_origin: false,
         subway: '',
         urls: [],
         have_subway: false,
         // 返回的可选择数据
-        subway_list:[],
-        house_types:[],
-        apartments:[],
+        subway_list: [],
+        house_types: [],
+        apartments: [],
         // 表单选择 name
         choose_house_type: "",
         choose_apartment: "",
@@ -32,7 +33,7 @@ Page({
         apartment: "",
         house_type: "",
     },
-    ShortRentClick(e){
+    ShortRentClick(e) {
         this.setData({
             short_rent: e.detail.value
         })
@@ -61,7 +62,9 @@ Page({
 
                                     }
                                 })
-                            }else{app.ShowToast("授权失败，请重新点击")}
+                            } else {
+                                app.ShowToast("授权失败，请重新点击")
+                            }
                         },
                     })
                 }
@@ -74,8 +77,8 @@ Page({
                 that.setData({
                     address: res.address,      //调用成功直接设置地址
                     resident: res.name,
-                    longitude:res.longitude,
-                    latitude:res.latitude
+                    longitude: res.longitude,
+                    latitude: res.latitude
                 })
             }
         })
@@ -88,7 +91,7 @@ Page({
             house_type: choose.value,
         })
     },
-    ApartmentChange(e){
+    ApartmentChange(e) {
         let choose = this.data.apartments[e.detail.value]
         this.setData({
             choose_apartment: choose.name,
@@ -112,38 +115,20 @@ Page({
         var region = e.detail.value;
         this.setData({
             region: region,
-            subway:"",
-            select_origin:true
+            subway: "",
+            select_origin: true
         });
-        var data = {'city':region[1]};
-        app.WxHttpRequestGet('house/selects',data,this.ParamsDone)
-    },
-    ParamsDone(res){
-        let resp = res.data;
-        if(resp.code === 200){
-            this.setData({
-                subway_list: resp.data.subway,
-                apartments: resp.data.apartment,
-                house_types: resp.data.house_type,
-                facility_list: resp.data.facility_list,
-                have_subway: resp.data.subway.length > 0
-            });
-        }
-    },
-    GetOssDone(res){
-        this.setData({
-            oss: res.data.data
-        })
+        this.initChooseComponent(region[1])
     },
     OssSign: function (e) {
         let that = this;
         app.WxHttpRequestGet('house/oss_sigin', {}, function (res) {
-        that.setData({
-            oss: res.data.data
+            that.setData({
+                oss: res.data.data
+            })
         })
-    })
     },
-    fileupload: function (oss,filename, url) {
+    fileupload: function (oss, filename, url) {
         return new Promise((resolve, reject) => {
             wx.uploadFile({
                 url: oss.region_host,
@@ -178,7 +163,7 @@ Page({
                 var filename = app.create_file_name(dir);
                 that.fileupload(oss, filename, urls[i]).then(function (res) {
                     filenames.push(res);
-                    if(urls.length === filenames.length){
+                    if (urls.length === filenames.length) {
                         resolve(filenames);
                     }
                 })
@@ -187,7 +172,6 @@ Page({
     },
     submitBtn: function (e) {
         var that = this;
-        var  formId = e.detail.formId;
         var wxdata = that.data;
         const params = e.detail.value;
         params['house_type'] = wxdata.house_type;
@@ -205,16 +189,16 @@ Page({
             return false
         }
         var region_place = params['region'][2];
-        if(!region_place){
-            app.ShowModel('操作错误','请选择房源具体区域');
+        if (!region_place) {
+            app.ShowModel('操作错误', '请选择房源具体区域');
             return false
         }
         app.requestMsg();
         wx.showModal({
             title: '确认提示',
             content: '确认发布吗房源',
-            success: function(res) {
-                if(res.confirm){
+            success: function (res) {
+                if (res.confirm) {
                     app.wxshowloading('房源发布中...');
                     var facility_list = [];
                     var facility_list_active = wxdata.facility_list;
@@ -224,19 +208,18 @@ Page({
                         }
                     }
                     params['facility_list'] = facility_list;
-                    params['formId'] = formId;
                     params['short_rent'] = wxdata.short_rent;
                     var temprory = wxdata.temporary_imgs;
-                    if(temprory){
+                    if (temprory) {
                         params['img'] = temprory
-                        app.WxHttpRequestPOST('house/house_add',params,that.AjaxDone,that.AjaxError)
-                    }else{
+                        app.WxHttpRequestPOST('house/house_add', params, that.AjaxDone, that.AjaxError)
+                    } else {
                         that.OssUpload('house/', wxdata.urls).then(function (urls) {
                             that.setData({
-                                temporary_imgs:urls
+                                temporary_imgs: urls
                             });
                             params['img'] = urls;
-                            app.WxHttpRequestPOST('house/house_add',params,that.AjaxDone,that.AjaxError)
+                            app.WxHttpRequestPOST('house/house_add', params, that.AjaxDone, that.AjaxError)
                         })
                     }
                 }
@@ -244,32 +227,32 @@ Page({
         })
     },
 
-    AjaxDone(res){
+    AjaxDone(res) {
         var that = this;
         var data = res.data;
         wx.hideLoading()
         if (data.code === 200) {
             that.setData({
-                form:{},
-                cur_house_type:"",
-                cur_rent_type:"",
-                address:"",
-                subway:"",
-                urls:[],
+                form: {},
+                cur_house_type: "",
+                cur_rent_type: "",
+                address: "",
+                subway: "",
+                urls: [],
             });
-            app.ShowModel( '恭喜！房源发布成功!', '快马加鞭审核中...')
+            app.ShowModel('恭喜！房源发布成功!', '快马加鞭审核中...')
             setTimeout(function () {
                 wx.switchTab({
                     url: '/pages/index/index'
                 })
-            },2000)
+            }, 2000)
         } else {
-            app.ShowModel( '错误', data.msg)
+            app.ShowModel('错误', data.msg)
         }
         wx.hideLoading()
     },
-    AjaxError(res){
-        app.ShowModel('网络错误','请检查你的网络，请稍后再试~')
+    AjaxError(res) {
+        app.ShowModel('网络错误', '请检查你的网络，请稍后再试~')
     },
     linchangeListen: function (e) {
         this.setData({
@@ -334,13 +317,13 @@ Page({
             title: {
                 required: '标题必须要填写',
                 maxlength: '标题最多20个字符',
-                minlength:'标题至少2个字符'
+                minlength: '标题至少2个字符'
             },
             price: {
                 required: '请输入房租',
                 number: '租金格式错误',
-                max:"不支持太高价格房源",
-                min:'房源价格错误'
+                max: "不支持太高价格房源",
+                min: '房源价格错误'
             },
             storey: {
                 required: '请输入楼层',
@@ -366,7 +349,7 @@ Page({
             desc: {
                 required: '请简要描述下你的房源',
                 maxlength: '简介过长',
-                minlength:'简介太短啦'
+                minlength: '简介太短啦'
             },
             imgs: {
                 required: '请选择房源图片'
@@ -374,29 +357,32 @@ Page({
         }
         this.WxValidate = new WxValidate(rules, messages)
     },
-    CheckDone(res){
-        var data = res.data;
-        if(data.code == 400){
-            app.ShowToast(data.msg);
-            setTimeout(function () {
-                wx.navigateBack({//返回
-                    delta: 1
-                })
-            },1500)
-        }
+    initChooseComponent(city) {
+        let that = this;
+        app.WxHttpRequestGet('house/selects', {"city": city}, function (res) {
+            let resp = res.data;
+            if (resp.code === 200) {
+                that.setData({
+                    subway_list: resp.data.subway,
+                    apartments: resp.data.apartment,
+                    house_types: resp.data.house_type,
+                    facility_list: resp.data.facility_list,
+                    have_subway: resp.data.subway.length > 0
+                });
+            }
+        })
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
         this.setData({
-            region:[app.globalData.province,app.globalData.city,app.globalData.district]
+            region: [app.globalData.province, app.globalData.city, app.globalData.district]
         })
-        app.WxHttpRequestGet('house/add_check',{},this.CheckDone,app.InterError)
         this.initValidate();
         this.OssSign();
-        var data = {'city': app.globalData.city};
-        app.WxHttpRequestGet('house/selects',data,this.ParamsDone)
+        wx.setNavigationBarTitle({title: app.globalData.city + "房源发布"})
+        this.initChooseComponent(app.globalData.city)
     },
     /**
      * 生命周期函数--监听页面初次渲染完成

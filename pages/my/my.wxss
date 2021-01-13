@@ -50,11 +50,10 @@
 .aui-tour-content{
   width:100%;
   height:300rpx;
-  background-image: -webkit-gradient(linear,left top,right top,from(#46cb8f),to(#2DCB73));
-  background-image: -webkit-linear-gradient(left,#46cb8f,#2DCB73);
-  background-image: -moz-linear-gradient(left,#46cb8f,#2DCB73);
-  background-image: linear-gradient(to right,#46cb8f,#2DCB73);
   background-color: #46cb8f;
+  background-image: -webkit-gradient(linear,left top,right top,from(#44ea76),to(#39fad7));
+  background-image: -moz-linear-gradient(left,#44ea76,#39fad7);
+  background: -webkit-linear-gradient(left,#44ea76 0%,#39fad7 80%,#39fad7 100%);
   border-radius:0 0 50% 50%;
 }
 .aui-tour-box{

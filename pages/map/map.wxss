@@ -1,0 +1,28 @@
+page {height: 100%;margin: 0;padding: 0;}
+
+/* 弹窗 */
+.zan-dialog__mask {position: fixed;top: 0; left: 0;right: 0;bottom: 0;background: rgba(0, 0, 0, 0); background: rgba(0, 0, 0, 0.4);display: none;z-index: 1001}
+
+.zan-dialog__container {position: fixed; bottom: 0;width: 100%;left: 0;right: 0;overflow: hidden;border-top-left-radius: 40rpx;
+    box-shadow: darkgrey 0rpx 5rpx 15rpx 8rpx;z-index: 1003;
+    background: #f8f8f8; margin: 0 auto;transform: translateY(300%);transition: all 0.4s ease;border-top-right-radius: 30rpx;}
+
+.zan-dialog--show .zan-dialog__container {transform: translateY(0);}
+.zan-dialog--show .zan-dialog__mask {display: block;}
+
+.b_line{margin: 0 20rpx;}
+.b_line .line{width: 40%;height: 25rpx;margin: 0 auto;background-color: #eee;border-radius: 25rpx;margin-top: 30rpx;}
+.b-adder text{font-size: 32rpx;color: #808080;margin-left: 10rpx;}
+.card-container{margin:0 auto;padding:20rpx;box-sizing:border-box;display:flex}
+.zan-img{width: 50%;vertical-align: bottom;height: 230rpx;border-radius: 8rpx}
+.content .tips{width: 46%}
+
+/*.tips .adder{font-size: 28rpx;color: #808080;padding: 10rpx 0;}*/
+
+.tips .price{display: flex;justify-content: space-between;align-items: center;}
+.price .jiage{font-size: 28rpx;color: #ff7428}
+.juli text{font-size: 28rpx;color: #0be200;}
+
+
+.viewlittle{width: 60rpx;height: 60rpx;overflow: hidden;background-color: #fff;position: fixed;bottom: 50rpx;right: 20rpx;display: flex;justify-content: center;align-items: center;border-radius: 8rpx;z-index: 1002}
+.viewlittle image{width: 50rpx;height: 50rpx;vertical-align: bottom;}

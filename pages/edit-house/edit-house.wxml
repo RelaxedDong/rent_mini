@@ -1,8 +1,9 @@
-<view bindtap="ToDetail" class="editbox">
+<navigator open-type="navigate" target="self" url="/pages/detail/detail?house={{house.id}}"
+        class="editbox">
     <view class="img-group-face">
         <image wx:for="{{house.imgs}}" wx:if="{{index<4}}" mode='aspectFill' src="{{item}}" lazy-load wx:key></image>
     </view>
-</view>
+</navigator>
 <view class="edit-container">
     <form bindsubmit='submitBtn'>
         <l-input label="标题" required="{{true}}" name="title" label-width="170"

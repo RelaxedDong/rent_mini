@@ -1,7 +1,9 @@
 <!--pages/mypublish/mypublish.wxml-->
 <view class="mycontainer">
-    <view wx:for='{{houses}}' wx:key="{{index}}" bindtap="HandleClick" data-id="{{item.id}}">
-        <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
+    <view wx:for='{{houses}}' wx:key="{{index}}">
+        <navigator
+                open-type="navigate" target="self" url="/pages/detail/detail?house={{item.id}}"
+                class="card card-container card-container-primary card-container-primary-right card-container-unfull">
             <view class="loadImg loadImg{{index}} active">
                 <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
                       style="background-image: url('{{item.imgs[0]}}');"></view>
@@ -74,7 +76,7 @@
                     </view>
                 </view>
             </view>
-        </view>
+        </navigator>
     </view>
     <view class="empty" wx:if="{{houses.length == 0}}">
         <image src="/image/empty-imgs/no-publish.png"></image>

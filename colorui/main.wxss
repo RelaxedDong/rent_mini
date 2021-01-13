@@ -17,7 +17,7 @@ page {
 	--grey: #8799a3;
 	--black: #333333;
 	--darkGray: #666666;
-	--gray: #aaaaaa;
+	--gray: #B1B1B1;
 	--ghostWhite: #f1f1f1;
 	--white: #ffffff;
 	/* 浅色 */
@@ -732,7 +732,7 @@ button.icon.lg {
 	position: relative;
 	display: flex;
 	padding: 0 30rpx;
-	min-height: 100rpx;
+	min-height: 90rpx;
 	background-color: var(--white);
 	justify-content: space-between;
 	align-items: center
@@ -933,7 +933,6 @@ button.icon.lg {
 	position: relative;
 	align-items: center;
 	min-height: 100rpx;
-	justify-content: space-between;
 }
 
 .cu-bar .action {
@@ -1138,7 +1137,9 @@ button.icon.lg {
 	position: fixed;
 	width: 100%;
 	bottom: 0;
-	height: calc(100rpx + env(safe-area-inset-bottom) / 2);
+	border-top-left-radius: 30rpx;
+	border-top-right-radius: 30rpx;
+	height: calc(120rpx + env(safe-area-inset-bottom) / 2);
 	padding-bottom: calc(env(safe-area-inset-bottom) / 2);
     border-top: 1px solid #f1f2f6;
 }
@@ -1163,11 +1164,6 @@ button.icon.lg {
 	margin: 30rpx 0;
 	overflow: initial;
 	color: #b2afb0;
-}
-
-.cu-bar.footer.shop .action {
-	width: 140rpx;
-	flex: initial;
 }
 
 .cu-bar.footer .action.add-action {
@@ -3013,6 +3009,16 @@ scroll-view.cu-steps .cu-item {
 .line-red,
 .lines-red {
 	color: var(--red);
+}
+.text-cyan,
+.line-cyan,
+.lines-cyan {
+	color: var(--cyan);
+}
+.text-purple,
+.line-purple,
+.lines-purple {
+	color: var(--purple);
 }
 .text-orange,
 .line-orange,

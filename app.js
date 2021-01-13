@@ -1,5 +1,7 @@
 //app.js
 var QQMapWX = require('/utils/qqmap-wx-jssdk.min.js');
+const CHINA = require('/utils/china_city');
+
 App({
   onLaunch: function () {
     //检查是否存在新版本
@@ -62,20 +64,12 @@ App({
     })
   },
   user_info_bind: function (page_this, e) {
-    // 微信授权绑定
-        if (e.detail.formId) {
-            page_this.setData({
-                formId: e.detail.formId
-            });
-            return
-        }
-        var that = page_this;
+        // 微信授权绑定
         var userinfo = e.detail.userInfo;
         if (!userinfo) {
             this.ShowToast('信息获取失败，请重新点击')
             return
         }
-        userinfo['formId'] = that.data.formId;
         this.globalData.userInfo = userinfo;
         this.WxHttpRequestPOST('account/user_info', userinfo, page_this.BindUserInfoDone, this.InterError);
     },
@@ -139,7 +133,7 @@ App({
             return
           }
           wx.request({
-            url: that.globalData.api_host +'account/login',
+            url: that.globalData.api_host+ '/api/' +'account/login',
             data: {code:res.code},
             header:{
               "content-type": "application/json"		//使用POST方法要带上这个header
@@ -217,7 +211,7 @@ App({
     // 封装get请求
     data['jwt_token'] = this.globalData.jwt_token;
     wx.request({
-      url: this.globalData.api_host + url,
+      url: this.globalData.api_host+ '/api/' + url,
       method: 'GET',
       data: data,
       header: {
@@ -236,7 +230,7 @@ App({
     data['jwt_token'] = this.globalData.jwt_token;
     console.log(data)
     wx.request({
-      url: this.globalData.api_host + url,
+      url: this.globalData.api_host+ '/api/' + url,
       data: data,
       header:{
         "content-type": "application/json"		//使用POST方法要带上这个header
@@ -293,15 +287,48 @@ App({
       })
     }).exec()
   },
-  handlehouseClick: function(house_id){
-    wx.navigateTo({
-      url: '/pages/detail/detail?house='+house_id
-    })
+  GetCities(pro, city) {
+        var cities = CHINA.cites;
+        var province = cities[0];
+        return new Promise(function (resolve, reject) {
+            for (var k in province) {
+                if (province[k] === pro) {
+                    var p = '0,' + k;
+                    for (var i in cities[p]) {
+                        if (cities[p][i] === city) {
+                            var rcode = p + ',' + i;
+                            resolve(cities[rcode])
+                        }
+                    }
+                }
+            }
+        })
+    },
+  initSearchComponent(city) {
+    let that = this;
+    this.WxHttpRequestGet('house/selects', {'city': city}, that.getSearchComponentDone, that.InterError)
   },
-  makePhoneCall(phone){
-    wx.makePhoneCall({
-      phoneNumber: phone
-    })
+  getSearchComponentDone(res){
+        let that = this;
+        let resp = res.data;
+        if (resp.code === 200) {
+            var province = that.globalData.province;
+            var city = that.globalData.city;
+            that.GetCities(province, city).then(function (regions) {
+                var filter_conf = resp.data.filter_conf;
+                that.globalData.filter_conf = {
+                    regions: regions,
+                    subway_list: resp.data.subway,
+                    apartment_list: resp.data.apartment,
+                    house_type_list: resp.data.house_type,
+                    dropDownMenuFourthData: filter_conf['dropDownMenuFourthData'],
+                    dropDownMenuThirdData: filter_conf['dropDownMenuThirdData'],
+                    dropDownMenuFirstData: filter_conf['dropDownMenuFirstData'],
+                    dropDownMenuTitle: filter_conf['dropDownMenuTitle'],
+                }
+            })
+        }
+
   },
   requestMsg(){
     // 订阅消息
@@ -329,11 +356,13 @@ App({
       })
     },
   globalData: {
-    api_host:'https://rent.donghao.club/api/',
+    api_host:'http://127.0.0.1:8000',
     index_new_city:false,
     is_superuser:false,
     raw_city:true,
-    share_img_list: ['../../image/icon/share.png', '../../image/icon/share1.png', '../../image/icon/share2.png'],
+    // 过滤条件
+    filter_conf:{},
+    share_img: "",
     city:'北京市', // 默认进入首页的地址
     province:'北京市',
     district:'',

@@ -63,26 +63,27 @@ Component({
         clearTimeout(old_timer)
       }
       this.setData({
-        timer:setTimeout(() => {
-          if(e.detail.value){
-            app.globalData.qqmapsdk.getSuggestion({
-              //获取输入框值并设置keyword参数
-              keyword: e.detail.value, //用户输入的关键词，可设置固定值,如keyword:'KFC'
-              region:app.globalData.city, //设置城市名，限制关键词所示的地域范围，非必填参数
-              success: function(res) {//搜索成功后的回调
-                var sug = [];
-                for (var i = 0; i < res.data.length; i++) {
-                  sug.push(
-                      res.data[i].title,
-                  )
-                }
-                _this.triggerEvent('SearchList',sug);
-              },
-            });
-          }else{ _this.triggerEvent('SearchList',[]);}
-          // 调用关键词提示接口
-        }, 700),
         inputVal:e.detail.value,
+        // timer:setTimeout(() => {
+        //   if(e.detail.value){
+        //     app.globalData.qqmapsdk.getSuggestion({
+        //       //获取输入框值并设置keyword参数
+        //       keyword: e.detail.value, //用户输入的关键词，可设置固定值,如keyword:'KFC'
+        //       region:app.globalData.city, //设置城市名，限制关键词所示的地域范围，非必填参数
+        //       success: function(res) {//搜索成功后的回调
+        //         var sug = [];
+        //         for (var i = 0; i < res.data.length; i++) {
+        //           sug.push(
+        //               res.data[i].title,
+        //           )
+        //         }
+        //         _this.triggerEvent('SearchList',sug);
+        //       },
+        //     });
+        //   }else{ _this.triggerEvent('SearchList',[]);}
+        //   // 调用关键词提示接口
+        // }, 700),
+        // inputVal:e.detail.value,
       })
     },
     toSearch:function(e){

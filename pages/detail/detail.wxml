@@ -1,32 +1,40 @@
-
-
 <view class="loading-gif" wx:if="{{is_loading}}">
     <image src="/image/icon/loading.gif"></image>
 </view>
 <view wx:else>
-    <swiper class="screen-swiper" bindchange="swiperchange" current="{{currentIndex}}" circular="true" autoplay="true"
-        interval="5000" duration="500">
-    <swiper-item wx:for="{{imglist}}" wx:key bindtap="HandleImgClick"
-                 data-urls="{{imglist}}" data-currenturl="{{item}}">
-        <image src="{{item}}" mode="aspectFill" lazy-load="true"></image>
-    </swiper-item>
-</swiper>
+    <video wx:if="{{house.video_url}}" style="width: 100%;height=400px;"
+           controls="{{true}}"
+           custom-cache="{{false}}"
+           src="{{house.video_url}}" binderror="videoErrorCallback"></video>
+    <swiper wx:if="{{imglist.length > 0}}" class="screen-swiper" bindchange="swiperchange" current="{{currentIndex}}"
+            circular="true" autoplay="true"
+            interval="5000" duration="500">
+        <swiper-item wx:for="{{imglist}}" wx:key bindtap="HandleImgClick"
+                     data-urls="{{imglist}}" data-currenturl="{{item}}">
+            <image class="detail-img" src="{{item}}" mode="aspectFill" lazy-load="true"></image>
+            <view class="detail-img-count">{{index+1}}/{{imglist.length}}</view>
+        </swiper-item>
+    </swiper>
     <scroll-view class="contanerbox" scroll-y="true" id="pagecontainer">
         <view class="contentbox">
-            <view class="user-info-group house_item_box border-bottom ">
-                <view class="imgurl avatar-user" style="background-image: url({{house.publisher.avatarUrl}});"></view>
+            <view class="user-info-group padding-bottom-sm font-size-25 border-bottom ">
+                <view class="imgurl avatar-user cell-center"
+                      style="background-image: url({{house.publisher.avatarUrl}});"></view>
                 <view class="userinfo">
-                    <view class="username">{{house.publisher.nickname}}
-                        <text class="{{house.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
+                    <view class="username">
+                        {{house.publisher.nickname}}
+                        <text wx:if="{{house.publisher.gender}}"
+                              class="{{house.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
                     </view>
                     <view class="upload_time">
-                        发表于：{{house.create_time}}
+                        {{house.create_time}}
                     </view>
                 </view>
                 <view class="operation">
                     <view class="rightbox">
                         <view class="icon-box">
-                            <text class="{{is_favor?'text-pink cuIcon-likefill':'cuIcon-like'}}" bindtap="OperationClick"
+                            <text class="{{is_favor?'text-pink cuIcon-likefill':'cuIcon-like'}}"
+                                  bindtap="OperationClick"
                                   data-house-id="{{house.id}}" data-type="favor"></text>
                             <text class="{{is_collect?'text-orange cuIcon-favorfill':'cuIcon-favor'}} "
                                   bindtap="OperationClick" data-house-id="{{house.id}}" data-type="collect"></text>
@@ -34,74 +42,48 @@
                     </view>
                 </view>
             </view>
-            <view class="border-bottom house_item_box">
-                <view class="title">标题：{{house.title}}</view>
-                <view class="house-desc padding-bottom-xs">
-                    <text>
-                       描述：{{house.desc}}
+            <view class="desc-header margin-top">
+                <view class="padding-top-sm padding-bottom-sm desc-header-1">
+                    <view>
+                        <text>{{house.region}}</text>
+                        <text class="cuIcon-title"></text>
+                    </view>
+                    <view>
+                        <text>{{house.address}}</text>
+                    </view>
+                </view>
+                <view class="text-orange price cell-center" wx:if="{{house.price}}">
+                    <text>{{house.price}}元 /月</text>
+                </view>
+            </view>
+            <view class="sub-title margin-top-sm">房间信息</view>
+            <view class="houseinfo" wx:if="{{house.tags.length > 0}}">
+                <view class="tag-detail {{index===0?'green-icon':'grey-icon'}} cell-center" wx:for="{{house.tags}}">
+                    {{item}}
+                </view>
+                <view class="tag-detail grey-icon" wx:if="{{house.area}}">
+                        {{house.area}}平
+                </view>
+                <view class="tag-detail grey-icon" wx:if="{{house.storey}}">
+                        {{house.storey}}楼
+                </view>
+                <view class="tag-detail grey-icon" wx:if="{{house.subway}}">
+                        地铁：{{house.subway}}
+                </view>
+            </view>
+
+            <view class="house_item_box">
+                <view class="sub-title">房源标题</view>
+                <view class="font-size-26 text-grey margin-top">{{house.title}}</view>
+                <view class="sub-title margin-top-sm" wx:if="{{house.desc}}">房源介绍</view>
+                <view class="house-desc margin-top-sm padding-bottom-xs" wx:if="{{house.desc}}">
+                    <text class="text-grey">
+                        {{house.desc}}
                     </text>
                 </view>
             </view>
-                    <view class="border-bottom house_item_box">
-                <view class="title">详情信息</view>
-                <view class="house_info">
-                    <view class="item">
-                        <view class="item_name"><text class="cuIcon-usefull margin-right-sm"></text>面积
-                        </view>
-                        <view class="item_value">{{house.area}}㎡</view>
-                    </view>
-                    <view class="item">
-                        <view class="item_name"><text class="cuIcon-rank margin-right-sm"></text>楼层
-                        </view>
-                        <view class="item_value">{{house.storey}}楼</view>
-                    </view>
-                    <view class="item">
-                        <view class="item_name"><text class="cuIcon-moneybag margin-right-sm"></text>可短租
-                        </view>
-                        <view class="item_value">{{house.can_short_rent?'是':'否'}}</view>
-                    </view>
-                    <view class="item">
-                        <view class="item_name"><text class="cuIcon-apps margin-right-sm"></text>类型
-                        </view>
-                        <view class="item_value">{{house.house_type}}</view>
-                    </view>
-                    <view class="item">
-                        <view class="item_name"><text class="cuIcon-moneybag margin-right-sm"></text>租金
-                        </view>
-                        <view class="item_value">{{house.price}}元</view>
-                    </view>
-                    <view class="item">
-                        <view class="item_name"><text class="cuIcon-home margin-right-sm"></text>户型
-                        </view>
-                        <view class="item_value">{{house.apartment}}</view>
-                    </view>
-                </view>
-            </view>
-            <view class="border-bottom house_item_box">
-                <view class="title">房源位置</view>
-                <view class="house_region">
-                    <view class="cell-center">
-                        <view class="item">区域：{{house.region}}</view>
-                        <view class="item text-yellow border-bottom" bindtap="Showmap"
-                         data-house-longitude="{{house.longitude}}"
-                         data-house-latitude="{{house.latitude}}"
-                         data-house-address="{{house.address}}"
-                        >
-                           地址：{{house.address}} >
-                        </view>
-                    </view>
-                </view>
-                <map id="map"
-                        style="width: 100%"
-                         longitude="{{house.longitude}}"
-                         latitude="{{house.latitude}}"
-                         scale="12"
-                         markers="{{markers}}"
-                    >
-                </map>
-            </view>
+            <view class="sub-title">设施设备</view>
             <view class="house_item_box">
-                <view class="title">设施设备</view>
                 <view class="iconlist">
                     <view class="cu-list grid col-5 no-border">
                         <view class="cu-item" wx:for="{{facilities}}" wx:for-item="value" wx:for-index="index" wx:key>
@@ -111,52 +93,97 @@
                     </view>
                 </view>
             </view>
-
+            <view class="sub-title">房源位置及周边</view>
+            <view class="border-bottom address-detail text-grey">
+                <view class="house_region padding-bottom-sm shadow" bindtap="Showmap"
+                      data-house-longitude="{{house.longitude}}"
+                      data-house-latitude="{{house.latitude}}"
+                      data-house-address="{{house.address}}">
+                    <view class="padding-xs">
+                        <view class="flex-row">
+                            <text>地址：{{house.address}} {{house.address_detail?'('+house.address_detail+')':''}}</text>
+                            <text class="cuIcon-right margin-left-xs cell-center"></text>
+                        </view>
+                    </view>
+                </view>
+                <map id="map"
+                     style="width: 100%"
+                     longitude="{{house.longitude}}"
+                     latitude="{{house.latitude}}"
+                     scale="12"
+                     markers="{{markers}}"
+                >
+                </map>
+            </view>
+            <view class="tips text-grey" wx:if="{{house.is_sp}}">
+                <text>
+                    帖子编号：{{house.user_id}}
+                </text>
+                <text>
+                    免责声明：
+                    以上信息由搜索引擎自动从互联网搜索所得，我方不会收集、存储、原文中用户个人信息，可能标签识别有误情况，具体请按标题、描述为准。此收录出于更好的传播个人转租、直租房源，消除租房双方信息不对称。
+                    平台不对发布的信息的真实性、有效性、安全性负责，请租房者注意自身人身财产安全。
+                </text>
+                <view class="flex-row" style="width: 100%">
+                    我们致力于提供一个简洁、好用的租房小程序。若以上信息侵犯了您的合法权益，可向我们反馈，我们将及时更正、删除等处理。
+                </view>
+                <button class="text-red custom-btn text-sm" style="margin-top: 10rpx" open-type="contact">联系我们</button>
+            </view>
         </view>
     </scroll-view>
-    <view class="cu-bar tabbar footer border shop bg-white">
-        <button class="action bg-white" open-type="share">
-            <view class="cuIcon-share"></view>
-            <view>分享</view>
-        </button>
-        <!--    <view class="action" bindtap="make_call" data-phone="{{house.publisher.phone}}">-->
-        <!--        <view class="cuIcon-phone"></view>-->
-        <!--        电话联系-->
-        <!--    </view>-->
-        <view class="bg-green submit text-white"
-              bindtap="WechatCopyClick" data-wechat="{{house.publisher.wechat}}"
-              data-target="DialogModal1">
-            <view class="cuIcon-weixin margin-right-sm"></view>
-            微信
+    <view class="cu-bar tabbar footer border bg-white shadow">
+        <view class="op-left">
+            <button class="share-bottom custom-btn" open-type="share">
+                <text class="iconfont icon-share3 cell-center icon-black share-icon"></text>
+                <text class="cell-center icon-grey share-text">分享</text>
+            </button>
+            <button class="share-bottom custom-btn" bindtap="Mycopy"
+                    data-value="https://rent.donghao.club/house_detail/?house_id={{house.id}}">
+                <text class="iconfont icon-lianjie cell-center icon-black share-icon"></text>
+                <text class="cell-center icon-grey share-text"
+                >链接
+                </text>
+            </button>
+        </view>
+        <view class="op-right">
+            <view class="circle-btn bg-phone" bindtap="make_call" data-phone="{{house.publisher.phone}}">
+                电话联系
+            </view>
+            <view class="circle-btn bg-wexin"
+                  bindtap="WechatCopyClick" data-wechat="{{house.publisher.wechat}}"
+                  data-target="DialogModal1">
+                添加微信
+            </view>
         </view>
     </view>
     <view class="cu-modal {{authModal?'show':''}}">
-    <view class="cu-dialog">
-        <view class="cu-bar justify-end">
-            <view class="content">微信授权</view>
-            <view class="action" bindtap="hideModal">
-                <text class="cuIcon-close text-red"></text>
+        <view class="cu-dialog">
+            <view class="cu-bar justify-end">
+                <view class="content">微信授权</view>
+                <view class="action" bindtap="hideModal">
+                    <text class="cuIcon-close text-red"></text>
+                </view>
             </view>
-        </view>
-        <view class="padding-xl auth-content">
-            <view>
-                <image  style="width: 100rpx;height: 100rpx;border-radius: 50%" src="/image/icon/logo.jpeg"></image>
+            <view class="padding-xl auth-content">
+                <view>
+                    <image style="width: 100rpx;height: 100rpx;border-radius: 50%" src="/image/icon/logo.jpeg"></image>
+                </view>
+                <view class="margin-top-sm text-grey">获取您的公开信息（昵称、头像等）</view>
             </view>
-            <view class="margin-top-sm text-grey">获取您的公开信息（昵称、头像等）</view>
-        </view>
-        <view class="cu-bar bg-white justify-end">
-            <view class="action">
-                <button class="cu-btn line-green text-grey" bindtap="hideModal">拒绝</button>
-                        <form bindsubmit='login' report-submit>
-                <button class="cu-btn bg-green margin-left-sm"
-                        open-type="getUserInfo"
-                        bindgetuserinfo="login"
-                        formType="submit"
-                        hover-class="hover"
-                >允许</button>
-            </form>
+            <view class="cu-bar bg-white justify-end">
+                <view class="action">
+                    <button class="cu-btn line-green text-grey" bindtap="hideModal">拒绝</button>
+                    <form bindsubmit='login' report-submit>
+                        <button class="cu-btn bg-green margin-left-sm"
+                                open-type="getUserInfo"
+                                bindgetuserinfo="login"
+                                formType="submit"
+                                hover-class="hover"
+                        >允许
+                        </button>
+                    </form>
+                </view>
             </view>
         </view>
     </view>
-</view>
 </view>

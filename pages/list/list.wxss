@@ -8,7 +8,15 @@
   padding: 200rpx 0;
   box-sizing: border-box;
 }
-
+.match-list {
+  padding: 10rpx 20rpx;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+.match-list text{
+  margin: 5rpx 0;
+}
 /* 头部search filter*/
 .section-placeholder,.header-select {
   background-color: white;

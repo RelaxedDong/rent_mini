@@ -3,6 +3,5 @@
     "dropdownmenu": "../../components/dropdownmenu/dropdownmenu"
   },
   "navigationBarBackgroundColor": "#fff",
-  "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "房源查询"
+  "navigationBarTextStyle": "black"
 }

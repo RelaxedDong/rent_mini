@@ -18,8 +18,8 @@ Page({
         ],
         msg_len: 0,
         houses_count: 0,
-        system: app.globalData.system,
-        version: app.globalData.version,
+        // system: app.globalData.system,
+        // version: app.globalData.version,
         favors: 0,
     },
     coutNum(e) {
@@ -31,9 +31,13 @@ Page({
         }
         return e
     },
-  login(e){
-    app.user_info_bind(this, e)
-  },
+    login(e) {
+        app.user_info_bind(this, e)
+    },
+    handleContact(e) {
+        console.log(e.detail.path)
+        console.log(e.detail.query)
+    },
     Navigator_to(e) {
         if (!this.data.is_auth) {
             app.ShowToast("请先完成授权")
@@ -62,6 +66,15 @@ Page({
         this.setData({
             is_superuser: app.globalData.is_superuser
         })
+        if (!app.globalData.user_id) {
+            this.setData({is_auth: false})
+            return
+        }
+        wx.showLoading({
+            title: '数据加载中',
+            mask: true,
+        });
+        app.WxHttpRequestGet('account/item_list', {}, this.ShowAccount, this.HanleAjaxItemFail);
     },
     HanleAjaxItemFail(res) {
         app.ShowModel('网络错误', '请刷新后再试');
@@ -77,15 +90,7 @@ Page({
      * 生命周期函数--监听页面显示
      */
     onShow: function () {
-        if(!app.globalData.user_id) {
-            this.setData({is_auth: false})
-            return
-        }
-        wx.showLoading({
-            title: '数据加载中',
-            mask: true,
-        });
-        app.WxHttpRequestGet('account/item_list', {}, this.ShowAccount, this.HanleAjaxItemFail);
+
     },
     /**
      * 生命周期函数--监听页面隐藏
@@ -116,7 +121,7 @@ Page({
     ShowAccount(res) {
         let resp = res.data;
         wx.hideLoading()
-        if(resp.code !== 200){
+        if (resp.code !== 200) {
             app.ShowToast(resp.msg);
             return
         }
