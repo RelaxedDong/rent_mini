@@ -36,8 +36,7 @@ Page({
           app.WxHttpRequestPOST('house/house_delete', {houseid:houseid},function (res) {
             var data = res.data;
             if(data.code == 200){
-              const index = e.currentTarget.dataset.index;
-              that.data.houses[index].status = '2';
+              that.data.houses.splice(e.currentTarget.dataset.index, 1)
               that.setData({
                 houses:that.data.houses
               })

@@ -115,19 +115,22 @@
                 >
                 </map>
             </view>
-            <view class="tips text-grey" wx:if="{{house.is_sp}}">
-                <text>
-                    帖子编号：{{house.user_id}}
-                </text>
-                <text>
-                    免责声明：
-                    以上信息由搜索引擎自动从互联网搜索所得，我方不会收集、存储、原文中用户个人信息，可能标签识别有误情况，具体请按标题、描述为准。此收录出于更好的传播个人转租、直租房源，消除租房双方信息不对称。
-                    平台不对发布的信息的真实性、有效性、安全性负责，请租房者注意自身人身财产安全。
-                </text>
-                <view class="flex-row" style="width: 100%">
-                    我们致力于提供一个简洁、好用的租房小程序。若以上信息侵犯了您的合法权益，可向我们反馈，我们将及时更正、删除等处理。
+            <view class="tips text-grey">
+                <view wx:if="{{house.is_sp}}">
+                    <text>
+                        帖子编号：{{house.user_id}}
+                    </text>
+                    <text>
+                        免责声明：
+                        以上信息由搜索引擎自动从互联网搜索所得，我方不会收集、存储、原文中用户个人信息，可能标签识别有误情况，具体请按标题、描述为准。此收录出于更好的传播个人转租、直租房源，消除租房双方信息不对称。
+                        平台不对发布的信息的真实性、有效性、安全性负责，请租房者注意自身人身财产安全。
+                    </text>
+                    <view class="flex-row" style="width: 100%">
+                        我们致力于提供一个简洁、好用的租房小程序。若以上信息侵犯了您的合法权益，可向我们反馈，我们将及时更正、删除等处理。
+                    </view>
+                    <button class="text-red custom-btn text-sm" style="margin-top: 10rpx" open-type="contact">联系我们
+                    </button>
                 </view>
-                <button class="text-red custom-btn text-sm" style="margin-top: 10rpx" open-type="contact">联系我们</button>
             </view>
         </view>
     </scroll-view>

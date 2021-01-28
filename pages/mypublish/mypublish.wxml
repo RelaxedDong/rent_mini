@@ -23,9 +23,7 @@
                     </view>
                 </view>
                 <view class="content">
-                    <view class="cu-tag round xs bg-mainbg text-green margin-top" wx:if="{{item.status == '2'}}">已删除
-                    </view>
-                    <view class="cu-tag round xs bg-mainbg text-yellow margin-top" wx:elif="{{item.status == '0'}}">
+                    <view class="cu-tag round xs bg-mainbg text-yellow margin-top" wx:if="{{item.status == '0'}}">
                         审核中
                     </view>
                     <view class="user-operation padding-top text-sm" wx:else>

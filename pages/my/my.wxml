@@ -26,11 +26,13 @@
             <view class="text-df">{{favors}}</view>
             <view class="margin-top-xs text-xs">点赞</view>
         </view>
-        <view class="flex flex-sub flex-direction icon-text">
+        <view class="flex flex-sub flex-direction icon-text"
+        bindtap="Navigator_to" data-url="/pages/mycollects/mycollects">
             <view class="text-df">{{collect_count}}</view>
             <view class="margin-top-xs text-xs">收藏</view>
         </view>
-        <view class="flex flex-sub flex-direction icon-text">
+        <view class="flex flex-sub flex-direction icon-text"
+              bindtap="Navigator_to" data-url="/pages/mypublish/mypublish">
             <view class="text-df">{{houses_count}}</view>
             <view class="margin-top-xs text-xs">房源数</view>
         </view>

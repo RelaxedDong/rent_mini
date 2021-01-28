@@ -316,8 +316,10 @@ App({
             var city = that.globalData.city;
             that.GetCities(province, city).then(function (regions) {
                 var filter_conf = resp.data.filter_conf;
+                var facility_list = resp.data.facility_list;
                 that.globalData.filter_conf = {
                     regions: regions,
+                    facility_list: facility_list,
                     subway_list: resp.data.subway,
                     apartment_list: resp.data.apartment,
                     house_type_list: resp.data.house_type,
@@ -356,12 +358,13 @@ App({
       })
     },
   globalData: {
-    api_host:'http://127.0.0.1:8000',
+    api_host:'https://rent.donghao.club',
     index_new_city:false,
     is_superuser:false,
     raw_city:true,
     // 过滤条件
     filter_conf:{},
+    home_conf:{},
     share_img: "",
     city:'北京市', // 默认进入首页的地址
     province:'北京市',

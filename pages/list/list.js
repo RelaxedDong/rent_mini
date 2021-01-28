@@ -154,9 +154,7 @@ Page({
         let conditions = this.data.conditions;
         conditions['city'] = app.globalData.city
         conditions['title'] = this.data.searchinput
-        wx.setNavigationBarTitle({
-            title: app.globalData.city + "房源搜索"
-        })
+        wx.setNavigationBarTitle({title: app.globalData.city + "房源搜索"})
         // 拼接从首页跳转过来的card参数，直接合并
         let result_conditions = Object.assign(conditions, options)
         this.setData({conditions: result_conditions})
@@ -165,7 +163,8 @@ Page({
         query.exec(function (res) {
             var height = res[0].height;
             that.setData({
-                placeholder: app.globalData.city,
+                placeholder: result_conditions.title||'输入关键字，搜索'+app.globalData.city+' 房源...',
+                searchinput: result_conditions.title,
                 fiexed_top: height + 10,
                 scrollHeight: app.globalData.windowHeight + 30
             });

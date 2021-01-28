@@ -14,12 +14,6 @@
 .address-right{
     text-align: right;
 }
-.f-item{
-    margin: 10rpx 8rpx;
-    box-sizing: border-box;
-    border-radius: 10rpx;
-    padding: 5rpx;
-}
 .img {
     width: 100rpx;
     height: 50rpx;
@@ -35,13 +29,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-.facility_box {
-    display: flex;
-    display: -webkit-flex;
-    justify-content: left;
-    flex-direction: row;
-    flex-wrap: wrap;
 }
 .add-icon {
     height: 50rpx;

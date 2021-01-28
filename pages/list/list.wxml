@@ -1,7 +1,7 @@
 <view class="header-select section-placeholder" id="filter_bar">
     <search-bar currentvalue="{{searchinput}}"
                 bind:ChildInputValue="ChildInputValueHanle"
-                bind:SearchList="SearchList" placeholder="输入关键字，搜索 {{placeholder}} 房源..."></search-bar>
+                bind:SearchList="SearchList" placeholder="{{placeholder}}"></search-bar>
 <!--    <view wx:for="{{search_list}}" class="match-list">-->
 <!--        <text class="font-size-25" bindtap="matchClick" data-value="{{item}}">{{item}}</text>-->
 <!--    </view>-->
