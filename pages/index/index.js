@@ -49,6 +49,7 @@ Page({
                 address: '莲塘口岸新四季御园',
             }],
         banners: [],
+        color_list: app.globalData.color_list,
         icon_list: [],
         cards: [],
         show_empty:false,

@@ -63,7 +63,7 @@ App({
       })
     })
   },
-  user_info_bind: function (page_this, e) {
+  user_info_bind: function (page_this, e, phone="") {
         // 微信授权绑定
         var userinfo = e.detail.userInfo;
         if (!userinfo) {
@@ -71,6 +71,9 @@ App({
             return
         }
         this.globalData.userInfo = userinfo;
+        if(phone){
+          userinfo['phone'] = phone
+        }
         this.WxHttpRequestPOST('account/user_info', userinfo, page_this.BindUserInfoDone, this.InterError);
     },
   /**
@@ -149,6 +152,23 @@ App({
         }
       });
     })
+  },
+  parseQueryString(url) {
+    if(!url||url === 'undefined') {
+      return {}
+    }
+    var obj = {};
+      var keyvalue = [];
+      var key = "",
+          value = "";
+      var paraString = url.substring(url.indexOf("?") + 1, url.length).split("&");
+      for (var i in paraString) {
+          keyvalue = paraString[i].split("=");
+          key = keyvalue[0];
+          value = keyvalue[1];
+          obj[key] = value;
+      }
+      return obj;
   },
   /**
    * @return {string}
@@ -359,9 +379,13 @@ App({
     },
   globalData: {
     api_host:'https://rent.donghao.club',
+    // api_host:'http://127.0.0.1:8000',
     index_new_city:false,
     is_superuser:false,
+    color_list: ['#66CC66', '#99CCFF',  '#FF9900', '#FF6666',],
     raw_city:true,
+    // 进入场景
+    in_scene:"",
     // 过滤条件
     filter_conf:{},
     home_conf:{},

@@ -1,4 +1,5 @@
 const app = getApp();
+var log = require('../../utils/log.js') // 引用上面的log.js文件
 Page({
   data: {
     facilities: [],
@@ -7,6 +8,7 @@ Page({
     is_collect: false,
     authModal: false,
     is_loading: true,
+    in_scene: false,
     // choose_time:"",
     // has_show_appoint: false,
     // weekday:["星期日","星期一","星期二","星期三","星期四","星期五","星期六"]
@@ -69,6 +71,14 @@ Page({
       }
     })
   },
+  HouseBind(e){
+    // if(!app.globalData.user_id){
+      this.setData({
+        authModal: true
+      })
+      // return false
+    // }
+  },
   WechatCopyClick(e){
     if(!app.globalData.user_id){
       this.setData({
@@ -112,7 +122,7 @@ Page({
     })
   },
   login(e){
-    app.user_info_bind(this, e)
+    app.user_info_bind(this, e, this.data.house.publisher.phone)
   },
   OperationClick (e){
     if(!app.globalData.user_id){
@@ -172,7 +182,11 @@ Page({
             app.ShowToast('授权成功')
             app.globalData.user_id = data.data.user_id;
             this.setData({
-              authModal: false
+              authModal: false,
+              in_scene: false,
+            })
+            this.onLoad({
+              house: this.data.house_id,
             })
         } else {
             app.ShowToast(data.msg)
@@ -319,12 +333,15 @@ Page({
   DetailOnload(options){
     let scene = options.scene
     var house_id = options.house;
-    if(scene && scene !== 'undefined') {
-       house_id = decodeURIComponent(scene).split("house=")[1]
+    let query_obj = app.parseQueryString(decodeURIComponent(scene))
+    if(query_obj.house) {
+       house_id = query_obj.house
     }
+    if(query_obj.scene_in){this.setData({in_scene: query_obj.scene_in})}
     app.WxHttpRequestGet('house/detail/'+ house_id, {}, this.HandleGetDone)
   },
   onLoad: function (options) {
+    log.info(options)
     var that = this;
     var user_id = app.globalData.user_id;
     if(!user_id){

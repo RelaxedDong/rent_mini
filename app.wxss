@@ -419,8 +419,9 @@ page {
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 5rpx;
-    margin-left: 5rpx;
+    border-radius: 8rpx;
+    margin-left: 10rpx;
+    font-size: 18rpx;
 }
 
 .tab-bar {

@@ -149,13 +149,22 @@
             </button>
         </view>
         <view class="op-right">
-            <view class="circle-btn bg-phone" bindtap="make_call" data-phone="{{house.publisher.phone}}">
-                电话联系
+            <view wx:if="{{in_scene}}">
+               <view class="circle-btn bg-wexin"
+                      bindtap="HouseBind"
+                      data-target="DialogModal1">
+                    绑定房源
+                </view>
             </view>
-            <view class="circle-btn bg-wexin"
-                  bindtap="WechatCopyClick" data-wechat="{{house.publisher.wechat}}"
-                  data-target="DialogModal1">
-                添加微信
+            <view wx:else class="flex-row">
+                <view class="circle-btn bg-phone" bindtap="make_call" data-phone="{{house.publisher.phone}}">
+                    电话联系
+                </view>
+                <view class="circle-btn bg-wexin"
+                      bindtap="WechatCopyClick" data-wechat="{{house.publisher.wechat}}"
+                      data-target="DialogModal1">
+                    添加微信
+                </view>
             </view>
         </view>
     </view>
