@@ -25,7 +25,7 @@
                 <view class="content">
                     <view class='info'>
                         <view class="houseinfo" wx:if="{{item.tags.length > 0}}">
-                                <view class="{{index===0?'green-icon':'grey-icon'}} cell-center" wx:for="{{item.tags}}" wx:if="{{index < 3}}">
+                                <view style="background: {{color_list[index]}};color: white" class="cell-center tag" wx:for="{{item.tags}}">
                                     {{item}}
                                 </view>
                             </view>

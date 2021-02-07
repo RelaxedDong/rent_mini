@@ -2,6 +2,7 @@ const app = getApp();
 var log = require('../../utils/log.js') // 引用上面的log.js文件
 Page({
   data: {
+    color_list: app.globalData.color_list,
     facilities: [],
     house: [],
     is_favor: false,
@@ -331,13 +332,13 @@ Page({
   onShow:function(e){
   },
   DetailOnload(options){
-    let scene = options.scene
+    // let scene_in = options.scene_in
     var house_id = options.house;
-    let query_obj = app.parseQueryString(decodeURIComponent(scene))
-    if(query_obj.house) {
-       house_id = query_obj.house
-    }
-    if(query_obj.scene_in){this.setData({in_scene: query_obj.scene_in})}
+    // let query_obj = app.parseQueryString(decodeURIComponent(scene))
+    // if(query_obj.house) {
+    //    house_id = query_obj.house
+    // }
+    if(options.scene_in){this.setData({in_scene: true})}
     app.WxHttpRequestGet('house/detail/'+ house_id, {}, this.HandleGetDone)
   },
   onLoad: function (options) {

@@ -12,7 +12,7 @@
     </view>
     <view wx:else class="margin">
         <form bindsubmit='login' report-submit>
-            <button class="cu-btn bg-blue"
+            <button class="cu-btn bg-green"
                     wx:if="{{!is_auth}}"
                     open-type="getUserInfo"
                     bindgetuserinfo="login"

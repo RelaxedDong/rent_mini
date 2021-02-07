@@ -23,10 +23,10 @@
                     </view>
                 </view>
                 <view class="content">
-                    <view class="cu-tag round xs bg-mainbg text-yellow margin-top" wx:if="{{item.status == '0'}}">
-                        审核中
+                    <view class="cu-tag round xs {{item.status!=='1'?'bg-orange':'bg-green'}} text-white margin-top" wx:if="{{item.status}}">
+                        {{item.status_verbose}}
                     </view>
-                    <view class="user-operation padding-top text-sm" wx:else>
+                    <view class="user-operation padding-top text-sm">
                         <view catchtap="RefrshHouse" data-house-id="{{item.id}}" data-index="{{index}}">
                             <text class="cuIcon-refresh text-green padding-right-sm"></text>顶帖
                         </view>

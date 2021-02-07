@@ -295,11 +295,6 @@ Page({
                 min: 1,
                 max: 500
             },
-            desc: {
-                required: true,
-                maxlength: 300,
-                minlength: 5
-            },
             house_type: {
                 required: true
             },
@@ -308,6 +303,11 @@ Page({
             },
             address: {
                 required: true,
+            },
+            desc: {
+                required: true,
+                maxlength: 300,
+                minlength: 5
             },
             imgs: {
                 required: true,

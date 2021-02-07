@@ -112,6 +112,10 @@ Page({
             this.setData({
                 title: data.data
             })
+          setTimeout(function () {
+              app.globalData.page_refresh = true
+            wx.navigateBack();
+          },1500)
         }
     },
     /**

@@ -5,6 +5,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        color_list: app.globalData.color_list,
         dropDownMenuTitle: [],
         dropDownMenuFirstData: [],
         dropDownMenuRegion: [

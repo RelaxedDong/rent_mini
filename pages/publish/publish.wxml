@@ -1,19 +1,16 @@
 <!--pages/publish/publish.wxml-->
-<scroll-view class="publish-container">
-    <form bindsubmit='submitBtn' report-submit>
+<scroll-view class="publish-container shadow">
+    <form bindsubmit='submitBtn' report-submit class="shadow">
         <view class='buttun-wrapper'>
-            <l-input label="标题" required="{{true}}" name="title" placeholder="好的标题更吸引眼球～ （^ - ^）" label-width="170"
+            <l-input label="标题" name="title" placeholder="好的标题更吸引眼球～ （^ - ^）" label-width="170"
                      value="{{form.title}}"></l-input>
-            <l-input label="租金" required="{{true}}" name="price" label-width="170" type="number" placeholder="租金/月"
+            <l-input label="租金" name="price" label-width="170" type="number" placeholder="租金/月"
                      value="{{form.price}}"></l-input>
-            <l-input label="楼层" required="{{true}}" name="storey" label-width="170" type="number" placeholder="楼层"
+            <l-input label="楼层" name="storey" label-width="170" type="number" placeholder="楼层"
                      value="{{form.storey}}"></l-input>
-            <l-input label="房屋面积" required="{{true}}" name="area" placeholder="房间面积" type="number" label-width="170"
+            <l-input label="房屋面积" name="area" placeholder="房间面积" type="number" label-width="170"
                      value="{{form.area}}">
             </l-input>
-            <l-textarea name="desc" value="{{form.desc}}" required="{{true}}" border="{{false}}" maxlength="300"
-                        placeholder="详细的描述会给你带来快速转租～"
-            />
         </view>
         <view class="cu-form-group border-bottom">
             <view class="title">整租/合租</view>
@@ -54,11 +51,23 @@
                    bindtap="AddressInput"/>
             <text class="cuIcon-locationfill text-green"></text>
         </view>
-            <view class="cu-form-group border-bottom">
+        <view class="cu-form-group border-bottom">
                 <view class="title">可短租</view>
                 <switch class="switch-sex" checked="{{short_rent}}" bindchange="ShortRentClick"></switch>
-            </view>
+        </view>
         <view class="border-bottom padding-bottom-sm">
+<!--        <view class='item-title margin-top-sm'>添加丰富信息，出租更快捷 ～</view>-->
+        <view class="facility_box margin-top padding-bottom-sm">
+            <view class="f-item {{item.is_active?'bg-green-grant':'bg-gray'}}" wx:for="{{facility_list}}"
+                  wx:key bindtap="TagChoose" data-key="{{index}}">
+                <view class="cu-tag">
+                <view class="iconfont {{item.icon}}"></view>
+                <view class="margin-left-sm">{{item.name}}</view>
+                </view>
+            </view>
+        </view>
+        <l-textarea style="margin-top: 20rpx" name="desc" value="{{form.desc}}" required="{{true}}" border="{{false}}" maxlength="300"
+                        placeholder="详细的描述会给你带来快速转租～"/>
             <l-image-picker
                 urls="{{urls}}"
                 count="6"
@@ -71,16 +80,6 @@
                 <text class='add-text'>选择图片</text>
             </view>
         </l-image-picker>
-        </view>
-        <view class='item-title'>添加丰富信息，出租更快捷 ～</view>
-        <view class="facility_box padding-bottom-sm">
-            <view class="f-item {{item.is_active?'bg-green-grant':'bg-gray'}}" wx:for="{{facility_list}}"
-                  wx:key bindtap="TagChoose" data-key="{{index}}">
-                <view class="cu-tag">
-                <view class="iconfont {{item.icon}}"></view>
-                <view class="margin-left-sm">{{item.name}}</view>
-                </view>
-            </view>
         </view>
         <view class="padding flex flex-direction">
             <button class="cu-btn blue-btn margin-tb-sm lg" formType="submit">

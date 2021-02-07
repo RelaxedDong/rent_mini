@@ -382,7 +382,10 @@ App({
     // api_host:'http://127.0.0.1:8000',
     index_new_city:false,
     is_superuser:false,
-    color_list: ['#66CC66', '#99CCFF',  '#FF9900', '#FF6666',],
+    page_refresh:false,
+    color_list: ['#66CC66', '#99CCFF',  '#FF9900', '#FF6666',
+      '#CCCCFF', '#CCCC33', '#009966', '#FF99CC',
+      '#99CC00', '#66CCCC', '#CCCC99', '#CC6600'],
     raw_city:true,
     // 进入场景
     in_scene:"",
