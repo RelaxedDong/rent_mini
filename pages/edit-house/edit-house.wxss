@@ -12,6 +12,7 @@
     margin: 10rpx;
     width: 150rpx;
     height: 200rpx;
+    border-radius: 15rpx;
 }
 .cu-form-group .title {
     min-width: calc(4em + 30rpx);

@@ -15,6 +15,7 @@ Page({
             desc: "",
         },
         short_rent: false,
+        show_phone: false,
         address: "", // 详细地址
         resident: "", // 小区名
         index: "",
@@ -36,6 +37,11 @@ Page({
     ShortRentClick(e) {
         this.setData({
             short_rent: e.detail.value
+        })
+    },
+    ShowPhoneClick(e) {
+        this.setData({
+            show_phone: e.detail.value
         })
     },
     AddressInput(e) {
@@ -131,7 +137,7 @@ Page({
     fileupload: function (oss, filename, url) {
         return new Promise((resolve, reject) => {
             wx.uploadFile({
-                url: oss.region_host,
+                url: oss.upload_path,
                 filePath: url,
                 name: 'file',
                 header: {
@@ -199,7 +205,7 @@ Page({
             content: '确认发布吗房源',
             success: function (res) {
                 if (res.confirm) {
-                    app.wxshowloading('房源发布中...');
+                    // app.wxshowloading('房源发布中...');
                     var facility_list = [];
                     var facility_list_active = wxdata.facility_list;
                     for (var tag in facility_list_active) {
@@ -209,12 +215,13 @@ Page({
                     }
                     params['facility_list'] = facility_list;
                     params['short_rent'] = wxdata.short_rent;
+                    params['show_phone'] = wxdata.show_phone;
                     var temprory = wxdata.temporary_imgs;
                     if (temprory) {
                         params['img'] = temprory
                         app.WxHttpRequestPOST('house/house_add', params, that.AjaxDone, that.AjaxError)
                     } else {
-                        that.OssUpload('house/', wxdata.urls).then(function (urls) {
+                        that.OssUpload('house_img/', wxdata.urls).then(function (urls) {
                             that.setData({
                                 temporary_imgs: urls
                             });
@@ -295,11 +302,6 @@ Page({
                 min: 1,
                 max: 500
             },
-            desc: {
-                required: true,
-                maxlength: 300,
-                minlength: 5
-            },
             house_type: {
                 required: true
             },
@@ -308,6 +310,11 @@ Page({
             },
             address: {
                 required: true,
+            },
+            desc: {
+                required: true,
+                maxlength: 300,
+                minlength: 5
             },
             imgs: {
                 required: true,

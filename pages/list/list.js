@@ -5,6 +5,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        color_list: app.globalData.color_list,
         dropDownMenuTitle: [],
         dropDownMenuFirstData: [],
         dropDownMenuRegion: [
@@ -13,11 +14,14 @@ Page({
         ],
         dropDownMenuThirdData: [],
         dropDownMenuFourthData: [],//排序数据
+        customFilter: {},
         subway: [],
         apartment_list: [],
         house_type_list: [],
         /* 筛选条件 end */
         show_empty: false,
+        distance_page: false,
+        location_auth: false,
         scrollHeight: 0,
         animation: '',
         page: 0,
@@ -119,7 +123,6 @@ Page({
             apartment_list: filter_conf['apartment_list'],
             house_type_list: filter_conf['house_type_list'],
         })
-        console.log(filter_conf)
     },
     get_conditions() {
         let conditions = this.data.conditions;
@@ -130,48 +133,77 @@ Page({
     get_house_list(conditions, page = 0) {
         // 统一获取房源列表接口
         // app.wxshowloading('');
+        conditions['location_conf'] = JSON.stringify(app.globalData.location_conf)
         app.WxHttpRequestGet('house/search?page=' + page, conditions, this.SearchCallback, app.InterError);
     },
+    openLocation() {
+        let that = this;
+        wx.openSetting({
+            success: function (data) {
+                if (data.authSetting["scope.userLocation"] === true) {
+                    app.ShowToast("位置授权成功")
+                    app.GetUserLocation(that).then(function (auth) {
+                        if(auth) {
+                            that.setData({page: 0})
+                            that.get_house_list(that.get_conditions(), 0)
+                        }
+                    })
+                } else {
+                    app.ShowToast("授权失败，请重新点击")
+                }
+            }
+        })
+    },
     selectedFourth: function (e) {
+        var value = e.detail.selectedValue
+        var index = e.detail.index
         var filter_conf = this.data.filter_conf;
         let conditions = this.get_conditions()
-        filter_conf[e.detail.index] = e.detail.selectedValue
+        filter_conf[index] = value
         conditions['filter_conf'] = filter_conf
-        this.setData({
+        var params = {
             filter_conf: filter_conf,
             conditions: conditions,
             houses: [],
             search_list: [],
             page: 0,
-        })
+            distance_page: false,
+            location_auth: true,
+        }
+        if(index == 1 && value === 'distance') {
+            params['distance_page'] = true;
+            if (JSON.stringify(app.globalData.location_conf) === '{}') {
+                params['location_auth'] = false
+            }
+        }
+        if(index == 4) {
+            conditions['house_type'] = ""
+        }
+        this.setData(params)
         this.GoToTop()
         this.get_house_list(conditions, 0)
     },
     onLoad: function (options) {
-        // todo: 基础card跳转
         var that = this;
         let query = wx.createSelectorQuery();
         let conditions = this.data.conditions;
         conditions['city'] = app.globalData.city
         conditions['title'] = this.data.searchinput
-        wx.setNavigationBarTitle({
-            title: app.globalData.city + "房源搜索"
-        })
+        wx.setNavigationBarTitle({title: app.globalData.city + "房源搜索"})
         // 拼接从首页跳转过来的card参数，直接合并
         let result_conditions = Object.assign(conditions, options)
-        this.setData({conditions: result_conditions})
+        this.setData({conditions: result_conditions, customFilter: options})
         this.get_house_list(result_conditions)
         query.select('#filter_bar').boundingClientRect()
         query.exec(function (res) {
             var height = res[0].height;
             that.setData({
-                placeholder: app.globalData.city,
+                searchinput: result_conditions.title,
                 fiexed_top: height + 10,
                 scrollHeight: app.globalData.windowHeight + 30
             });
         });
         this.initSearchComponent()
-
     },
     onReady: function () {
 
@@ -221,7 +253,7 @@ Page({
     onShareAppMessage: function (res) {
         var path = '/pages/index/index'
         return {
-            title: "蚁租房|快速的找房租房平台",
+            title: "蚁租房",
             path: path,
             imageUrl: "", // 分享的封面图
             success: function (res) {

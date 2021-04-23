@@ -2,16 +2,16 @@ const app = getApp();
 const CHINA = require('../../utils/china_city');
 Page({
   data: {
-    StatusBar: app.globalData.StatusBar,
-    CustomBar: app.globalData.CustomBar,
-    Custom: app.globalData.Custom,
-    TabCur: 0,
-    MainCur: 0,
-    VerticalNavTop: 0,
-    list: [],
-    house_count:0,
-    base:CHINA.cites,
-    load: true
+    // StatusBar: app.globalData.StatusBar,
+    // CustomBar: app.globalData.CustomBar,
+    // Custom: app.globalData.Custom,
+    // TabCur: 0,
+    // MainCur: 0,
+    // VerticalNavTop: 0,
+    // list: [],
+    // house_count:0,
+    // base:CHINA.cites,
+    load: true,
   },
   NavigetClick(res){
     var navigate = res.currentTarget.dataset.navigate;
@@ -24,31 +24,23 @@ Page({
   },
   GetAdvertiseDone(res){
     this.setData({
-      advertises: res.data.data
+      advertises: res.data.data,
     })
   },
   onLoad() {
     app.wxshowloading('加载中...');
-    var params = {};
-    var city = app.globalData.city;
-    if(city){
-      params['city'] = city
-    }
-    app.WxHttpRequestGet('house/advertises',params, this.GetAdvertiseDone, app.InterError)
-    let list = [];
-    var index = 0;
-    const cities = CHINA.cites["0"];
-    for(const i in cities){
-      list.push({
-        'code':i,
-        'id':index++,
-        'name':cities[i]
-      })
-    }
     this.setData({
-      list: list,
-      listCur: list[0]
+        city:app.globalData.city
     })
+    let that = this;
+    app.WxHttpRequestGet('house/city_conf',{from_mini: true}, function (resp) {
+        let data = resp.data;
+        if(data.code === 200) {
+            that.setData({
+                city_list: data.data.city_list
+            })
+        }
+    }, app.InterError)
     wx.hideLoading()
   },
   onReady() {
@@ -84,35 +76,35 @@ Page({
   /**
    * @return {boolean}
    */
-  VerticalMain(e) {
-    let that = this;
-    let list = this.data.list;
-    let tabHeight = 0;
-    if (this.data.load) {
-      for (let i = 0; i < list.length; i++) {
-        let view = wx.createSelectorQuery().select("#main-" + list[i].id);
-        view.fields({
-          size: true
-        }, data => {
-          list[i].top = tabHeight;
-          tabHeight = tabHeight + data.height;
-          list[i].bottom = tabHeight;
-        }).exec();
-      }
-      that.setData({
-        load: false,
-        list: list
-      })
-    }
-    let scrollTop = e.detail.scrollTop + 20;
-    for (let i = 0; i < list.length; i++) {
-      if (scrollTop > list[i].top && scrollTop < list[i].bottom) {
-        that.setData({
-          VerticalNavTop: (list[i].id - 1) * 50,
-          TabCur: list[i].id
-        })
-        return false
-      }
-    }
-  }
+  // VerticalMain(e) {
+  //   let that = this;
+  //   let list = this.data.list;
+  //   let tabHeight = 0;
+  //   if (this.data.load) {
+  //     for (let i = 0; i < list.length; i++) {
+  //       let view = wx.createSelectorQuery().select("#main-" + list[i].id);
+  //       view.fields({
+  //         size: true
+  //       }, data => {
+  //         list[i].top = tabHeight;
+  //         tabHeight = tabHeight + data.height;
+  //         list[i].bottom = tabHeight;
+  //       }).exec();
+  //     }
+  //     that.setData({
+  //       load: false,
+  //       list: list
+  //     })
+  //   }
+  //   let scrollTop = e.detail.scrollTop + 20;
+  //   for (let i = 0; i < list.length; i++) {
+  //     if (scrollTop > list[i].top && scrollTop < list[i].bottom) {
+  //       that.setData({
+  //         VerticalNavTop: (list[i].id - 1) * 50,
+  //         TabCur: list[i].id
+  //       })
+  //       return false
+  //     }
+  //   }
+  // }
 })

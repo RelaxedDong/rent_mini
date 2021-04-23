@@ -17,8 +17,8 @@
     box-sizing: border-box;
 }
 .before-item image{
-    width: 150rpx;
-    height: 150rpx;
+    width: 200rpx;
+    height: 200rpx;
 }
 .choose-box{
     display:flex;
@@ -27,6 +27,7 @@
     padding: 20rpx;
     text-align: center;
     flex:1;
+    font-size: 30rpx;
 }
 .choose-item{
     margin-left: 20rpx;

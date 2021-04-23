@@ -1,83 +1,54 @@
 // components/tabs/index.js
 // pages/test/test.js
 // 设置函数防抖
-const house_type = {'0': '不限', '1': '整租', '2': '合租'};
-const apartment = {
-    '0': "不限",
-    '1': "单间",
-    '2': "一室一厅",
-    '3': "两室一厅",
-    '4': "三室一厅",
-    '5': "四室一厅",
-    '6': "五室一厅",
-    '7': "其它",
-};
+
 const app = getApp();
 Page({
-    relations: {
-        '../tabpanel/index': {
-            type: 'child',
-            linked(target) {
-                this.initTabs();
-            },
-            unlinked(target) {
-                this.initTabs();
-            }
-        },
-    },
     /**
      * 组件的属性列表
      */
     data: {
-        recommend: [
-            {
-                id: 1,
-                face: 'https://szs-renting.oss-cn-shenzhen.aliyuncs.com/house/20201112193613671tp5hFDMKi7p6bT7PhCcXC8HXE3xeFENm.jpg',
-                name: '老君山',
-                address: '岸新四季御园',
-            },
-            {
-                id: 1,
-                face: "https://szs-renting.oss-cn-shenzhen.aliyuncs.com/house/2020083143610153GT65TXdCJBRWRkF7z7apHiHraaG4fSB5.jpg",
-                name: '西峡老界岭',
-                address: '莲塘口岸新四季御园',
-            },
-            {
-                id: 1,
-                name: '宝天曼',
-                face: "https://szs-renting.oss-cn-shenzhen.aliyuncs.com/house/20201112193613655WWffFjaPeDDPEtHteHjD4mTNzETceGFz.jpg",
-                address: '莲塘口岸新四季御园',
-            }],
+        navbarInitTop: 0, //导航栏初始化距顶部的距离
+        animationData: "",
+        isFixedTop: false, //是否固定顶部
+        navTab: ['热门推荐', '附近好房'],
+        currentTab: 0,
         banners: [],
+        color_list: app.globalData.color_list,
         icon_list: [],
         cards: [],
-        show_empty:false,
+        show_empty: false,
         houses: [],
-        publish_discuss:"right: 110rpx",
-        activekey: 'all',
         page: 0,
         offset: 10,
         Loading: false,//加载动画的显示
-        count: 0,
         has_next: true,
-        last_active_key: 'all'
+        tab_api_conf: ['house/index', 'house/nearby_houses'],
+        api_url: "house/index",
+        location_auth: false,
     },
-    ImageClick:function(e){
+    currentTab(e) {
+        let that = this;
+        let idx = e.currentTarget.dataset.idx
+        if (this.data.currentTab === idx) {
+            return
+        }
+        let url = this.data.tab_api_conf[idx]
+        this.setData({
+            api_url: url,
+            currentTab: idx,
+            page: 0,
+            houses: []
+        })
+        if (idx === 1 && !this.data.location_auth) {
+            return
+        }
+        that.getHouseList(url, 0)
+    },
+    ImageClick: function (e) {
         wx.navigateTo({
             url: e.currentTarget.dataset.path
         })
-    },
-    changeTabs(e) {
-        var activekey = e.currentTarget.dataset.activekey;
-        if (activekey !== this.data.last_active_key) {
-            this.setData({
-                page: 0,
-                houses: [],
-                last_active_key: activekey,
-                activekey: activekey
-            });
-            this.getHouseList(0);
-        }
     },
     CitySelect(res) {
         // 城市选择
@@ -87,11 +58,10 @@ Page({
     },
     onReachBottom: function () {
         var has_next = this.data.has_next;
-        var activekey = this.data.activekey;
         if (has_next) {
             var page = this.data.page + 1;
-            app.WxHttpRequestGet('house/index', {
-                'city': app.globalData.city, 'page': page, activekey: activekey
+            app.WxHttpRequestGet(this.data.api_url, {
+                'city': app.globalData.city, 'page': page, lng: this.data.lng, lat: this.data.lat
             }, this.LoadMoreDone, app.InterError)
         } else {
             app.ShowToast('没有更多了...')
@@ -99,15 +69,15 @@ Page({
     },
     HandleIndexGetDone(res) {
         var resp = res.data;
-        if(resp.code === 200){
+        if (resp.code === 200) {
             var houses_result = resp.data.house;
             var length = houses_result.length
-            if(length > 0){
+            if (length > 0) {
                 this.setData({
                     has_next: length > 0,
                     [`houses[${this.data.page}]`]: houses_result
                 });
-            }else{
+            } else {
                 this.setData({
                     show_empty: true
                 })
@@ -115,11 +85,10 @@ Page({
         } else {
             app.ShowToast(resp.msg);
         }
-        wx.hideLoading()
     },
     LoadMoreDone(res) {
         var resp = res.data;
-        if(resp.code === 200){
+        if (resp.code === 200) {
             var page = this.data.page + 1;
             var houses = resp.data.house;
             if (houses.length > 0) {
@@ -134,15 +103,25 @@ Page({
                 })
             }
         }
-        wx.hideLoading()
     },
-    onPageScroll: function (e) {  // 调用showImg函数
+    onPageScroll: function (e) {
+        var that = this;
+        var scrollTop = parseInt(e.scrollTop); //滚动条距离顶部高度
+        //判断'滚动条'滚动的距离 和 '元素在初始时'距顶部的距离进行判断
+        var isSatisfy = scrollTop >= that.data.navbarInitTop ? true : false;
+        //为了防止不停的setData, 这儿做了一个等式判断。 只有处于吸顶的临界值才会不相等
+        if (that.data.isFixedTop === isSatisfy) {
+            return false;
+        }
+        that.setData({
+            isFixedTop: isSatisfy
+        });
     },
     onReady: function () {
     },
-    getHouseList: function (page) {
-        app.WxHttpRequestGet('house/index', {
-            'city': app.globalData.city, 'page': page, 'activekey': this.data.activekey
+    getHouseList: function (url, page) {
+        app.WxHttpRequestGet(url, {
+            city: app.globalData.city, page: page, location_conf: JSON.stringify(app.globalData.location_conf)
         }, this.HandleIndexGetDone, app.InterError)
     },
     GetIndexConfigDone(res) {
@@ -163,27 +142,55 @@ Page({
         // 停止下拉动作
         wx.stopPullDownRefresh();
     },
-    onLoad: function (options) {
-        var that = this;
-        var city = app.globalData.city;
-        wx.setNavigationBarTitle({title: "蚁租房"})
-        app.initSearchComponent(city);
-        that.setData({
-            city: city,
-            placeholder: city,
-        });
-        this.getHouseList(0);
-        app.WxHttpRequestGet('house/banners', {city: city}, this.GetIndexConfigDone, app.InterError);
-        wx.getSetting({
-            success: function (res) {
-                var statu = res.authSetting;
-                if (!statu['scope.userLocation']) {
-                    that.getPermission()
+    openLocation() {
+        let that = this;
+        wx.openSetting({
+            success: function (data) {
+                if (data.authSetting["scope.userLocation"] === true) {
+                    app.ShowToast("位置授权成功")
+                    app.GetUserLocation(that).then(function (location_auth) {
+                        that.getHouseList(that.data.api_url, 0)
+                        // 定位后重新配置组件
+                        page_that.setData({location_auth: location_auth})
+                    })
+                } else {
+                    app.ShowToast("授权失败，请重新点击")
                 }
             }
         })
     },
-    getPermission:function(){
+    initLocation() {
+        wx.getLocation({
+            type: 'wgs84',
+            success: function (r) {
+                var latitude = r.latitude;
+                var longitude = r.longitude;
+                app.globalData.location_conf = {'longitude': longitude, 'latitude': latitude}
+            }
+        })
+    },
+    onLoad: function (options) {
+        var that = this;
+        var city = app.globalData.city;
+        wx.setNavigationBarTitle({title: "蚁租房"})
+        app.initSearchComponent();
+        that.setData({city: city});
+        this.getHouseList(this.data.api_url, 0);
+        app.WxHttpRequestGet('house/banners', {city: city}, this.GetIndexConfigDone, app.InterError);
+        wx.getSetting({
+            success: function (res) {
+                var status = res.authSetting;
+                console.log(status)
+                if (!status['scope.userLocation']) {
+                    that.getPermission()
+                } else {
+                    that.initLocation()
+                }
+            }
+        })
+        app.GetUserLocation(that)
+    },
+    getPermission: function () {
         var that = this;
         return new Promise((resolve, reject) => {
             wx.getLocation({
@@ -191,6 +198,7 @@ Page({
                 success: function (res) {
                     var latitude = res.latitude;
                     var longitude = res.longitude;
+                    app.globalData.location_conf = {'longitude': longitude, 'latitude': latitude}
                     app.globalData.qqmapsdk.reverseGeocoder({
                         location: {
                             latitude: latitude,
@@ -203,15 +211,14 @@ Page({
                             let district = ad_info.district;
                             app.SetProvinceCity(province, city, district);
                             that.setData({
-                                pla:city,
-                                placeholder: city
+                                pla: city,
                             })
-                            app.WxHttpRequestGet('house/banners', {city: that.data.city}, app.GetIndexConfigDone, app.InterError);
-                            that.getHouseList(0);
-                            app.initSearchComponent(city);
+                            app.WxHttpRequestGet('house/banners', {city: that.data.city}, that.GetIndexConfigDone, app.InterError);
+                            that.getHouseList(this.data.api_url);
+                            app.initSearchComponent();
                             app.ShowToast('定位城市：' + city)
                         },
-                        fail:function (res) {
+                        fail: function (res) {
                             wx.showModal({
                                 title: res,
                             });
@@ -222,22 +229,33 @@ Page({
         })
     },
     onShareAppMessage: function (res) {
-        var path ='/pages/index/index'
+        var path = '/pages/index/index'
         return {
-          title: "蚁租房|快速的找房租房平台",
-          path: path,
-          imageUrl:app.globalData.share_img, // 分享的封面图
-          success: function(res) {
-            app.ShowModel('恭喜', '转发成功~');
-            // 转发成功
-          },
-          fail: function(res) {
-            app.ShowModel('网络错误', '转发失败~');
-            // 转发失败
-          }
+            title: "蚁租房",
+            path: path,
+            imageUrl: app.globalData.share_img, // 分享的封面图
+            success: function (res) {
+                app.ShowModel('恭喜', '转发成功~');
+                // 转发成功
+            },
+            fail: function (res) {
+                app.ShowModel('网络错误', '转发失败~');
+                // 转发失败
+            }
         }
     },
     onShow: function () {
+        var that = this;
+        if (that.data.navbarInitTop === 0) {
+            //获取节点距离顶部的距离
+            wx.createSelectorQuery().select('#navbar').boundingClientRect(function (rect) {
+                if (rect && rect.top > 0) {
+                    that.setData({
+                        navbarInitTop: parseInt(rect.top) + 180
+                    });
+                }
+            }).exec();
+        }
         var new_city = app.globalData.index_new_city;
         if (new_city) {
             this.onLoad()

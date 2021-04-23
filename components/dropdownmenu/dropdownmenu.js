@@ -1,4 +1,6 @@
 //Component() 来注册组件，并提供组件的属性定义、内部数据和自定义方法
+import object from "../../dist/common/async-validator/validator/object";
+
 const app = getApp();
 Component({
     properties: {
@@ -23,6 +25,10 @@ Component({
         dropDownMenuFourthData: {
             type: Array,
             value: []
+        },
+        customFilter: {
+            type: Object,
+            value: {}
         },
     },
     data: {
@@ -266,6 +272,15 @@ Component({
     lifetimes: {
         ready() {
             let that = this;
+            var customFilter = this.data.customFilter;
+            let fourthComponents = this.data.dropDownMenuFourthData[1].components
+            let house_type = customFilter['house_type']
+            for(let i =0;i<fourthComponents.length;i++){
+                if (fourthComponents[i]['value'] === house_type) {
+                    fourthComponents[i]['is_active'] = true;
+                }
+            }
+            if (house_type) {this.setData({dropDownMenuFourthData: this.data.dropDownMenuFourthData})}
             setTimeout(function () {
                 that.selectleft({currentTarget: {dataset: {model: that.data.dropDownMenuRegion[0], index: 0}}})
             }, 800)

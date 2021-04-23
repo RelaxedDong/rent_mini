@@ -1530,7 +1530,7 @@ button.icon.lg {
 
 .cu-form-group picker .picker {
 	line-height: 100rpx;
-	font-size: 28rpx;
+	font-size: 25rpx;
 	text-overflow: ellipsis;
 	white-space: nowrap;
 	overflow: hidden;

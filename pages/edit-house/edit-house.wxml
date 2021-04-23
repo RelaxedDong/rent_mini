@@ -7,16 +7,27 @@
 <view class="edit-container">
     <form bindsubmit='submitBtn'>
         <l-input label="标题" required="{{true}}" name="title" label-width="170"
-                 value="{{form.title}}"></l-input>
+                 value="{{form.title}}" placeholder="房源标题"></l-input>
         <l-input label="租金" required="{{true}}" name="price" label-width="170" type="number"
-                 value="{{form.price}}"></l-input>
-        <l-input label="房屋面积" required="{{true}}" name="area" type="number" label-width="170" value="{{form.area}}">
+                 value="{{form.price}}" placeholder="房源房租"></l-input>
+        <l-input label="房屋面积" required="{{true}}" name="area" type="number" label-width="170"
+                 value="{{form.area}}" placeholder="房源面积">
         </l-input>
-        <l-input label="楼层" required="{{true}}" name="storey" type="number" label-width="170" value="{{form.storey}}">
+        <l-input label="楼层" required="{{false}}" name="storey" type="number" label-width="170"
+                 value="{{form.storey}}" placeholder="房源楼层">
         </l-input>
         <l-textarea  name="desc" value="{{form.desc}}" required="{{true}}" border="{{false}}" maxlength="400"
                     placeholder="详细的描述会给你带来快速转租哦~"
         />
+        <view class="facility_box padding-bottom-sm padding-xs">
+            <view class="f-item {{item.is_active?'bg-green-grant':'bg-gray'}}" wx:for="{{facility_list}}"
+                  wx:key bindtap="TagChoose" data-key="{{index}}">
+                <view class="cu-tag">
+                <view class="iconfont {{item.icon}}"></view>
+                <view class="margin-left-sm">{{item.name}}</view>
+                </view>
+            </view>
+        </view>
         <view class="padding flex flex-direction">
             <button class="bg-green margin-tb-sm lg" formType="submit">
                 <text class="text-white">立即修改</text>

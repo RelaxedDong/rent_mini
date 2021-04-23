@@ -8,6 +8,23 @@ page {
 .font-size-25 {
     font-size: 25rpx;
 }
+.font-size-30 {
+    font-size: 30rpx;
+}
+
+.open-location {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-top: 50rpx;
+}
+
+.open-location image {
+    width: 300rpx;
+    height: 300rpx;
+    border-radius: 20rpx;
+}
 
 @import "/icon/icon.wxss";
 .container {
@@ -55,7 +72,7 @@ page {
 
 .tips {
     font-size: 22rpx;
-    padding: 10rpx 0 40rpx 0;
+    padding: 10rpx 0 80rpx 0;
     box-sizing: border-box;
     word-wrap: break-word;
     word-break: break-all;
@@ -263,7 +280,8 @@ page {
     position: relative;
     display: flex;
     flex-direction: column;
-    flex: 1
+    flex: 1;
+    overflow: hidden;
 }
 
 .card-title {
@@ -387,6 +405,7 @@ page {
 
 .sub-title-right {
     font-size: 25rpx;
+    margin: 0 auto;
 }
 
 .green-icon {
@@ -400,27 +419,33 @@ page {
 }
 
 .icon-text {
-    font-family: "NSimSun";
     font-style: normal;
     font-size: 0.65rem;
     border-radius: 2px;
-    padding: 0.15rem 0.1rem;
     margin-right: 10rpx;
+    padding: 20rpx;
 }
-
+.icon-text image{
+    width: 80rpx;
+    height: 80rpx;
+    text-align: center;
+    display: flex;
+    align-self: center;
+    margin-top: 10rpx;
+}
 .houseinfo {
     font-size: 25rpx;
     display: flex;
 }
-
 .houseinfo view {
     text-align: center;
-    padding: 5rpx 10rpx;
+    padding: 5rpx 7rpx;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 5rpx;
-    margin-left: 5rpx;
+    margin-right: 10rpx;
+    font-size: 18rpx;
 }
 
 .tab-bar {
@@ -471,6 +496,42 @@ page {
     white-space: nowrap;
 }
 
+/*设施选择相关*/
+.facility_box {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: left;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.f-item{
+    margin: 10rpx 8rpx;
+    box-sizing: border-box;
+    border-radius: 10rpx;
+    padding: 5rpx;
+}
+
+.bg-house {
+    background: linear-gradient(33deg, #fbb13c, #FF6666);
+}
+
+.bg-wexin {
+    background: linear-gradient(33deg, #c4e759, #06d6a0);
+}
+
+.bg-phone {
+    background: linear-gradient(33deg, #fdeb82, #FF9500);
+}
+
+.circle-btn {
+    color: white;
+    border-radius: 40rpx;
+    padding: 20rpx 70rpx;
+    box-sizing: border-box;
+    font-size: 25rpx;
+    font-weight: bold;
+}
 
 @import "colorui/main.wxss";
 @import "colorui/icon.wxss";

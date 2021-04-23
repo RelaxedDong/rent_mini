@@ -59,6 +59,7 @@ Component({
   data: {
     showBtn: true,
     tempFilePath: '',
+    face_index: 0
   },
 
   /**
@@ -131,7 +132,11 @@ Component({
       })
 
     },
-
+    onTagTap(e){
+      // this.setData({
+      //   face_index: e.currentTarget.dataset.index
+      // })
+    },
     // 删除 remove
     onDelTap(e) {
       const index = e.currentTarget.dataset.index

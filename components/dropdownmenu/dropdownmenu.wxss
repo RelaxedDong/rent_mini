@@ -9,8 +9,8 @@
   position: relative;
   z-index: 99;
   display: flex;
-  border-bottom: 1px solid #d1d3d4;
   background: #fff;
+  border-bottom: 1px solid #f1f2f6;
 }
 
 .nav-son {
@@ -24,14 +24,14 @@
   margin: 20rpx 0;
 }
 .borders-right {
-  border-right: 1px solid #e6e6e6;
+  border-right: 1px solid #f1f2f6;
 }
 .borders-left {
-  border-left: 1px solid #e6e6e6;
+  border-left: 1px solid #f1f2f6;
 }
 .borders {
-  border-left: 1px solid #e6e6e6;
-  border-right: 1px solid #e6e6e6;
+  border-left: 1px solid #f1f2f6;
+  border-right: 1px solid #f1f2f6;
 }
 
 .content {
@@ -83,7 +83,7 @@
   line-height: 80rpx;
   box-sizing: border-box;
   font-size: 30rpx;
-  border-bottom: 1px solid #d1d3d4;
+  border-bottom: 1px solid #f1f2f6;
 
 }
 
@@ -110,7 +110,7 @@
 }
 
 .quyu-right view {
-  border-bottom: 1px solid #c5c5c5;
+  border-bottom: 1px solid #f1f2f6;
 }
 
 .current {
@@ -379,7 +379,7 @@
   font-size: 25rpx;
   border-radius: 10rpx;
   display: flex;
-  padding: 10rpx 20rpx;
+  padding: 5rpx 20rpx;
   box-sizing: border-box;
   margin: 10rpx;
 }

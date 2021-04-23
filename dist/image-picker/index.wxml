@@ -10,6 +10,9 @@
       <view class="close" data-index="{{ index }}" catchtap="onDelTap">
         <view style="color: #fff;font-size: 22rpx">x</view>
       </view>
+      <view wx:if="{{index===face_index}}" class="close" style="left: 10rpx;top: 10rpx" data-index="{{ index }}" catchtap="onTagTap">
+        <view style="color: white;background: #66CC66;font-size: 22rpx">首图</view>
+      </view>
       <image class="{{size == 3? 'img': 'min-img'}}" mode="{{ mode }}" src="{{ item }}" />
     </view>
   </l-grid-item>

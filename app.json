@@ -1,13 +1,13 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/contact/contact",
     "pages/detail/detail",
     "pages/map/map",
     "pages/web/web",
     "pages/publish/publish",
     "pages/before-publish/before-publish",
     "pages/edit-house/edit-house",
-    "pages/contact/contact",
     "pages/my/my",
     "pages/list/list",
     "pages/mycollects/mycollects",
@@ -26,7 +26,7 @@
   },
   "tabBar": {
     "color": "#333332",
-    "selectedColor": "#22DD65",
+    "selectedColor": "#333332",
     "list": [
       {
         "selectedIconPath": "image/footer/home-active.png",

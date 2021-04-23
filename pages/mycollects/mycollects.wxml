@@ -1,44 +1,60 @@
 <!--pages/mypublish/mypublish.wxml-->
 <view class="mycontainer">
-    <navigator open-type="navigate" target="self" url="/pages/detail/detail?house={{item.id}}"
-            wx:for='{{houses}}' wx:key="{{index}}">
-        <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
-            <view class="loadImg  active" wx:if="{{item.imgs.length > 0}}">
-                <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
-                      style="background-image: url('{{item.imgs[0]}}');"></view>
-            </view>
-            <view class="card-content">
-                <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
-                <view class="user-info-group">
-                    <view class="imgurl avatar-user"
-                          style="background-image: url({{item.publisher.avatarUrl}});"></view>
-                    <view class="userinfo">
-                        <view class="username">{{item.publisher.nickname}}
-                            <text wx:if="{{item.publisher.gender}}"
-                                  class="{{item.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
-                        </view>
-                        <view class="upload_time">
-                            {{item.publisher.last_login}}
-                        </view>
-                    </view>
-                </view>
-                <view class="content">
-                    <view class='info'>
-                        <view class="houseinfo" wx:if="{{item.tags.length > 0}}">
-                                <view class="{{index===0?'green-icon':'grey-icon'}} cell-center" wx:for="{{item.tags}}" wx:if="{{index < 3}}">
-                                    {{item}}
+        <view class="main-item" wx:for='{{houses}}' wx:key="{{index}}">
+            <movable-area>
+                <movable-view
+                      out-of-bounds="true" direction="horizontal" x="{{item.xmove}}"
+                      inertia="true"
+                      data-houseIndex="{{index}}"
+                      bindtouchstart="handleTouchStart"
+                      bindtouchend="handleTouchEnd"
+                      bindchange="handleMovableChange">
+                    <navigator open-type="navigate" target="self" url="/pages/detail/detail?house={{item.id}}">
+                        <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
+                            <view class="loadImg  active" wx:if="{{item.imgs.length > 0}}">
+                                <view class="right-card cover-img-unfull card-img-primary  card-img-primary-right imgurl"
+                                      style="background-image: url('{{item.imgs[0]}}');"></view>
+                            </view>
+                            <view class="card-content">
+                                <text class="l-title-class card-title card-title-primary my-card-title">{{item.title}}</text>
+                                <view class="user-info-group">
+                                    <view class="imgurl avatar-user"
+                                          style="background-image: url({{item.publisher.avatarUrl}});"></view>
+                                    <view class="userinfo">
+                                        <view class="username">{{item.publisher.nickname}}
+                                            <text wx:if="{{item.publisher.gender}}"
+                                                  class="{{item.publisher.gender==='2'?'cuIcon-female text-pink':'cuIcon-male text-blue'}}"></text>
+                                        </view>
+                                        <view class="upload_time">
+                                            {{item.publisher.last_login}}
+                                        </view>
+                                    </view>
+                                </view>
+                                <view class="content">
+                                    <view class='info'>
+                                        <view class="houseinfo" wx:if="{{item.tags.length > 0}}">
+                                            <view style="background: {{color_list[index]}};color: white"
+                                                  class="cell-center tag"
+                                                  wx:for="{{item.tags}}">
+                                                {{item}}
+                                            </view>
+                                        </view>
+                                        <view class="price" wx:if="{{item.price}}">
+                                            <text class="cuIcon-moneybagfill"></text>
+                                            {{item.price}} 元
+                                        </view>
+                                    </view>
                                 </view>
                             </view>
-                        <view class="price" wx:if="{{item.price}}">
-                            <text class="cuIcon-moneybagfill"></text>
-                            {{item.price}} 元
                         </view>
-                    </view>
-                </view>
-            </view>
-        </view>
-    </navigator>
+                    </navigator>
+                </movable-view>
+            </movable-area>
+          <view class="delete-btn" data-id="{{item.id}}" bindtap="handleDeleteProduct">
+              <text>删除</text>
+          </view>
+    </view>
     <view class="empty" wx:if="{{houses.length == 0}}">
-        <image src="/image/empty-imgs/no-collect.png"></image>
+        <image src="/image/icon/data-empty.png"></image>
     </view>
 </view>

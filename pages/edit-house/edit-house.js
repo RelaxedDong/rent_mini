@@ -6,6 +6,7 @@ Page({
      * 页面的初始数据
      */
     data: {
+        facility_list: [],
         title: '',
         form: {
             title: "",
@@ -19,7 +20,7 @@ Page({
         const rules = {
             title: {
                 required: true,
-                maxlength: 20,
+                maxlength: 50,
                 minlength: 2
             },
             price: {
@@ -35,21 +36,21 @@ Page({
                 max: 500
             },
             storey: {
-                required: true,
+                // required: true,
                 number: true,
                 min: 1,
                 max: 99
             },
             desc: {
                 required: true,
-                maxlength: 400,
+                maxlength: 500,
                 minlength: 20
             },
         }
         const messages = {
             title: {
                 required: '标题必须要填写',
-                maxlength: '标题最多20个字符',
+                maxlength: '标题最多50个字符',
                 minlength: '标题至少5个字符'
             },
             price: {
@@ -65,7 +66,6 @@ Page({
                 max: '面积输入错误，请重试~'
             },
             storey: {
-                required: '请输入楼层',
                 number: '楼层请输入整数',
                 min: '楼层输入不符实际，请重试~',
                 max: '楼层输入不符实际，请重试~'
@@ -78,7 +78,16 @@ Page({
         }
         this.WxValidate = new WxValidate(rules, messages)
     },
+    TagChoose(e) {
+        var key = e.currentTarget.dataset.key;
+        var facility_list = this.data.facility_list;
+        facility_list[key].is_active = !facility_list[key].is_active;
+        this.setData({
+            facility_list: facility_list
+        })
+    },
     submitBtn(e) {
+        var facility_list = [];
         const params = e.detail.value;
         var that = this;
         if (!that.WxValidate.checkForm(params)) {
@@ -86,6 +95,13 @@ Page({
             app.ShowModel('错误', error.msg);
             return false
         }
+        var facility_list_active = this.data.facility_list;
+        for (var tag in facility_list_active) {
+            if (facility_list_active[tag].is_active) {
+                facility_list.push(tag)
+            }
+        }
+        params['facility_list'] = facility_list;
         params['houseid'] = this.data.house.id;
         app.WxHttpRequestPOST('house/house_edit', params, this.EditDone, app.InterError);
     },
@@ -96,6 +112,10 @@ Page({
             this.setData({
                 title: data.data
             })
+          setTimeout(function () {
+              app.globalData.page_refresh = true
+            wx.navigateBack();
+          },1500)
         }
     },
     /**
@@ -104,20 +124,29 @@ Page({
     onLoad: function (options) {
         var that = this;
         that.initValidate();
+        var filter_conf = JSON.parse(JSON.stringify(app.globalData.filter_conf))
         app.WxHttpRequestGet('house/detail/' + options['id'], {'is_edit': 1}, function (res) {
             let resp = res.data;
             if (resp.code === 200) {
                 let house = resp.data.house;
+                let facility_list = house.facilities;
+                let facility_conf = filter_conf.facility_list
+                console.log(facility_conf)
+                for (let i = 0; i < facility_list.length; i++) {
+                    facility_conf[facility_list[i]].is_active = true;
+                }
                 let form = {
                     title: house.title,
                     price: house.price,
                     area: house.area,
                     desc: house.desc,
                     storey: house.storey,
+                    facilities: house.facilities,
                 }
                 that.setData({
                     form: form,
-                    house: house
+                    house: house,
+                    facility_list: facility_conf
                 })
             } else {
                 app.ShowToast(resp.msg);
