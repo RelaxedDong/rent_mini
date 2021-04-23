@@ -1,18 +1,26 @@
 <view class="header-select section-placeholder" id="filter_bar">
     <search-bar currentvalue="{{searchinput}}"
                 bind:ChildInputValue="ChildInputValueHanle"
-                bind:SearchList="SearchList" placeholder="{{placeholder}}"></search-bar>
+                bind:SearchList="SearchList" placeholder="搜索地点名、小区、地铁站等..."></search-bar>
 <!--    <view wx:for="{{search_list}}" class="match-list">-->
 <!--        <text class="font-size-25" bindtap="matchClick" data-value="{{item}}">{{item}}</text>-->
 <!--    </view>-->
     <dropdownmenu dropDownMenuTitle='{{dropDownMenuTitle}}' dropDownMenuFourthData='{{dropDownMenuFourthData}}'
                   dropDownMenuFirstData='{{dropDownMenuFirstData}}'
                   dropDownMenuRegion='{{dropDownMenuRegion}}'
-                  dropDownMenuThirdData='{{dropDownMenuThirdData}}' bind:selectedItem='selectedFourth'/>
+                  dropDownMenuThirdData='{{dropDownMenuThirdData}}'
+                  customFilter="{{customFilter}}"
+                  bind:selectedItem='selectedFourth'/>
 </view>
-<scroll-view scroll-top='{{topNum}}' bindscrolltolower="bindscrolltolower" bindtouchstart="touchStart" scroll-y
+<scroll-view scroll-top='{{topNum}}' bindscrolltolower="bindscrolltolower" scroll-y
              style='height:{{scrollHeight}}px;padding-top: {{fiexed_top}}px;'>
-    <view wx:for="{{houses}}" wx:for-item='row' wx:key>
+    <view class="open-location" wx:if="{{!location_auth && distance_page}}"
+              bindtap="openLocation">
+            <image src="/image/icon/load_fail.png"></image>
+            <text class="bg-wexin circle-btn">打开定位</text>
+    </view>
+    <view wx:else>
+        <view wx wx:for="{{houses}}" wx:for-item='row' wx:key>
         <navigator open-type="navigate" target="self" url="/pages/detail/detail?house={{item.id}}" wx:for='{{row}}' wx:key="{{index}}">
             <view class="card card-container card-container-primary card-container-primary-right card-container-unfull">
                 <view class="loadImg active" wx:if="{{item.imgs.length > 0}}">
@@ -56,8 +64,9 @@
             </view>
         </navigator>
     </view>
+    </view>
     <view class="empty" wx:if="{{houses.length == 0 && show_empty}}" style="margin-top: {{fiexed_top}}px">
-        <image src="/image/empty-imgs/no-house.png"></image>
+        <image src="/image/icon/data-empty.png"></image>
     </view>
 </scroll-view>
 

@@ -173,12 +173,12 @@ App({
   /**
    * @return {string}
    */
-  Generat_Random_string (){
+  Generat_Random_string (count=10){
     // 生成随机字符串函数
     var chars = 'ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678';    /****默认去掉了容易混淆的字符oOLl,9gq,Vv,Uu,I1****/
     var maxPos = chars.length;
     var pwd = '';
-    for (var i = 0; i < 32; i++) {
+    for (var i = 0; i < count; i++) {
       pwd += chars.charAt(Math.floor(Math.random() * maxPos));
     }
     return pwd
@@ -229,13 +229,14 @@ App({
   },
   WxHttpRequestGet(url,data,successback,failback){
     // 封装get请求
-    data['jwt_token'] = this.globalData.jwt_token;
+    let that = this;
     wx.request({
       url: this.globalData.api_host+ '/api/' + url,
       method: 'GET',
       data: data,
       header: {
-        'Content-Type': 'application/x-www-form-urlencoded'
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'token': that.globalData.jwt_token,
       },
       success:function(res) {
         successback(res)
@@ -247,13 +248,13 @@ App({
   },
   WxHttpRequestPOST(url,data,successback,failback){
     // 封装post请求
-    data['jwt_token'] = this.globalData.jwt_token;
-    console.log(data)
+    let that = this;
     wx.request({
       url: this.globalData.api_host+ '/api/' + url,
       data: data,
       header:{
-        "content-type": "application/json"		//使用POST方法要带上这个header
+        "content-type": "application/json",		//使用POST方法要带上这个header
+        'token': that.globalData.jwt_token
       },
       method:"POST",
       success:function(res) {
@@ -324,9 +325,12 @@ App({
             }
         })
     },
-  initSearchComponent(city) {
+  initSearchComponent() {
     let that = this;
-    this.WxHttpRequestGet('house/selects', {'city': city}, that.getSearchComponentDone, that.InterError)
+    this.WxHttpRequestGet('house/selects',
+        {city: this.globalData.city},
+        that.getSearchComponentDone,
+        that.InterError)
   },
   getSearchComponentDone(res){
         let that = this;
@@ -377,9 +381,25 @@ App({
         })
       })
     },
+    GetUserLocation(page_this) {
+        let that = this;
+        return new Promise((resolve, reject) => {
+            wx.getLocation({
+                type: 'wgs84',
+                success: function (res) {
+                    that.globalData.location_conf = {'longitude': res.longitude, 'latitude': res.latitude}
+                    page_this.setData({location_auth: true})
+                    resolve(true)
+                },
+                fail: function (res) {
+                  page_this.setData({location_auth: false})
+                }
+            })
+        })
+    },
   globalData: {
-    api_host:'https://rent.donghao.club',
-    // api_host:'http://127.0.0.1:8000',
+    api_host:'http://127.0.0.1:8000',
+    error_image: 'https://img.donghao.club/web/01bc0f59c9a9b0a8012053f85f066c.jpg%40260w_195h_1c_1e_1o_100sh.jpg?versionId=null',
     index_new_city:false,
     is_superuser:false,
     page_refresh:false,
@@ -387,15 +407,21 @@ App({
       '#CCCCFF', '#CCCC33', '#009966', '#FF99CC',
       '#99CC00', '#66CCCC', '#CCCC99', '#CC6600'],
     raw_city:true,
+    // 用户当前的定位, 授权定位了为{}形式
+    location_conf: {},
     // 进入场景
     in_scene:"",
     // 过滤条件
     filter_conf:{},
     home_conf:{},
     share_img: "",
-    city:'北京市', // 默认进入首页的地址
-    province:'北京市',
+    city:'南京市', // 默认进入首页的地址
+    province:'江苏省',
     district:'',
-    last_page:''
+    last_page:'',
+    toast_new_profile: true,
+    toast_new_publish: true,
+    my_page_type: 'collect', // 操作类型：收藏&点赞&浏览，默认是collect
+    my_page_title: '我的收藏' // 操作类型：收藏&点赞&浏览，默认是collect
   }
 });

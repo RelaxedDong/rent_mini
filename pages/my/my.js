@@ -9,27 +9,24 @@ Page({
      */
     data: {
         hasUserInfo: false,
-        collect_count: 0,
         is_auth: true,
         grid_list: [
-            {name: '我的收藏', icon: 'favor', color: 'pink', url: "/pages/mycollects/mycollects"},
-            {name: '我的房源', icon: 'write', color: 'green', url: "/pages/mypublish/mypublish"},
-            {name: '编辑信息', icon: 'profile', color: 'blue', url: "/pages/userinfo/userinfo"},
+            {name: '意见反馈', icon: 'question',  url: "/pages/feedback/feedback"},
         ],
-        msg_len: 0,
-        houses_count: 0,
-        // system: app.globalData.system,
-        // version: app.globalData.version,
-        favors: 0,
     },
-    coutNum(e) {
-        if (e > 1000 && e < 10000) {
-            e = (e / 1000).toFixed(1) + 'k'
+    Navigator_to(e) {
+        if(e.currentTarget.dataset.type && !this.data.is_auth){
+            app.ShowToast('请先完成授权绑定~');
+            return
         }
-        if (e > 10000) {
-            e = (e / 10000).toFixed(1) + 'W'
-        }
-        return e
+        app.globalData.my_page_type = e.currentTarget.dataset.type
+        app.globalData.my_page_title = e.currentTarget.dataset.title
+        wx.navigateTo({
+            url: e.currentTarget.dataset.url
+        })
+    },
+    Desktop() {
+      app.ShowModel('提示', '请点击右上角胶囊 "添加到桌面" ');
     },
     login(e) {
         app.user_info_bind(this, e)
@@ -37,15 +34,6 @@ Page({
     handleContact(e) {
         console.log(e.detail.path)
         console.log(e.detail.query)
-    },
-    Navigator_to(e) {
-        if (!this.data.is_auth) {
-            app.ShowToast("请先完成授权")
-        } else {
-            wx.navigateTo({
-                url: e.currentTarget.dataset.url
-            })
-        }
     },
     BindUserInfoDone(res) {
         var data = res.data;
@@ -70,14 +58,6 @@ Page({
             this.setData({is_auth: false})
             return
         }
-        wx.showLoading({
-            title: '数据加载中',
-            mask: true,
-        });
-        app.WxHttpRequestGet('account/item_list', {}, this.ShowAccount, this.HanleAjaxItemFail);
-    },
-    HanleAjaxItemFail(res) {
-        app.ShowModel('网络错误', '请刷新后再试');
     },
     /**
      * 生命周期函数--监听页面初次渲染完成
@@ -117,43 +97,6 @@ Page({
         wx.hideNavigationBarLoading();
         // 停止下拉动作
         wx.stopPullDownRefresh();
-    },
-    ShowAccount(res) {
-        let resp = res.data;
-        wx.hideLoading()
-        if (resp.code !== 200) {
-            app.ShowToast(resp.msg);
-            return
-        }
-        let data = resp.data;
-        var that = this;
-        that.setData({
-            gender: data.user.gender
-        })
-        let i = 0;
-        numDH();
-
-        function numDH() {
-            if (i < 20) {
-                setTimeout(function () {
-                    that.setData({
-                        collect_count: i,
-                        msg_len: i,
-                        houses_count: i,
-                        favors: i
-                    });
-                    i++;
-                    numDH();
-                }, 20)
-            } else {
-                that.setData({
-                    collect_count: that.coutNum(data.collects | 0),
-                    msg_len: that.coutNum(data.msgs | 0),
-                    houses_count: that.coutNum(data.houses_count | 0),
-                    favors: that.coutNum(data.favor_count | 0)
-                })
-            }
-        }
     },
     /**
      * 页面上拉触底事件的处理函数
@@ -195,7 +138,7 @@ Page({
     /**
      * 用户点击右上角分享
      */
-    onShareAppMessage: function () {
-
-    }
+    // onShareAppMessage: function () {
+    //
+    // }
 })

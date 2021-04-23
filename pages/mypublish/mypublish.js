@@ -17,7 +17,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    app.wxshowloading('数据加载中');
+    if(app.globalData.toast_new_publish){
+        app.ShowModel('提示', '擦亮房源可获得更高曝光~');
+        app.globalData.toast_new_publish = false;
+    }
     app.WxHttpRequestGet('account/get_publish', {},this.GetPublishesDone, app.InterError);
   },
   /**
@@ -54,7 +57,7 @@ Page({
     const houseid = e.currentTarget.dataset.houseId;
     wx.showModal({
       title: '使用确认',
-      content: '顶帖消耗刷新次数 x1',
+      content: '消耗房源擦亮次数 x1',
       success: function(res) {
         if (res.confirm) {
           app.WxHttpRequestPOST('house/house_refresh', {houseid:houseid},function (res) {
@@ -66,10 +69,10 @@ Page({
               that.setData({
                 houses:that.data.houses
               })
-              app.ShowToast('顶帖成功');
+              app.ShowToast('房源擦亮成功');
             }else{
               app.ShowToast(data.msg);
-              if(data.msg === '没有刷新次数了') {
+              if(data.msg === '没有房源擦亮次数了') {
                   that.showModal("DialogModal1")
               }
             }
@@ -106,7 +109,6 @@ Page({
     this.setData({
       houses:res.data.data
     })
-    wx.hideLoading()
   },
   toShare(e){
     this.onShareAppMessage(e)

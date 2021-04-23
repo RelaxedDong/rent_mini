@@ -7,7 +7,7 @@ Page({
      */
     data: {
         choose_item: [
-            {name: '房源转租', src: '/image/icon/hot.png', type: 'zhuanzu'}
+            {name: '房源发布', src: '/image/icon/hot.png', type: 'zhuanzu'}
             // {name:'租房动态',src:'/image/icon/publish-zhuanzu.png',type:'discuss'}
         ]
     },
@@ -17,11 +17,16 @@ Page({
             console.log(data.code)
             if (data.code == 400) {
                 app.ShowModel('', data.msg);
-                setTimeout(function () {
-                    wx.switchTab({
-                        url: '/pages/my/my'
-                    })
-                }, 1500)
+                let url = data.data.path
+                if (url === '/pages/my/my') {
+                    setTimeout(function () {
+                        wx.switchTab({url: url})
+                    }, 1500)
+                } else {
+                    setTimeout(function () {
+                        wx.navigateTo({url: url})
+                    }, 1500)
+                }
                 return false
             } else {
                 wx.navigateTo({

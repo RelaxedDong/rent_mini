@@ -2,8 +2,7 @@
 //获取应用实例
 const app = getApp();
 Page({
-    data: {
-    },
+    data: {},
     Copy(e){
         wx.setClipboardData({
             data: e.currentTarget.dataset.number,

@@ -2,5 +2,6 @@
   "usingComponents": {
   },
    "navigationBarTitleText": "个人中心",
-  "enablePullDownRefresh": true
+   "navigationStyle": "custom",
+   "enablePullDownRefresh": true
 }

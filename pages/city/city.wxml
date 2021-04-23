@@ -1,28 +1,49 @@
-<swiper class="screen-swiper round-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">
-    <swiper-item wx:for="{{advertises}}" wx:key wx:for-item="advertise"  bindtap="NavigetClick" data-navigate="{{advertise.navigate}}">
-        <image src="{{advertise.url}}" mode='aspectFill'></image>
-    </swiper-item>
-</swiper>
-<view class="VerticalBox">
-    <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 375rpx)">
-        <view class="cu-item {{index==TabCur?'text-green cur':''}}" wx:for="{{list}}" wx:key bindtap='tabSelect' data-id="{{index}}">
-            {{item.name}}
+<!--<swiper class="screen-swiper round-dot" indicator-dots="true" circular="true" autoplay="true" interval="5000" duration="500">-->
+        <!--    <swiper-item wx:for="{{advertises}}" wx:key wx:for-item="advertise"  bindtap="NavigetClick" data-navigate="{{advertise.navigate}}">-->
+        <!--        <image src="{{advertise.url}}" mode='aspectFill'></image>-->
+        <!--    </swiper-item>-->
+        <!--</swiper>-->
+        <!--<view class="VerticalBox">-->
+        <!--    <scroll-view class="VerticalNav nav" scroll-y scroll-with-animation scroll-top="{{VerticalNavTop}}" style="height:calc(100vh - 375rpx)">-->
+        <!--        <view class="cu-item {{index==TabCur?'text-green cur':''}}" wx:for="{{list}}" wx:key bindtap='tabSelect' data-id="{{index}}">-->
+        <!--            {{item.name}}-->
+        <!--        </view>-->
+        <!--    </scroll-view>-->
+        <!--    <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 375rpx)" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain">-->
+        <!--        <view class="padding-top padding-left" wx:for="{{list}}" wx:key id="main-{{index}}" wx:for-item="province">-->
+        <!--            <view class='cu-bar solid-bottom bg-white'>-->
+        <!--                <view class='action'>-->
+        <!--                    <text class='cuIcon-title text-green'></text> {{province.name}} </view>-->
+        <!--            </view>-->
+        <!--            <view class="action bg-white"-->
+        <!--                  bindtap="CityClick"-->
+        <!--                  data-province="{{province.name}}"-->
+        <!--                  data-city-name="{{item}}"-->
+        <!--                  wx:key-->
+        <!--                  wx:for="{{base['0,'+province.code]}}">-->
+        <!--                <view class="city-list solid-bottom">{{item}}</view>-->
+        <!--            </view>-->
+        <!--        </view>-->
+        <!--    </scroll-view>-->
+        <!--</view>-->
+<view class="city-container-box">
+    <view class="title">当前城市</view>
+    <view class="title margin-top">
+        <text class="current">{{city}}</text>
+    </view>
+    <view class="title">热门城市</view>
+    <view class="city-container">
+        <view class="city-box" wx:for="{{city_list}}"
+              wx:key="{{index}}"
+              data-province="{{item.province}}"
+              data-city-name="{{item.city}}"
+        bindtap="CityClick"
+        >
+            <image src="{{item.url}}"></image>
+            <view class="city-name">{{item.city}}</view>
         </view>
-    </scroll-view>
-    <scroll-view class="VerticalMain" scroll-y scroll-with-animation style="height:calc(100vh - 375rpx)" scroll-into-view="main-{{MainCur}}" bindscroll="VerticalMain">
-        <view class="padding-top padding-left" wx:for="{{list}}" wx:key id="main-{{index}}" wx:for-item="province">
-            <view class='cu-bar solid-bottom bg-white'>
-                <view class='action'>
-                    <text class='cuIcon-title text-green'></text> {{province.name}} </view>
-            </view>
-            <view class="action bg-white"
-                  bindtap="CityClick"
-                  data-province="{{province.name}}"
-                  data-city-name="{{item}}"
-                  wx:key
-                  wx:for="{{base['0,'+province.code]}}">
-                <view class="city-list solid-bottom">{{item}}</view>
-            </view>
-        </view>
-    </scroll-view>
+    </view>
+    <view class="other-city">
+        其它城市研发小哥哥努力开发中，敬请期待~
+    </view>
 </view>

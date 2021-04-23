@@ -7,10 +7,10 @@
                        maxlength="11"
                        minlength="11"
                        value="{{form.phone}}"></input>
-                <button class="cu-btn bg-green shadow"
-                        open-type="getPhoneNumber"
-                        bindgetphonenumber="getPhoneNumber"
-                >授权绑定</button>
+<!--                <button class="cu-btn bg-green shadow"-->
+<!--                        open-type="getPhoneNumber"-->
+<!--                        bindgetphonenumber="getPhoneNumber"-->
+<!--                >授权绑定</button>-->
             </view>
             <view class="cu-form-group">
                 <view class="title">微信号</view>

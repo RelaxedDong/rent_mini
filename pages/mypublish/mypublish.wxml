@@ -23,12 +23,13 @@
                     </view>
                 </view>
                 <view class="content">
-                    <view class="cu-tag round xs {{item.status!=='1'?'bg-orange':'bg-green'}} text-white margin-top" wx:if="{{item.status}}">
+                    <view class="cu-tag round xs {{item.status!=='1'?'bg-orange':'bg-green'}} text-white margin-top"
+                          wx:if="{{item.status}}">
                         {{item.status_verbose}}
                     </view>
                     <view class="user-operation padding-top text-sm">
                         <view catchtap="RefrshHouse" data-house-id="{{item.id}}" data-index="{{index}}">
-                            <text class="cuIcon-refresh text-green padding-right-sm"></text>顶帖
+                            <text class="cuIcon-refresh text-green padding-right-sm"></text>擦亮
                         </view>
                         <view catchtap="EditHouse" data-id="{{item.id}}">
                             <text class="cuIcon-write text-yellow padding-right-sm"></text>编辑
@@ -76,7 +77,7 @@
             </view>
         </navigator>
     </view>
-    <view class="empty" wx:if="{{houses.length == 0}}">
-        <image src="/image/empty-imgs/no-publish.png"></image>
+    <view class="empty" wx:if="{{houses.length === 0}}">
+        <image src="/image/icon/no-publish.png"></image>
     </view>
 </view>

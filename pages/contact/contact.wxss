@@ -1,21 +1,8 @@
-.wechat-qq-box{
-    margin-top: 100rpx;
-    padding: 20rpx;
-    text-align: center;
-    box-sizing: border-box;
+.con {
+  height: 100%
 }
-.qq-number-box{
-    text-align: center;
-    padding: 50rpx;
-    display: flex;
-    box-sizing: border-box;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.logo{
-    border: 1px solid #f1f2f6;
-    text-align: center;
-    width: 100rpx;
-    height: 100rpx;
-    border-radius: 50%;
+.container{
+  width: 100%;
+  height: 100%;
+  padding: 0;
 }

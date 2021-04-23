@@ -88,7 +88,10 @@ Page({
    */
   onLoad: function (options) {
     var that = this;
-    app.wxshowloading('资料加载中...');
+    if(app.globalData.toast_new_profile){
+        app.ShowModel('提示', '丰富的信息用户可更便捷联系~');
+        app.globalData.toast_new_profile = false;
+    }
     app.WxHttpRequestGet('account/edit_info',{},that.GetUesrInfoDone, app.InterError);
     this.initValidate();
   },
@@ -103,7 +106,6 @@ Page({
       gender:data.gender,
       form: form
     })
-    wx.hideLoading()
   },
   /**
    * 生命周期函数--监听页面初次渲染完成

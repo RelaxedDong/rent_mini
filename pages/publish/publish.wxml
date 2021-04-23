@@ -55,6 +55,10 @@
                 <view class="title">可短租</view>
                 <switch class="switch-sex" checked="{{short_rent}}" bindchange="ShortRentClick"></switch>
         </view>
+        <view class="cu-form-group border-bottom">
+                <view class="title">展示手机</view>
+                <switch class="switch-sex" checked="{{show_phone}}" bindchange="ShowPhoneClick"></switch>
+        </view>
         <view class="border-bottom padding-bottom-sm">
 <!--        <view class='item-title margin-top-sm'>添加丰富信息，出租更快捷 ～</view>-->
         <view class="facility_box margin-top padding-bottom-sm">

@@ -1,6 +1,0 @@
-<view class="content-card">
-    <view class="content-name">{{name}}</view>
-  <view class="card-bottom l-content ">
-    <slot />
-  </view>
-</view>

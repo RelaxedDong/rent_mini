@@ -1,26 +1,4 @@
-<view class="margin bg-white shadow simple-radis icon-text text-sm radius">
-<!--    <view class="text-center padding-top-sm">-->
-<!--        <image class="logo" src="/image/icon/logo.jpeg"></image>-->
-<!--    </view>-->
-    <view class="padding text-center">
-        <image class="radius" style="width: 100%;height: 700rpx" src="https://rent-mini.obs.cn-north-4.myhuaweicloud.com/common/BFBBED46-A485-4A75-92C8-413852043CE3.png"></image>
-        <view class="margin-top">
-            蚁租房是一个免费的发布转租合租找室友的平台
-        </view>
-        <view class="margin-top">我们旨在为用户快捷转租或找到满意的房子</view>
-        <view class="margin-top">如果平台好用，别忘分享给其他伙伴哦～</view>
-            <view class="margin-top flex flex-direction">
-        <text class="margin-top">如果您有任何建议或者有关商业合作</text>
-        <text class="margin-top">可以点击下方按钮与我们联系</text>
-    </view>
-    <view class="qq-number-box">
-        <button class="text-xs bg-green" open-type="contact" bindcontact="handleContact" >
-                    <view class="content">
-            <text class="text-white text-sm">联系我们</text>
-        </view>
-    </button>
-    </view>
-    </view>
-
+<view class="con">
+  <image class="container" src="/image/dir/haibao.jpg"></image>
 </view>
 

@@ -1,14 +1,13 @@
 <view class="aui-tour-content"></view>
-<view  class="radius my-head simple-radis aui-tour-box text-df text-center icon-text bg-white"
-    style="  box-shadow: 0 4rpx 20rpx 0 rgba(212,217,223,.5)">
-    <view wx:if="{{is_auth}}" class="userbox padding-sm">
-            <view class="avatar">
-                <open-data type="userAvatarUrl"></open-data>
-            </view>
-            <view class="nickname-gender">
-                <open-data type="userNickName" lang="zh_CN"></open-data>
-                <text class="{{gender=='1'?'cuIcon-male text-blue':'cuIcon-female text-pink'}}  margin-top-xs"></text>
-            </view>
+<view class="radius my-head simple-radis aui-tour-box text-sm text-center icon-text">
+    <view wx:if="{{is_auth}}" class="userbox padding-left-xs">
+        <view class="avatar">
+            <open-data type="userAvatarUrl"></open-data>
+        </view>
+        <view class="nickname-gender">
+            <open-data type="userNickName" lang="zh_CN"></open-data>
+            <open-data type="userGender" lang="zh_CN"></open-data>
+        </view>
     </view>
     <view wx:else class="margin">
         <form bindsubmit='login' report-submit>
@@ -18,73 +17,76 @@
                     bindgetuserinfo="login"
                     formType="submit"
                     hover-class="hover"
-            >立即授权</button>
+            >立即授权
+            </button>
         </form>
     </view>
-    <view class="flex-item margin-xs padding-bottom text-grey">
-        <view class="flex flex-sub  flex-direction icon-text">
-            <view class="text-df">{{favors}}</view>
-            <view class="margin-top-xs text-xs">点赞</view>
+    <view class="action-info shadow">
+        <view class="flex flex-sub  flex-direction icon-text"
+              bindtap="Navigator_to"
+              data-type="favor"
+              data-title="我的点赞"
+              data-url="/pages/mycollects/mycollects">
+            <image src="/image/icon/action/star.png"></image>
+            <view class="margin-top-sm text-sm">我的点赞</view>
         </view>
         <view class="flex flex-sub flex-direction icon-text"
-        bindtap="Navigator_to" data-url="/pages/mycollects/mycollects">
-            <view class="text-df">{{collect_count}}</view>
-            <view class="margin-top-xs text-xs">收藏</view>
+              bindtap="Navigator_to"
+              data-type="collect"
+              data-title="我的收藏"
+              data-url="/pages/mycollects/mycollects">
+            <image src="/image/icon/action/collect.png"></image>
+            <view class="margin-top-sm text-sm">我的收藏</view>
         </view>
         <view class="flex flex-sub flex-direction icon-text"
-              bindtap="Navigator_to" data-url="/pages/mypublish/mypublish">
-            <view class="text-df">{{houses_count}}</view>
-            <view class="margin-top-xs text-xs">房源数</view>
+              bindtap="Navigator_to"
+              data-type="true"
+              data-url="/pages/mypublish/mypublish">
+            <image src="/image/icon/action/edit.png"></image>
+            <view class="margin-top-sm text-sm">我的发布</view>
+        </view>
+        <view class="flex flex-sub flex-direction icon-text"
+              bindtap="Navigator_to"
+              data-type="true"
+              data-url="/pages/userinfo/userinfo">
+            <image src="/image/icon/action/profile.png"></image>
+            <view class="margin-top-sm text-sm">信息编辑</view>
         </view>
     </view>
 </view>
-<view class="margin bg-white">
-    <view class="cu-list grid shadow col-3 no-border radius">
-        <view class="cu-item" wx:for="{{grid_list}}" wx:key bindtap="Navigator_to" data-url="{{item.url}}">
-            <view class="cuIcon-{{item.icon}} text-{{item.color}}">
-            </view>
-            <text class="text-xs text-grey">{{item.name}}</text>
+<view class="more-service">
+    <view class="icon-box-title">更多服务</view>
+    <view class="icon-box">
+        <view class="icon-content" wx:if="{{is_auth}}"
+              data-url="/pages/mycollects/mycollects?type=history"
+              data-type="history"
+              data-title="浏览记录"
+              bindtap="Navigator_to">
+            <button>
+                <view class="grid-icon cuIcon-footprint"></view>
+                <text class="text-sm">浏览记录</text>
+            </button>
+        </view>
+        <view class="icon-content" wx:for="{{grid_list}}" wx:key
+              bindtap="Navigator_to" data-url="{{item.url}}">
+            <button>
+                <view class="grid-icon cuIcon-{{item.icon}}"></view>
+                <text class="text-sm">{{item.name}}</text>
+            </button>
+        </view>
+        <view class="icon-content">
+            <button bindtap="Desktop">
+                <view class="grid-icon cuIcon-add"></view>
+                <text class="text-sm">快捷方式</text>
+            </button>
+        </view>
+        <view class="icon-content">
+            <button class="icon-content" wx:if="{{is_superuser}}" bindtap="Navigator_to" wx:if="{{is_superuser}}"
+                    data-url="/pages/web/web?navigate=http://127.0.0.1:8000">
+                <view class="grid-icon cuIcon-check"></view>
+                <text class="text-xs">房源审核</text>
+            </button>
         </view>
     </view>
 </view>
-<view  class="cu-list icon-text text-sm menu card-menu margin-top-sm margin-bottom-xl  radius shadow">
-<!--        <button class="cu-item arrow text-xs custom-btn" open-type="contact" bindcontact="handleContact" >-->
-<!--                    <view class="content">-->
-<!--            <text class="cuIcon-service text-purple"></text>-->
-<!--            <text class="text-grey text-sm">客服会话</text>-->
-<!--        </view>-->
-<!--    </button>-->
-<!--    <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/contact/contact">-->
-<!--        <view class="content">-->
-<!--            <text class="cuIcon-community text-cyan"></text>-->
-<!--            <text class="text-grey text-sm">关于我们</text>-->
-<!--        </view>-->
-<!--    </view>-->
-    <view class="cu-item arrow text-xs" bindtap="Navigator_to" data-url="/pages/feedback/feedback">
-        <view class="content">
-            <text class="cuIcon-mail text-yellow"></text>
-            <text class="text-grey text-sm">意见反馈</text>
-        </view>
-    </view>
-    <view class="cu-item arrow text-xs" bindtap="VersionClick">
-        <view class="content">
-            <text class="cuIcon-settings text-olive"></text>
-            <text class="text-grey text-sm">更新版本</text>
-        </view>
-    </view>
-    <view class="cu-item arrow text-xs" bindtap="Navigator_to" wx:if="{{is_superuser}}"
-          data-url="/pages/web/web?navigate=https://rent.donghao.club/admin/">
-        <view class="content">
-            <text class="cuIcon-pullright text-blue"></text>
-            <text class="text-grey text-sm">房源审核</text>
-        </view>
-    </view>
-</view>
-
-<!--<view class="text-center text-grey text-xs margin-top-xs">-->
-<!--    微信: {{version}}-->
-<!--</view>-->
-<!--<view class="text-center text-grey text-xs">-->
-<!--    操作系统：{{system}}-->
-<!--</view>-->
 
