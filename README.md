@@ -31,9 +31,11 @@
 <img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/ECC2CCF9-5207-4764-9947-167FA80EA2FE.png" width = "200" height = "400"  align=left />
 <img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/86F4C322-369B-43FF-9947-417BBB18DDDA.png" width = "200" height = "400"  align=left />
 <img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/3848184C-723D-43D0-94A5-4A2435FF0E5B.png" width = "200" height = "400"  align=left />
-:label: pages 后台展示: 
+:label: pages 后台展示（样式1、样式2）: 
+
 <img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/%E4%BD%BF%E7%94%A8%E6%88%AA%E5%9B%BE/AA20F6B8-9EFE-4A03-8BBE-2A1F4444D7F6.png" width = "600" height = "400" aligh=left />
 
+<img src="https://img-blog.csdnimg.cn/20210423115030930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMjM5NTIw,size_16,color_FFFFFF,t_70" width = "600" height = "400" aligh=left />
 
 如果有技术支持或者商务合作，欢迎与我们联系：
 
