@@ -1,6 +1,8 @@
 ##### 蚁租房小程序 :mag::mag::mag:
 
-小程序功能：房源快捷发布，房东联系，后台CMS等。
+蚁租房是一个全国的租房小程序，小程序旨在为租房人带来更加简便的、快捷的、多样化的租房体验。
+<img src="https://rent-mini.obs.cn-north-4.myhuaweicloud.com/conf/35416EB8-64B4-4A1E-9313-1DEA11D3C201.png" width = "1000" height = "600"  align=left />
+
 
 项目场景：
 - 城市房源发布、找房看房
@@ -33,8 +35,8 @@
 <img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/3848184C-723D-43D0-94A5-4A2435FF0E5B.png" width = "200" height = "400"  align=left />
 :label: pages 后台展示（样式1、样式2）: 
 
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/%E4%BD%BF%E7%94%A8%E6%88%AA%E5%9B%BE/AA20F6B8-9EFE-4A03-8BBE-2A1F4444D7F6.png" width = "600" height = "400" aligh=left />
-
+<img src="https://rent-mini.obs.cn-north-4.myhuaweicloud.com/conf/D7554251-80D5-4685-8EB7-5259569D7B62.png" width = "600" height = "400" aligh=left />
+<img src="https://rent-mini.obs.cn-north-4.myhuaweicloud.com/conf/42ED5B1E-EA0F-4C76-8067-5103F7D214B1.png" width = "600" height = "400" aligh=left />
 <img src="https://img-blog.csdnimg.cn/20210423115030930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMjM5NTIw,size_16,color_FFFFFF,t_70" width = "600" height = "400" aligh=left />
 
 如果有技术支持或者商务合作，欢迎与我们联系：
