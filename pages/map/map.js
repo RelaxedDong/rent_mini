@@ -44,20 +44,20 @@ Page({
         })
     },
     onLoad: function (options) {
-        if(!app.globalData.index_new_city) {
+        if (!app.globalData.index_new_city) {
             wx.showModal({
-              title: '当前选择城市',
-              content: app.globalData.city,
-              confirmText: '知道了',
-              cancelText: '切换城市',
-              success: function (res) {
-                  if (!res.confirm) {
-                      wx.navigateTo({
-                        url: '/pages/city/city'
-                    })
-                  }
-              }
-          })
+                title: '当前选择城市',
+                content: app.globalData.city,
+                confirmText: '知道了',
+                cancelText: '切换城市',
+                success: function (res) {
+                    if (!res.confirm) {
+                        wx.navigateTo({
+                            url: '/pages/city/city'
+                        })
+                    }
+                }
+            })
         }
         let self = this;
         wx.getSetting({
@@ -65,12 +65,13 @@ Page({
                 var status = res.authSetting;
                 self.setData({location_auth: status['scope.userLocation']})
                 if (status['scope.userLocation']) {
-                    // app.wxshowloading('');
+                    app.wxshowloading('');
                     self.get_map_houses()
                 }
-        }})
+            }
+        })
     },
-    regionchange (e) {
+    regionchange(e) {
         if (e.causedBy === 'drag') {
             app.wxshowloading('')
             var that = this;
@@ -84,15 +85,22 @@ Page({
 
         }
     },
-    get_map_houses(lat="", lng="") {
+    get_map_houses(lat = "", lng = "") {
+        let that = this;
+        if (!lat && !lng) {
+            wx.getLocation({
+                type: 'wgs84',
+                success: function (res) {
+                    that.getNearbyHouse(res.latitude, res.longitude)
+                }
+            })
+        } else{
+            that.getNearbyHouse(lat, lng)
+        }
+    },
+    getNearbyHouse(latitude, longitude) {
         let self = this;
-        wx.getLocation({
-            type: 'wgs84',
-            success: function (res) {
-            console.log(res)
-            var latitude = lat?lat:res.latitude;
-            var longitude = lng?lng:res.longitude;
-            app.WxHttpRequestGet('house/nearby_houses',
+        app.WxHttpRequestGet('house/nearby_houses',
             {
                 city: app.globalData.city,
                 from_map: true,
@@ -104,14 +112,15 @@ Page({
                 let markers = [];
                 let house_map = {}
                 for (let i = 0; i < houses.length; i++) {
-                    house_map[houses[i].id] = houses[i]
+                    house_map[i] = houses[i]
                     markers.push({
                         iconPath: '/image/icon/map.png',
                         latitude: houses[i].latitude,
                         longitude: houses[i].longitude,
                         width: 30,
-                        id: houses[i].id,
+                        id: i,
                         height: 30,
+                        markerId: houses[i].id,
                         callout: {
                             content: houses[i].title,
                             fontSize: 0,
@@ -127,14 +136,9 @@ Page({
                 })
                 wx.hideLoading()
             })
-        },
-            fail: function (res) {
-                console.log(res)
-            }
-        })
     },
     markertap(e) {
-        let house = this.data.house_map[e.markerId]
+        let house = this.data.house_map[e.detail.markerId];
         this.setData({
             showDialog: true,
             active_house: house,

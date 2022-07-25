@@ -15,6 +15,9 @@
     "pages/city/city",
     "pages/userinfo/userinfo"
   ],
+  "requiredPrivateInfos": [
+    "chooseLocation", "getLocation"
+  ],
   "usingComponents": {
     "search-bar": "components/searchbar/searchbar",
     "swiper-banner": "components/swiper/swiper",

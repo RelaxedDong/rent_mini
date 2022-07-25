@@ -12,7 +12,9 @@
 .card-dot {
     margin-left: 0;
 }
-
+.house_item_box {
+    padding-bottom: 150rpx;
+}
 ::-webkit-scrollbar {
     display: none;
 }

@@ -1,5 +1,13 @@
 page {height: 100%;margin: 0;padding: 0;}
-
+.cover-image{
+position: absolute;
+top:50%;
+left:50%;
+margin-top:-25rpx;
+margin-left:-25rpx;
+width: 80rpx;
+height: 80rpx;
+}
 /* 弹窗 */
 .zan-dialog__mask {position: fixed;top: 0; left: 0;right: 0;bottom: 0;background: rgba(0, 0, 0, 0); background: rgba(0, 0, 0, 0.4);display: none;z-index: 1001}
 

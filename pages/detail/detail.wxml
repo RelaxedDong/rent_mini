@@ -70,7 +70,7 @@
                 </view>
             </view>
 
-            <view class="house_item_box">
+            <view class="margin-top-sm">
                 <view class="sub-title margin-top-lg" wx:if="{{house.desc}}">房源介绍</view>
                 <view class="house-desc margin-top-sm padding-bottom-xs" wx:if="{{house.desc}}">
                     <text class="text-grey">
@@ -101,8 +101,8 @@
                 >
                 </map>
             </view>
-            <view class="sub-title margin-top-lg" wx:if="{{house.facilities.length > 0}}">设施设备</view>
             <view class="house_item_box">
+                <view class="sub-title margin-lg" wx:if="{{house.facilities.length > 0}}">设施设备</view>
                 <view class="iconlist">
                     <view class="cu-list grid col-5 no-border">
                         <view class="cu-item" wx:for="{{facilities}}"
