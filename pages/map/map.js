@@ -10,15 +10,33 @@ Page({
         latitude: 39.913164,
         longitude: 116.405706,
         showDialog: false,
-        scale: 10,
+        location_auth: false,
+        scale: 14,
         active_house: {},
         house_map: {}
+    },
+    openLocation() {
+        let self = this;
+        wx.openSetting({
+            success: function (data) {
+                if (data.authSetting["scope.userLocation"] === true) {
+                    app.ShowToast("位置授权成功")
+                    self.setData({location_auth: true})
+                    self.get_map_houses()
+                } else {
+                    app.ShowToast("授权失败，请重新点击")
+                }
+            }
+        })
     },
     GetHousesDone(res) {
 
     },
     onShow: function () {
-
+        var new_city = app.globalData.index_new_city;
+        if (new_city) {
+            this.onLoad()
+        }
     },
     toggleDialog: function () {
         this.setData({
@@ -26,14 +44,63 @@ Page({
         })
     },
     onLoad: function (options) {
+        if(!app.globalData.index_new_city) {
+            wx.showModal({
+              title: '当前选择城市',
+              content: app.globalData.city,
+              confirmText: '知道了',
+              cancelText: '切换城市',
+              success: function (res) {
+                  if (!res.confirm) {
+                      wx.navigateTo({
+                        url: '/pages/city/city'
+                    })
+                  }
+              }
+          })
+        }
         let self = this;
-        app.wxshowloading('房源准备中...');
-        wx.request({
-            url: app.globalData.api_host+'/api/house/nearby_houses?is_json=1&city=' + app.globalData.city,
+        wx.getSetting({
             success: function (res) {
-                let result = res.data;
+                var status = res.authSetting;
+                self.setData({location_auth: status['scope.userLocation']})
+                if (status['scope.userLocation']) {
+                    // app.wxshowloading('');
+                    self.get_map_houses()
+                }
+        }})
+    },
+    regionchange (e) {
+        if (e.causedBy === 'drag') {
+            app.wxshowloading('')
+            var that = this;
+            this.mapCtx = wx.createMapContext("map");
+            this.mapCtx.getCenterLocation({
+                type: 'gcj02',
+                success: function (res) {
+                    that.get_map_houses(res.latitude, res.longitude)
+                }
+            })
+
+        }
+    },
+    get_map_houses(lat="", lng="") {
+        let self = this;
+        wx.getLocation({
+            type: 'wgs84',
+            success: function (res) {
+            console.log(res)
+            var latitude = lat?lat:res.latitude;
+            var longitude = lng?lng:res.longitude;
+            app.WxHttpRequestGet('house/nearby_houses',
+            {
+                city: app.globalData.city,
+                from_map: true,
+                location_conf: JSON.stringify({'longitude': longitude, 'latitude': latitude})
+            }
+            , function (resp) {
+                let result = resp.data;
                 let houses = result.data.houses;
-                let lng_lat = result.data.lng_lat;
                 let markers = [];
                 let house_map = {}
                 for (let i = 0; i < houses.length; i++) {
@@ -45,16 +112,6 @@ Page({
                         width: 30,
                         id: houses[i].id,
                         height: 30,
-                        // label: {
-                        //   content: houses[i].title,
-                        //   color: '#22ac38',
-                        //   fontSize: 14,
-                        //   bgColor: "#fff",
-                        //   borderRadius: 30,
-                        //   borderColor: "#22ac38",
-                        //   borderWidth: 1,
-                        //   padding: 3
-                        // },
                         callout: {
                             content: houses[i].title,
                             fontSize: 0,
@@ -62,15 +119,18 @@ Page({
                     })
                 }
                 self.setData({
-                    scale: 10,
+                    scale: 14,
                     markers: markers,
                     house_map: house_map,
-                    longitude: lng_lat['lng'],
-                    latitude: lng_lat['lat'],
+                    longitude: longitude,
+                    latitude: latitude,
                 })
                 wx.hideLoading()
+            })
+        },
+            fail: function (res) {
+                console.log(res)
             }
-
         })
     },
     markertap(e) {
