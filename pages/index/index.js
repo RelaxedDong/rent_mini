@@ -174,7 +174,7 @@ Page({
         var city = app.globalData.city;
         wx.setNavigationBarTitle({title: "蚁租房"})
         app.initSearchComponent();
-        that.setData({city: city});
+        that.setData({city: city, placeholder: city});
         this.getHouseList(this.data.api_url, 0);
         app.WxHttpRequestGet('house/banners', {city: city}, this.GetIndexConfigDone, app.InterError);
         wx.getSetting({

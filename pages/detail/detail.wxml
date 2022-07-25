@@ -124,13 +124,13 @@
                 <text class="iconfont icon-share3 cell-center icon-black share-icon"></text>
                 <text class="cell-center icon-grey share-text">分享</text>
             </button>
-<!--            <button class="share-bottom custom-btn" bindtap="Mycopy"-->
-<!--                    data-value="{{api_host}}/detail/?house_id={{house.id}}">-->
-<!--                <text class="iconfont icon-lianjie cell-center icon-black share-icon"></text>-->
-<!--                <text class="cell-center icon-grey share-text"-->
-<!--                >链接-->
-<!--                </text>-->
-<!--            </button>-->
+            <!--            <button class="share-bottom custom-btn" bindtap="Mycopy"-->
+            <!--                    data-value="{{api_host}}/detail/?house_id={{house.id}}">-->
+            <!--                <text class="iconfont icon-lianjie cell-center icon-black share-icon"></text>-->
+            <!--                <text class="cell-center icon-grey share-text"-->
+            <!--                >链接-->
+            <!--                </text>-->
+            <!--            </button>-->
         </view>
         <view class="op-right">
             <view class="flex-row">

@@ -17,18 +17,17 @@ Page({
         var content = e.detail.detail.value;
         this.setData({
             content: content
-        })
+        });
     },
     bindImageLoadError(e) {
-        let index = e.currentTarget.dataset.index
-        let type = e.currentTarget.dataset.type
-        let imglist = this.data.imglist
-        imglist[index] = app.globalData.error_image
-        this.setData({imglist: imglist})
+        let index = e.currentTarget.dataset.index;
+        let imglist = this.data.imglist;
+        imglist[index] = app.globalData.error_image;
+        this.setData({imglist: imglist});
     },
     appointDone(res) {
         app.ShowToast(res.data.msg);
-        this.hideModal()
+        this.hideModal();
     },
     click_check() {
         let now = new Date();
@@ -38,7 +37,7 @@ Page({
     hideModal(e) {
         this.setData({
             authModal: false
-        })
+        });
     },
     /**
      * @return {boolean}
@@ -53,25 +52,25 @@ Page({
                             '链接复制成功'
                         );
                     }
-                })
+                });
             }
-        })
+        });
     },
     WechatCopyClick(e) {
         if (!app.globalData.user_id) {
             this.setData({
                 authModal: true
-            })
-            return false
+            });
+            return false;
         }
         let can_operation = this.click_check();
         if (!can_operation) {
             app.ShowToast('8点后才能进行操作哦~');
-            return
+            return;
         }
         if (!e.currentTarget.dataset.wechat) {
             app.ShowToast('用户未公开哦~');
-            return
+            return;
         }
         wx.setClipboardData({
             data: e.currentTarget.dataset.wechat,
@@ -82,9 +81,9 @@ Page({
                             '微信复制成功'
                         );
                     }
-                })
+                });
             }
-        })
+        });
     },
     Showmap(e) {
         var dataset = e.currentTarget.dataset;
@@ -97,7 +96,7 @@ Page({
             fail(res) {
                 console.log(res)
             }
-        })
+        });
     },
     login(e) {
         app.user_info_bind(this, e, this.data.house.publisher.phone)
@@ -106,8 +105,8 @@ Page({
         if (!app.globalData.user_id) {
             this.setData({
                 authModal: true
-            })
-            return
+            });
+            return;
         }
         var dataset = e.currentTarget.dataset;
         var houseId = dataset.houseId;

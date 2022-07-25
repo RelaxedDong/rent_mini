@@ -36,7 +36,7 @@ App({
     var that = this;
     // 初始化地图sdk
     that.globalData.qqmapsdk  = new QQMapWX({
-      key: 'RG7BZ-G2KRV-XWPP2-U5GWL-WWQPF-RIBUW'
+      key: 'your_sdk'
     });
     // 初始化系统变量
     wx.getSystemInfo({
@@ -415,8 +415,8 @@ App({
     filter_conf:{},
     home_conf:{},
     share_img: "",
-    city:'南京市', // 默认进入首页的地址
-    province:'江苏省',
+    city:'北京市', // 默认进入首页的地址
+    province:'北京市',
     district:'',
     last_page:'',
     toast_new_profile: true,

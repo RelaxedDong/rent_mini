@@ -161,6 +161,7 @@ Page({
         })
     },
     OssUpload: function (dir, urls) {
+      // todo: 保证有序
         var oss = this.data.oss;
         var that = this;
         return new Promise(function (resolve, reject) {

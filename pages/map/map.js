@@ -29,7 +29,7 @@ Page({
         let self = this;
         app.wxshowloading('房源准备中...');
         wx.request({
-            url: app.globalData.api_host+'/house_map/?is_json=1&city=' + app.globalData.city,
+            url: app.globalData.api_host+'/api/house/nearby_houses?is_json=1&city=' + app.globalData.city,
             success: function (res) {
                 let result = res.data;
                 let houses = result.data.houses;
