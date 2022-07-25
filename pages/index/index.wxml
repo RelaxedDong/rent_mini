@@ -69,7 +69,8 @@
                         </view>
                     </view>
                     <view class="card-content">
-                        <text class="l-title-class card-title card-title-primary">{{item.title}}</text>
+                       <text class="l-title-class card-title card-title-primary">
+                            <text wx:if="{{item.is_delicate}}" class="hot-tag">精选</text>{{item.title}}</text>
                         <view class="user-info-group">
                             <view class="imgurl avatar-user"
                                   style="background-image: url({{item.publisher.avatarUrl}});"></view>

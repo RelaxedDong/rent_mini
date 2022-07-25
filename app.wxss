@@ -461,6 +461,15 @@ page {
     vertical-align: middle;
 }
 
+.hot-tag {
+    background: linear-gradient(45deg, #f43f3b, #ec008c);
+    color: white;
+    padding: 5rpx 10rpx;
+    box-sizing: border-box;
+    font-size: 23rpx;
+    border-radius: 5rpx;
+    margin-right: 5rpx;
+}
 .sort, .address {
     justify-content: right;
     text-align: right;
