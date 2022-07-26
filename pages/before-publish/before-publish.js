@@ -11,6 +11,20 @@ Page({
             // {name:'租房动态',src:'/image/icon/publish-zhuanzu.png',type:'discuss'}
         ]
     },
+    addme () {
+       wx.setClipboardData({
+            data: "kc8013",
+            success: function (res) {
+                wx.getClipboardData({
+                    success: function (res) {
+                        app.ShowModel('微信号复制成功！',
+                            '请添加微信联系'
+                        );
+                    }
+                })
+            }
+        })
+    },
     publish(e) {
         app.WxHttpRequestGet('house/add_check', {}, function (res) {
             var data = res.data;

@@ -14,4 +14,11 @@
             <text class="cuIcon-right text-lg"></text>
         </view>
     </view>
+    <view  class="before-item item-title  boder-tottom text-sm" bindtap="addme">
+        <image src="/image/icon/publish-zhuanzu.png" mode="aspectFit"></image>
+        <view class="choose-box"><view class="choose-item text-black">房源合作</view></view>
+        <view class="arrow" style="margin-left: auto">
+            <text class="cuIcon-right text-lg"></text>
+        </view>
+    </view>
 </view>

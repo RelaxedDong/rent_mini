@@ -159,20 +159,48 @@ Page({
             }
         })
     },
+    initCity(latitude, longitude) {
+        let that =this;
+        app.globalData.qqmapsdk.reverseGeocoder({
+            location: {
+                latitude: latitude,
+                longitude: longitude
+            },
+            success: function (res) {
+                var ad_info = res.result.ad_info;
+                let province = ad_info.province;
+                let city = ad_info.city;
+                let district = ad_info.district;
+                app.SetProvinceCity(province, city, district);
+                that.setData({placeholder: city, houses: []});
+                app.WxHttpRequestGet('house/banners', {city: city}, that.GetIndexConfigDone, app.InterError);
+                that.getHouseList(that.data.api_url, 0);
+                app.ShowToast('定位城市：' + city)
+            },
+            fail: function (res) {
+                console.log(res);
+                wx.showModal({
+                    title: res,
+                });
+            }
+        });
+    },
     initLocation() {
+        let that = this;
         wx.getLocation({
             type: 'wgs84',
             success: function (r) {
                 var latitude = r.latitude;
                 var longitude = r.longitude;
                 app.globalData.location_conf = {'longitude': longitude, 'latitude': latitude}
+                that.initCity(latitude, longitude);
             }
         })
     },
     onLoad: function (options) {
         var that = this;
         var city = app.globalData.city;
-        wx.setNavigationBarTitle({title: "蚁租房"})
+        wx.setNavigationBarTitle({title: "直租拼室友"})
         app.initSearchComponent();
         that.setData({city: city, placeholder: city});
         this.getHouseList(this.data.api_url, 0);
@@ -180,7 +208,6 @@ Page({
         wx.getSetting({
             success: function (res) {
                 var status = res.authSetting;
-                console.log(status)
                 if (!status['scope.userLocation']) {
                     that.getPermission()
                 } else {
@@ -199,31 +226,7 @@ Page({
                     var latitude = res.latitude;
                     var longitude = res.longitude;
                     app.globalData.location_conf = {'longitude': longitude, 'latitude': latitude}
-                    app.globalData.qqmapsdk.reverseGeocoder({
-                        location: {
-                            latitude: latitude,
-                            longitude: longitude
-                        },
-                        success: function (res) {
-                            var ad_info = res.result.ad_info;
-                            let province = ad_info.province;
-                            let city = ad_info.city;
-                            let district = ad_info.district;
-                            app.SetProvinceCity(province, city, district);
-                            that.setData({
-                                pla: city,
-                            })
-                            app.WxHttpRequestGet('house/banners', {city: that.data.city}, that.GetIndexConfigDone, app.InterError);
-                            that.getHouseList(this.data.api_url);
-                            app.initSearchComponent();
-                            app.ShowToast('定位城市：' + city)
-                        },
-                        fail: function (res) {
-                            wx.showModal({
-                                title: res,
-                            });
-                        }
-                    });
+                    that.initCity(latitude, longitude);
                 },
             })
         })
@@ -231,7 +234,7 @@ Page({
     onShareAppMessage: function (res) {
         var path = '/pages/index/index'
         return {
-            title: "蚁租房",
+            title: "直租拼室友",
             path: path,
             imageUrl: app.globalData.share_img, // 分享的封面图
             success: function (res) {

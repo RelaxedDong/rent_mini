@@ -3,6 +3,7 @@
     "pages/index/index",
     "pages/contact/contact",
     "pages/detail/detail",
+    "pages/feedback/feedback",
     "pages/map/map",
     "pages/web/web",
     "pages/publish/publish",

@@ -253,7 +253,7 @@ Page({
     onShareAppMessage: function (res) {
         var path = '/pages/index/index'
         return {
-            title: "蚁租房",
+            title: "直租拼室友",
             path: path,
             imageUrl: "", // 分享的封面图
             success: function (res) {
