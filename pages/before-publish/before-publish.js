@@ -13,7 +13,7 @@ Page({
     },
     addme () {
        wx.setClipboardData({
-            data: "kc8013",
+            data: "dh67763",
             success: function (res) {
                 wx.getClipboardData({
                     success: function (res) {
