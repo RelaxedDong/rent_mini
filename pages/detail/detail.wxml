@@ -161,16 +161,16 @@
             <view class="cu-bar bg-white justify-end">
                 <view class="action">
                     <button class="cu-btn line-green text-grey" bindtap="hideModal">取消</button>
-                    <form bindsubmit='login' report-submit>
+<!--                    <form bindsubmit='login' report-submit>-->
                         <button class="cu-btn bg-green margin-left-sm"
                                 open-type="getUserInfo"
-                                bindgetuserinfo="login"
+                                bindgetuserinfo="getUserProfile"
                                 formType="submit"
                                 hover-class="hover"
                         >
                             <text>允许</text>
                         </button>
-                    </form>
+<!--                    </form>-->
                 </view>
             </view>
         </view>

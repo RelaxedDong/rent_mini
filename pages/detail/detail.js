@@ -98,8 +98,8 @@ Page({
             }
         });
     },
-    login(e) {
-        app.user_info_bind(this, e, this.data.house.publisher.phone)
+    getUserProfile(e) {
+        app.user_info_bind(this, e);
     },
     OperationClick(e) {
         if (!app.globalData.user_id) {

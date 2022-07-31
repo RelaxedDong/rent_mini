@@ -1,25 +1,27 @@
 <view class="aui-tour-content"></view>
 <view class="radius my-head simple-radis aui-tour-box text-sm text-center icon-text">
     <view wx:if="{{is_auth}}" class="userbox padding-left-xs">
-        <view class="avatar">
-            <open-data type="userAvatarUrl"></open-data>
+<!--            <open-data type="userAvatarUrl"></open-data>-->
+        <view class="avatar-box">
+            <image class="user-avatar" src="{{avatarUrl}}"></image>
         </view>
         <view class="nickname-gender">
-            <open-data type="userNickName" lang="zh_CN"></open-data>
-            <open-data type="userGender" lang="zh_CN"></open-data>
+            <view cla>{{nickname}}</view>
+<!--            <open-data type="userNickName" lang="zh_CN"></open-data>-->
+<!--            <open-data type="userGender" lang="zh_CN"></open-data>-->
         </view>
     </view>
     <view wx:else class="margin">
-        <form bindsubmit='login' report-submit>
+<!--        <form bindsubmit='login' report-submit>-->
             <button class="cu-btn bg-green"
                     wx:if="{{!is_auth}}"
                     open-type="getUserInfo"
-                    bindgetuserinfo="login"
+                    bindtap="getUserProfile"
                     formType="submit"
                     hover-class="hover"
             >立即授权
             </button>
-        </form>
+<!--        </form>-->
     </view>
     <view class="action-info shadow">
         <view class="flex flex-sub  flex-direction icon-text"

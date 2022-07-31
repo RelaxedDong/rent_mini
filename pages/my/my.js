@@ -13,6 +13,8 @@ Page({
         grid_list: [
             {name: '意见反馈', icon: 'question',  url: "/pages/feedback/feedback"},
         ],
+        avatarUrl: "",
+        nickname: "",
     },
     Navigator_to(e) {
         if(e.currentTarget.dataset.type && !this.data.is_auth){
@@ -28,12 +30,8 @@ Page({
     Desktop() {
       app.ShowModel('提示', '请点击右上角胶囊 "添加到桌面" ');
     },
-    login(e) {
+    getUserProfile(e) {
         app.user_info_bind(this, e)
-    },
-    handleContact(e) {
-        console.log(e.detail.path)
-        console.log(e.detail.query)
     },
     BindUserInfoDone(res) {
         var data = res.data;
@@ -56,8 +54,16 @@ Page({
         })
         if (!app.globalData.user_id) {
             this.setData({is_auth: false})
-            return
+        } else {
+            app.WxHttpRequestGet('account/edit_info',{},this.GetUesrInfoDone, app.InterError);
         }
+    },
+    GetUesrInfoDone: function (res) {
+        var data = res.data.data;
+        this.setData({
+            avatarUrl: data.avatarUrl,
+            nickname: data.nickname,
+        })
     },
     /**
      * 生命周期函数--监听页面初次渲染完成

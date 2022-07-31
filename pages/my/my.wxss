@@ -12,6 +12,7 @@
 .userbox {
     display: flex;
     flex-direction: row;
+    height: 200rpx;
 }
 
 .action-info, .more-service {
@@ -123,12 +124,15 @@ background: linear-gradient(33deg, #41c7af, #54e38e);
     overflow: hidden;
     margin-top: -250rpx;
 }
-
-.avatar {
-    overflow: hidden;
-    display: block;
-    width: 150rpx;
-    height: 150rpx;
+.avatar-box {
+    width: 200rpx;
+    height: 200rpx;
+}
+.user-avatar {
+    /*overflow: hidden;*/
+    /*display: block;*/
+    width: 200rpx;
+    height: 200rpx;
     border-radius: 50%;
     border: 2px solid #fff;
     box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);
