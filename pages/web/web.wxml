@@ -1,2 +1,0 @@
-<web-view wx:if="{{show_web}}" src="{{url}}"></web-view>
-  

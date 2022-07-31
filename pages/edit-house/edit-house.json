@@ -1,9 +1,0 @@
-{
-  "usingComponents": {
-    "l-textarea":"../../dist/textarea/index",
-    "l-input":"../../dist/input/index"
-  },
-  "navigationBarBackgroundColor": "#fff",
-  "navigationBarTextStyle": "black",
-  "navigationBarTitleText": "房源编辑"
-}
