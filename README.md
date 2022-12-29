@@ -10,9 +10,12 @@
 - 房源宣传视频等
 - 扩展：楼盘展示、线上合同、房东房源、收租提醒、房源签约等
 
-扫码体验：
+后端开发框架：`django`
 
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/22203031-21B2-40B1-94B4-F269BB32BB87.png" width = "150" height = "150" div align=center />
+（2022-12-29）目前在进行 `golang` 学习，所以我尝试使用 `golang\beego` 重新写服务器端也当作实践了：
+
+https://github.com/RelaxedDong/go_rent
+
 
 :label: pages 页面布局: 
 ```
@@ -42,3 +45,7 @@
 如果有技术支持或者商务合作，欢迎与我们联系：
 
 <img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/WechatIMG43.jpeg" width = "200" height = "200" aligh=left />
+
+
+
+
