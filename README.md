@@ -12,9 +12,6 @@
 
 后端开发框架：`django`
 
-（2022-12-29）目前在进行 `golang` 学习，所以我尝试使用 `golang\beego` 重新写服务器端也当作实践了：
-
-https://github.com/RelaxedDong/go_rent
 
 
 :label: pages 页面布局: 
