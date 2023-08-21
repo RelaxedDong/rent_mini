@@ -26,13 +26,12 @@
 ```
 
 :art::art::art: 截图部分展示：
+![3151692594798_ pic](https://github.com/RelaxedDong/rent_mini/assets/38744096/67a5232d-99b2-4f51-bb09-34d1ab3a38c1)
+![3171692594810_ pic](https://github.com/RelaxedDong/rent_mini/assets/38744096/99aaf23c-f8e7-4c0d-8d5c-4d816c473d78)
+![3161692594803_ pic](https://github.com/RelaxedDong/rent_mini/assets/38744096/bcc4fd98-82d2-41a6-b814-3a536e1b20ae)
 
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/9113E57C-F80C-462D-8D64-6AFF300C4B67.png" width = "200" height = "400"  align=left />
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/0B62E1EB-6331-472B-92F7-B1E1FC5DAAFC.png" width = "200" height = "400"  align=left />
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/5CD63CAB-84D4-4DC0-AB02-88EDE8328E6B.png" width = "200" height = "400"  align=left />
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/ECC2CCF9-5207-4764-9947-167FA80EA2FE.png" width = "200" height = "400"  align=left />
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/86F4C322-369B-43FF-9947-417BBB18DDDA.png" width = "200" height = "400"  align=left />
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/3848184C-723D-43D0-94A5-4A2435FF0E5B.png" width = "200" height = "400"  align=left />
+![3181692594814_ pic](https://github.com/RelaxedDong/rent_mini/assets/38744096/0d2de169-3a08-45e1-8904-2a8f6ea811ad)
+
 :label: pages 后台展示（样式1、样式2）: 
 
 <img src="https://rent-mini.obs.cn-north-4.myhuaweicloud.com/conf/D7554251-80D5-4685-8EB7-5259569D7B62.png" width = "600" height = "400" aligh=left />
@@ -40,10 +39,5 @@
 <img src="https://img-blog.csdnimg.cn/20210423115030930.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3FxXzQyMjM5NTIw,size_16,color_FFFFFF,t_70" width = "600" height = "400" aligh=left />
 
 如果有技术支持或者商务合作，欢迎与我们联系：
+![3191692595090_ pic](https://github.com/RelaxedDong/rent_mini/assets/38744096/23a6228a-2c80-4e9d-9577-4c3e4a4552c6)
 
-<img src="https://szs-renting.oss-cn-shenzhen.aliyuncs.com/mina/show/WechatIMG43.jpeg" width = "200" height = "200" aligh=left />
-
-
-
-
-##### 租房小程序
